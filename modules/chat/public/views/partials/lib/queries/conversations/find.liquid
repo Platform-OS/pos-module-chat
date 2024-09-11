@@ -1,0 +1,22 @@
+{% liquid
+  if id == blank
+    log 'Something went wrong. id is null', type: 'ERROR'
+    return null
+  endif
+
+  graphql r = 'modules/chat/conversations/search', limit: 1, id: id, participant_id: participant_id, include_messages: include_messages
+  include 'modules/community/helpers/handle_graphql_response', r: r, name: 'modules/chat/conversations/find_by_participant'
+
+  assign conversation = r.conversations.results.first
+
+  assign participants = '[]' | parse_json
+
+  for participant_id in conversation.participant_ids
+    function profile = 'modules/profile/queries/profiles/find_proxy', id: participant_id
+    assign participants = participants | add_to_array: profile
+  endfor
+
+  hash_assign conversation['participants'] = participants
+
+  return conversation
+%}

@@ -1,0 +1,26 @@
+---
+slug: inbox
+---
+
+{% liquid
+  function current_profile = 'modules/community/helpers/current_profile', user_id: context.current_user.id
+  include 'modules/community/helpers/profile_present_or_redirect', profile: current_profile
+
+  function record = 'modules/chat/lib/queries/records/find_by_uuid', uuid: context.params['to_uuid']
+  assign object = null | hash_merge: to_id: record.id, conversation_id: context.params['conversation_id']
+
+  function current_conversation = 'modules/chat/lib/commands/conversations/find_or_create', object: object, current_profile: current_profile
+  if current_conversation.valid == false
+    assign current_conversation = null
+  endif
+  if current_conversation
+    function res = 'modules/chat/lib/commands/conversations/mark_read', conversation: current_conversation, participant_id: current_profile.id
+  endif
+  function conversations = 'modules/chat/lib/queries/conversations/search_by_participant', participant_id: current_profile.id, limit: 20, page: 1
+
+  if conversations.total_entries > 0
+    theme_render_rc 'components/pages/inbox', current_conversation: current_conversation, conversations: conversations, current_profile: current_profile
+  else
+    include 'modules/chat/theme/simple/inbox/blank'
+  endif
+%}

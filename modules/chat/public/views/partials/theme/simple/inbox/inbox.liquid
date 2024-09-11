@@ -1,0 +1,104 @@
+  <div
+    class="container"
+    id="chat-inbox"
+    style="min-height: calc((100vh - 112px) - 20px)"
+    data-error-connection="{{ 'modules/chat/error_connection' | t }}"
+  >
+    <div class="flex flex-col h-full">
+      <div class="flex {% unless current_conversation %}flex-col-reverse md:flex-row md:{% endunless %}h-full">
+
+          <div class="md:w-1/3 {% if current_conversation %}hidden md:flex{% else %}flex{% endif %} flex-col">
+            <div class="flex-1 overflow-auto">
+              {% liquid
+              for conversation in conversations.results
+                assign participants = conversation.participants
+                assign current_participants = participants | select: id: current_profile.id
+                assign other_participants = participants | subtract_array: current_participants
+                assign from_profile = other_participants | first
+
+                render 'modules/chat/theme/simple/inbox/conversation', conversation: conversation, current_conversation: current_conversation, current_profile: current_profile, from_user: from_profile, messages: messages
+
+                if conversation.id == current_conversation.id
+                  assign other_participant = from_profile
+                endif
+              endfor
+              %}
+            </div>
+          </div>
+
+          {% if current_conversation %}
+            <div class="w-full shadow flex flex-col relative bg-panel">
+              <div class="hidden absolute left-0 right-0 top-16 text-center" id="chat-loadingIndicator" data-more="true">
+                <span class="inline-block mt-2 py-2 px-4 bg-blue-600 rounded shadow-md text-content-inverted">{{ 'modules/chat/loading_previous' | t }}</span>
+              </div>
+              <div class="flex items-center absolute bg-panel bg-opacity-80 w-full border-b border-gray-100">
+                <a
+                  href="/inbox"
+                  class="flex flex-1 items-center md:hidden w-full p-2 text-black text-sm"
+                >
+                  {% theme_render_rc 'ui/icon', icon: 'dashLeft' %}
+                  {{ 'modules/chat/back' | t }}
+                </a>
+
+              <div class="flex flex-grow md:w-full items-center p-2 md:p-4">
+                {% liquid
+                  if other_participant
+                    if other_participant.first_name
+                      assign name = other_participant.first_name | append: ' ' | append: other_participant.last_name
+                    else
+                      assign name = other_participant.name
+                    endif
+
+                    render 'theme/simple/ui/avatar', profile: other_participant, size: 64, class: 'w-6 h-6 mx-0'
+                  endif
+                %}
+                <p class="text-sm pl-3 text-blue-700">{{ name }}</p>
+              </div>
+              </div>
+              <div class="flex-1 overflow-auto" id="chat-messagesList-container">
+                <ul class="max-w-full p-3 pt-16" id="chat-messagesList">
+                  {% liquid
+                    assign list = current_conversation.messages | reverse
+                    for message in list
+                      if message["autor_id"] != current_profile.id
+                        render "modules/chat/theme/simple/inbox/message", message: message, justify: 'justify-start', bg_color: 'bg-blue-100'
+                      else
+                        render "modules/chat/theme/simple/inbox/message", message: message, justify: 'justify-end', bg_color: 'bg-blue-200'
+                      endif
+                    endfor
+                  %}
+                  </ul>
+              </div>
+              <div class="px-3 py-3">
+                <div class="border-grey-200 border-t border-b -mx-3 py-1">
+                  <input
+                    placeholder="{{ 'modules/chat/message_input_placeholder' | t }}"
+                    id="chat-messageInput"
+                    class="w-full px-2 py-2 border-0 focus:outline-none focus-visible:outline-none focus-visible:ring-transparent"
+                    type="text"
+                    data-from-name="{{ current_profile.name }}" data-conversation-id="{{ current_conversation.id}}"
+                    data-current-profile-id="{{ current_profile.id }}"
+                    disabled
+                  />
+                </div>
+                <div class="flex justify-end mt-2">
+                  <button
+                    id="chat-sendButton"
+                    class="bg-blue-600 text-white px-4 py-2 rounded text-sm"
+                  >
+                    {{ 'modules/chat/send' | t }}
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          {% else %}
+            <div class="w-full md:shadow md:bg-panel flex items-center justify-center p-2">
+              <span class="title">
+                {{ 'modules/chat/pick_conversation' | t }}
+              </span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+  </div>

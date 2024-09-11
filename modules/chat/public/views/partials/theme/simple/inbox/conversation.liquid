@@ -1,0 +1,48 @@
+{% if conversation.id != current_conversation.id %}
+	<a href="/inbox?conversation_id={{ conversation.id }}">
+{% endif %}
+		{% liquid
+			assign active_class = 'bg-panel border-l-4 border-interaction text-content'
+			unless conversation.id == current_conversation.id
+				assign active_class = 'border-l-4 border-transparent text-content-sidenote'
+			endunless
+		%}
+
+		<div class="px-3 py-2 flex items-center {{ active_class }}" data-tc="chat-room">
+
+			<div>
+        {% render 'theme/simple/ui/avatar', profile: from_user, size: 64, class: 'w-16 h-16 mx-auto md:mx-0' %}
+			</div>
+
+			<div class="ms-4 flex-1">
+				<div class="flex items-bottom justify-between">
+
+          {% liquid
+            if from_user.first_name
+              assign name = from_user.first_name | append: ' ' | append: from_user.last_name
+            else
+              assign name = from_user.name
+            endif
+          %}
+
+          <p>{{ name }}</p>
+
+          {% unless conversation.participant_read_ids contains current_profile.id %}
+            <span class="flex items-center justify-center w-5 h-5 text-xs text-content-inverted rounded-full bg-interaction"></span>
+          {% endunless %}
+
+				</div>
+
+        {% if conversation.last_message %}
+          <p class="text-content-sidenote mt-1 text-sm">
+            {{ conversation.last_message.created_at | l: 'compact' }}
+          </p>
+        {% endif %}
+
+			</div>
+
+		</div>
+
+{% if conversation.id != current_conversation.id %}
+	</a>
+{% endif %}

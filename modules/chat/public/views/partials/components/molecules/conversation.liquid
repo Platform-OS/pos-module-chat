@@ -1,0 +1,92 @@
+---
+metadata:
+  name: Conversation panel
+  params:
+    id: ''
+    current:
+      - true
+      - false
+    unread:
+      - true
+      - false
+    name: ''
+    imageSrc: ''
+    last_message: ''
+    created_at: ''
+    timezone: ''
+  styleguide:
+    - id: '1'
+      current: true
+      unread: false
+      name: 'John Doe'
+      imageSrc: 'https://i.pravatar.cc/150?img=18'
+      last_message: 'Aenean volutpat urna vitae cursus hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      created_at: '2023-02-01T10:27:30.919Z'
+      timezone: 'Pacific Time (US & Canada)'
+    - id: '2'
+      current: false
+      unread: false
+      name: 'John Doe'
+      imageSrc: 'https://i.pravatar.cc/150?img=18'
+      last_message: 'Aenean volutpat urna vitae cursus hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      created_at: '2023-02-01T10:27:30.919Z'
+      timezone: 'Pacific Time (US & Canada)'
+    - id: '3'
+      current: false
+      unread: true
+      name: 'John Doe'
+      imageSrc: 'https://i.pravatar.cc/150?img=18'
+      last_message: 'Aenean volutpat urna vitae cursus hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      created_at: '2023-02-01T10:27:30.919Z'
+      timezone: 'Pacific Time (US & Canada)'
+---
+{% liquid
+  assign id = id | default: params.id
+  assign current = current | default: params.current | default: false
+  assign unread = unread | default: params.unread | default: false
+  assign name = name | default: params.name
+  assign imageSrc = imageSrc | default: params.imageSrc
+  assign last_message = last_message | default: params.last_message
+  assign created_at = created_at | default: params.created_at
+%}
+{% if current == false %}
+	<a href="/inbox?conversation_id={{ id }}">
+{% endif %}
+		{% liquid
+			assign active_class = 'bg-panel border-l-4 border-interactive-graphic bg-input '
+			if current == false
+				assign active_class = 'pl-4 border-b border-divider '
+			endif
+
+      if unread == false
+        assign text_class = 'text-supplementary'
+      else
+        assign text_class = 'text-normal font-bold'
+      endif
+
+      assign active_class = active_class | append: text_class
+		%}
+		<div class="px-3 py-2 flex items-center {{ active_class }}" data-tc="chat-room">
+			<div>
+        {% theme_render_rc 'components/atoms/avatar', size: 'l', name: name, imageSrc: imageSrc %}
+			</div>
+			<div class="ms-4 flex-1">
+				<div class="flex items-bottom justify-between">
+          <p>{{ name }}</p>
+          {% if last_message %}
+            <p class="mt-1 text-xs flex flex-col items-center">
+              {{ created_at | strftime: "%b %d", timezone }}
+            </p>
+          {% endif %}
+				</div>
+        {% if last_message %}
+          {% liquid
+            assign message = last_message | truncatewords: 6
+            theme_render_rc 'components/atoms/sidenote', content: message
+          %}
+        {% endif %}
+			</div>
+		</div>
+{% if current == false %}
+	</a>
+{% endif %}

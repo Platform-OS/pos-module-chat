@@ -1,0 +1,128 @@
+---
+metadata:
+  name: Chat Inbox
+  params:
+    current_conversation: {}
+    conversations: {}
+    current_profile: {}
+---
+<div
+  class="container"
+  id="chat-inbox"
+  style="min-height: calc((100vh - 112px) - 100px)"
+  data-error-connection="{{ 'modules/chat/error_connection' | t }}"
+>
+  <div class="flex flex-col h-full">
+    <div class="flex {% unless current_conversation %}flex-col-reverse md:flex-row md:{% endunless %}h-full">
+      <div class="md:w-1/3 {% if current_conversation %}hidden md:flex{% else %}flex{% endif %} flex-col relative z-18">
+        <div class="flex-1 overflow-auto">
+          <div class="bg-panel relative h-14 flex items-center font-bold p-4 shadow-card rounded-tl-lg">Messaging</div>
+          {% liquid
+            for conversation in conversations.results
+              assign participants = conversation.participants
+              assign current_participants = participants | select: id: current_profile.id
+              assign other_participants = participants | subtract_array: current_participants
+              assign from_profile = other_participants | first
+
+              if conversation.id != current_conversation.id
+                assign current = false
+              else
+                assign current = true
+              endif
+
+              if conversation.participant_read_ids contains current_profile.id
+                assign unread = false
+              else
+                assign unread = true
+              endif
+
+              assign name = from_profile.first_name | append: ' ' | append: from_profile.last_name | default: from_profile.name
+              assign imageSrc = from_profile.avatar.photo.versions.sm
+              assign last_message = conversation.last_message.message
+              assign created_at = conversation.last_message.created_at
+              if conversation.last_message
+                theme_render_rc 'components/molecules/conversation', id: conversation.id, current: current, unread: unread, name: name, imageSrc: imageSrc, last_message: last_message, created_at: created_at, timezone: current_profile.timezone
+              endif
+              if conversation.id == current_conversation.id
+                assign other_participant = from_profile
+              endif
+            endfor
+          %}
+        </div>
+      </div>
+
+      {% if current_conversation %}
+        <div class="w-full shadow-card flex flex-col relative bg-panel rounded rounded-tl-none">
+          <div class="hidden absolute left-0 right-0 top-16 text-center" id="chat-loadingIndicator" data-more="true">
+            <span class="inline-block mt-2 py-2 px-4 bg-colorful rounded shadow-md text-colorful-foreground">
+              {{- 'modules/chat/loading_previous' | t -}}
+            </span>
+          </div>
+          <div class="flex items-center w-full border-b border-divider border-l">
+            <a
+              href="/inbox"
+              class="flex flex-1 items-center md:hidden w-full p-2 text-black text-sm"
+            >
+              {% theme_render_rc 'components/atoms/icon', name: 'dashLeft' %}
+              {{ 'modules/chat/back' | t }}
+            </a>
+
+            <div class="flex flex-grow md:w-full items-center p-2 md:p-4 h-14 bg-panel rounded-tr">
+              {% liquid
+                if other_participant
+                  if other_participant.first_name
+                    assign name = other_participant.first_name | append: ' ' | append: other_participant.last_name
+                  else
+                    assign name = other_participant.name
+                  endif
+
+                  theme_render_rc 'components/atoms/avatar', size: 's', name: name, imageSrc: other_participant.avatar.photo.versions.sm
+                endif
+              %}
+              <p class="pl-3 text-interactive-text font-bold">{{ name }}</p>
+            </div>
+          </div>
+          <div class="flex-1 overflow-auto" id="chat-messagesList-container">
+            <ul class="max-w-full p-3 pt-16" id="chat-messagesList">
+              {% liquid
+                assign list = current_conversation.messages | reverse
+                for message in list
+                  if message.autor_id != current_profile.id
+                    theme_render_rc 'components/atoms/message', message: message.message, created_at: message.created_at, justify: 'justify-start', bg_color: 'bg-highlighted', timezone: current_profile.timezone
+                  else
+                    theme_render_rc 'components/atoms/message', message: message.message, created_at: message.created_at, justify: 'justify-end', bg_color: 'bg-interactive-disabled', timezone: current_profile.timezone
+                  endif
+                endfor
+              %}
+            </ul>
+          </div>
+          <div class="px-3 py-3">
+            <div class="border-divider border-t border-b -mx-3 py-1">
+              <textarea
+                placeholder="{{ 'modules/chat/message_input_placeholder' | t }}"
+                id="chat-messageInput"
+                class="overflow-auto max-h-32 w-full px-2 py-2 border-0 focus:outline-none focus-visible:outline-none focus-visible:ring-transparent"
+                data-from-name="{{ current_profile.name }}" data-conversation-id="{{ current_conversation.id}}"
+                data-current-profile-id="{{ current_profile.id }}"
+                disabled
+              ></textarea>
+            </div>
+            <div class="flex justify-end mt-2">
+              {% liquid
+                assign button_text = 'modules/chat/send' | t
+                assign attributes = '{}' | parse_json
+                hash_assign attributes['id'] = "chat-sendButton"
+                theme_render_rc 'components/atoms/button', size: 'small', weight: 'primary', content: button_text, attributes: attributes
+              %}
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="w-full md:shadow-card md:bg-panel flex items-center justify-center p-2">
+          {% assign heading_text = 'modules/chat/pick_conversation' | t %}
+          {% theme_render_rc 'components/atoms/heading', content: heading_text, level: 3, tag: 'span', classes: 'uppercase' %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
