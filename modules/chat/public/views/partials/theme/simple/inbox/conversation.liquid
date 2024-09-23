@@ -6,25 +6,22 @@
 			unless conversation.id == current_conversation.id
 				assign active_class = 'border-l-4 border-transparent text-content-sidenote'
 			endunless
+
+      if from_user.first_name
+        assign name = from_user.first_name | append: ' ' | append: from_user.last_name
+      else
+        assign name = from_user.name
+      endif
 		%}
 
 		<div class="px-3 py-2 flex items-center {{ active_class }}" data-tc="chat-room">
 
 			<div>
-        {% render 'theme/simple/ui/avatar', profile: from_user, size: 64, class: 'w-16 h-16 mx-auto md:mx-0' %}
+        {% theme_render_rc 'components/atoms/avatar', size: 's', name: name, imageSrc: from_user.avatar.photo.versions.sm %}
 			</div>
 
 			<div class="ms-4 flex-1">
 				<div class="flex items-bottom justify-between">
-
-          {% liquid
-            if from_user.first_name
-              assign name = from_user.first_name | append: ' ' | append: from_user.last_name
-            else
-              assign name = from_user.name
-            endif
-          %}
-
           <p>{{ name }}</p>
 
           {% unless conversation.participant_read_ids contains current_profile.id %}

@@ -36,7 +36,7 @@
                   href="/inbox"
                   class="flex flex-1 items-center md:hidden w-full p-2 text-black text-sm"
                 >
-                  {% theme_render_rc 'ui/icon', icon: 'dashLeft' %}
+                  {% theme_render_rc 'components/atoms/icon', name: 'dashLeft' %}
                   {{ 'modules/chat/back' | t }}
                 </a>
 
@@ -49,7 +49,7 @@
                       assign name = other_participant.name
                     endif
 
-                    render 'theme/simple/ui/avatar', profile: other_participant, size: 64, class: 'w-6 h-6 mx-0'
+                    theme_render_rc 'components/atoms/avatar', size: 's', name: name, imageSrc: other_participant.avatar.photo.versions.sm
                   endif
                 %}
                 <p class="text-sm pl-3 text-blue-700">{{ name }}</p>
