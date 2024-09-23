@@ -2,8 +2,9 @@
   "name": "Pos Module Chat",
   "machine_name": "chat",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
+    "components": "~1.0.0",
     "core": "1.5.3",
     "profile": "0.0.1"
   }
