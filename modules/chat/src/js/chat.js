@@ -42,7 +42,7 @@ const chat = function(){
     let timezonedDate;
     try {
       // the back-end returns the timezone formatted not according to tz identifier, so I'm going to risk the 'replace' here to make it work with .toLocaleString automatically
-      timezonedDate = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true, timeZone: api.profile.timezone.friendly_name_with_region.replace(' - ', '/') });
+      timezonedDate = date.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: api.profile.timezone.friendly_name_with_region.replace(' - ', '/') });
     } catch {
       if(typeof Intl == 'object' && typeof Intl.NumberFormat == 'function'){
         timezonedDate = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true, timeZone: 'Etc/UTC' });
@@ -270,10 +270,20 @@ const chat = function(){
   // ------------------------------------------------------------------------
   module.blocked = () => {
     module.settings.messageInput.disabled = true;
-    module.errorNotification = new api.flash(
+    module.errorNotification = new posComponents.flash(
       'error',
       'We cannot connect to the server. Check your internet connection or try reloading the page.'
     );
+  };
+
+
+  // purpose:		parses the dates outputted from BE with JS so that everyting uses browser locale
+  // ------------------------------------------------------------------------
+  module.parseDates = () => {
+    document.querySelectorAll('[data-message-time]').forEach(date => {
+      let currentDate = new Date(date.dataset.messageTime);
+      date.innerText = currentDate.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: api.profile.timezone.friendly_name_with_region.replace(' - ', '/') });
+    });
   };
 
 
@@ -288,6 +298,9 @@ const chat = function(){
 
     // scroll to bottom after loading the messages
     scrollBottom();
+
+    // parse dates from BE to be in the same format as browser locale
+    module.parseDates();
 
     let is_desktop = true;
 

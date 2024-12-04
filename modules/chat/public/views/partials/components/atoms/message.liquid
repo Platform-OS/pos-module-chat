@@ -28,7 +28,7 @@ metadata:
   assign message = message | markdown: '{ "elements": [ "br" ] }'
 %}
 
-<div class="flex text-xs text-supplementary {{ justify }}" data-message-time="{{ created_at | strftime: '%Y-%m-%dT%H:%M:%S%Z', timezone }}">
+<div class="flex text-xs text-supplementary {{ justify }}" data-message-time="{{ created_at }}">
   {{ created_at | l: 'long', timezone }}
 </div>
 
