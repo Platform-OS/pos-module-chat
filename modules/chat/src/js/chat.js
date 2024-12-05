@@ -36,10 +36,10 @@ const chat = function(){
   module.settings.messagesListContainer = document.querySelector('#chat-messagesList-container');
   // the box with all the messages stored (dom node)
   module.settings.messagesList = document.querySelector('#chat-messagesList');
-  // the html template for the single message (function that returns template literal);
-  module.settings.messageTemplate = data => {
-    let date = new Date(data.created_at);
+  // tries to parse the date with toLocaleString (function that gets Date object and returns parsed date or empty string if fails)
+  module.settings.timezonedDate = date => {
     let timezonedDate;
+
     try {
       // the back-end returns the timezone formatted not according to tz identifier, so I'm going to risk the 'replace' here to make it work with .toLocaleString automatically
       timezonedDate = date.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: api.profile.timezone.friendly_name_with_region.replace(' - ', '/') });
@@ -51,11 +51,17 @@ const chat = function(){
       }
     }
 
+    return timezonedDate;
+  }
+  // the html template for the single message (function that returns template literal);
+  module.settings.messageTemplate = data => {
+    let date = new Date(data.created_at);
+
     const message = encodeHtml(data.message).replace(/(\r\n|\r|\n)/g, "<br>");
 
     return `
     <p class="flex text-xs text-supplementary ${ data.status === 'sent' ? 'justify-end' : 'justify-start' }">
-      ${timezonedDate}
+      ${module.settings.timezonedDate(date)}
     </p>
     <li class="flex mb-2 break-words ${ data.status === 'sent' ? 'justify-end' : 'justify-start' }">
       <div
@@ -282,7 +288,7 @@ const chat = function(){
   module.parseDates = () => {
     document.querySelectorAll('[data-message-time]').forEach(date => {
       let currentDate = new Date(date.dataset.messageTime);
-      date.innerText = currentDate.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: api.profile.timezone.friendly_name_with_region.replace(' - ', '/') });
+      date.innerText = module.settings.timezonedDate(currentDate);
     });
   };
 
