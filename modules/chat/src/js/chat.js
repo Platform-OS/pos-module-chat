@@ -45,7 +45,7 @@ const chat = function(){
       timezonedDate = date.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: api.profile.timezone.friendly_name_with_region.replace(' - ', '/') });
     } catch {
       if(typeof Intl == 'object' && typeof Intl.NumberFormat == 'function'){
-        timezonedDate = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true, timeZone: 'Etc/UTC' });
+        timezonedDate = date.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: 'Etc/UTC' });
       } else {
         timezonedDate = '';
       }
