@@ -14,7 +14,7 @@ method: get
 
 {% liquid
   function current_profile = 'modules/community/helpers/current_profile', user_id: context.current_user.id
-  include 'modules/community/helpers/profile_present_or_redirect', profile: current_profile
+  render 'modules/community/helpers/profile_present_or_redirect', profile: current_profile
 
   assign conversation_id = context.params.conversation_id
   assign page = context.params.page | plus: 0 | default: 1
@@ -22,5 +22,5 @@ method: get
 
   function messages = 'modules/chat/lib/queries/messages/search_by_participant', conversation_id: conversation_id, page: page, limit: limit, participant_id: current_profile.id
 
-  render 'modules/chat/theme/json/messages/show', messages: messages, current_user_id: context.current_user.id
+  render 'modules/chat/theme/json/messages/show', messages: messages
 %}

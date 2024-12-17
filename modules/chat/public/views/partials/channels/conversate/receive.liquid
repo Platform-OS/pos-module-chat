@@ -17,7 +17,7 @@
   function current_profile = 'modules/community/helpers/current_profile', user_id: context.current_user.id
   assign room_id = context.params.room_id
 
-  function conversation = 'modules/chat/lib/queries/conversations/find_by_participant', id: room_id, participant_id: current_profile.id
+  function conversation = 'modules/chat/lib/queries/conversations/find_by_participant', id: room_id, participant_id: current_profile.id, include_messages: null
   if conversation
     assign message_safe = context.params.message | raw_escape_string
     assign object = '{}' | parse_json
@@ -29,7 +29,7 @@
       log message, 'ERROR receive message'
       echo "false"
     else
-      function res = 'modules/chat/lib/commands/conversations/mark_unread', conversation: conversation, current_profile: current_profile
+      function _res = 'modules/chat/lib/commands/conversations/mark_unread', conversation: conversation, current_profile: current_profile
     endif
   else
     log "Skippind. Message will be persisted on sender side", 'channel_actions/conversate skip_message'

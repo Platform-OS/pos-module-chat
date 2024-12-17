@@ -16,7 +16,7 @@
                 assign other_participants = participants | subtract_array: current_participants
                 assign from_profile = other_participants | first
 
-                render 'modules/chat/theme/simple/inbox/conversation', conversation: conversation, current_conversation: current_conversation, current_profile: current_profile, from_user: from_profile, messages: messages
+                render 'modules/chat/theme/simple/inbox/conversation', conversation: conversation, current_conversation: current_conversation, current_profile: current_profile, from_user: from_profile
 
                 if conversation.id == current_conversation.id
                   assign other_participant = from_profile
@@ -76,7 +76,7 @@
                     id="chat-messageInput"
                     class="w-full px-2 py-2 border-0 focus:outline-none focus-visible:outline-none focus-visible:ring-transparent"
                     type="text"
-                    data-from-name="{{ current_profile.name }}" data-conversation-id="{{ current_conversation.id}}"
+                    data-from-name="{{ current_profile.name }}" data-conversation-id="{{ current_conversation.id }}"
                     data-current-profile-id="{{ current_profile.id }}"
                     disabled
                   />

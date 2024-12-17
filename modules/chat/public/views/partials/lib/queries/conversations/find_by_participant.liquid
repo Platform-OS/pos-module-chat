@@ -10,14 +10,14 @@
   endif
 
   graphql r = 'modules/chat/conversations/search', limit: 1, id: id, participant_id: participant_id, include_messages: include_messages, messages_limit: 30
-  include 'modules/community/helpers/handle_graphql_response', r: r, name: 'modules/chat/conversations/find_by_participant'
+  render 'modules/community/helpers/handle_graphql_response', r: r, name: 'modules/chat/conversations/find_by_participant'
 
   assign conversation = r.conversations.results.first
 
   assign participants = '[]' | parse_json
 
   for participant_id in conversation.participant_ids
-    function profile = 'modules/profile/queries/profiles/find_proxy', id: participant_id
+    function profile = 'modules/profile/queries/profiles/find', id: participant_id, user_id: null, uuid: null, first_name: null, last_name: null
     assign participants = participants | add_to_array: profile
   endfor
 
