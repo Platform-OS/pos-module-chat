@@ -5,7 +5,6 @@
   endif
 
   graphql r = 'modules/chat/conversations/search', limit: 1, participant_ids: participant_ids, include_messages: include_messages, messages_limit: 30
-  include 'modules/community/helpers/handle_graphql_response', r: r, name: 'modules/chat/conversations/find_by_participants'
 
   assign conversation = r.conversations.results.first
 

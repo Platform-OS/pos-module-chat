@@ -1,0 +1,9 @@
+{
+  "name": "Profile",
+  "machine_name": "profile",
+  "type": "module",
+  "version": "1.0.11",
+  "dependencies": {
+    "core": "^1.0.0"
+  }
+}
