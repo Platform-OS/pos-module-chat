@@ -6,6 +6,14 @@ metadata:
     conversations: {}
     current_profile: {}
 ---
+<script>
+  let posChat = {};
+  posChat.csrfToken = '{{ context.authenticity_token }}';
+  posChat.profile = {};
+  posChat.profile.timezone = {% if current_profile.timezone %} {{ current_user_timezone }} {% else %} null {% endif %};
+</script>
+<script type="module" defer src="{{ 'modules/chat/js/chat.js' | asset_url }}"></script>
+
 <div
   class="container"
   id="chat-inbox"

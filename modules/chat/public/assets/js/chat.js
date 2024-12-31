@@ -1,1 +1,429 @@
-!function(t){var e={};function n(o){if(e[o])return e[o].exports;var i=e[o]={i:o,l:!1,exports:{}};return t[o].call(i.exports,i,i.exports,n),i.l=!0,i.exports}n.m=t,n.c=e,n.d=function(t,e,o){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:o})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var i in t)n.d(o,i,function(e){return t[e]}.bind(null,i));return o},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",Object.defineProperty(n,"p",{get:function(){try{if("string"!=typeof window.cdnUrl)throw new Error("WebpackRequireFrom: 'window.cdnUrl' is not a string or not available at runtime. See https://github.com/agoldis/webpack-require-from#troubleshooting");return window.cdnUrl}catch(t){return console.error(t),""}}}),n(n.s=3)}([function(t,e,n){"use strict";e.a=()=>{const t=document.querySelector('meta[name="csrf-token"]');if(!t)throw new Error("Unable to find CSRF token meta");const e=t.getAttribute("content");if(!e)throw new Error("Unable to get CSRF token value");return e}},function(t,e,n){"use strict";var o=n(2),i=n(0);e.a=Object(o.createConsumer)(()=>"/websocket?authenticity_token="+Object(i.a)())},function(t,e,n){!function(t){"use strict";var e={logger:self.console,WebSocket:self.WebSocket},n={log:function(){if(this.enabled){for(var t,n=arguments.length,o=Array(n),i=0;i<n;i++)o[i]=arguments[i];o.push(Date.now()),(t=e.logger).log.apply(t,["[ActionCable]"].concat(o))}}},o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},i=function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")},s=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}(),r=function(){return(new Date).getTime()},c=function(t){return(r()-t)/1e3},a=function(t,e,n){return Math.max(e,Math.min(n,t))},u=function(){function t(e){i(this,t),this.visibilityDidChange=this.visibilityDidChange.bind(this),this.connection=e,this.reconnectAttempts=0}return t.prototype.start=function(){this.isRunning()||(this.startedAt=r(),delete this.stoppedAt,this.startPolling(),addEventListener("visibilitychange",this.visibilityDidChange),n.log("ConnectionMonitor started. pollInterval = "+this.getPollInterval()+" ms"))},t.prototype.stop=function(){this.isRunning()&&(this.stoppedAt=r(),this.stopPolling(),removeEventListener("visibilitychange",this.visibilityDidChange),n.log("ConnectionMonitor stopped"))},t.prototype.isRunning=function(){return this.startedAt&&!this.stoppedAt},t.prototype.recordPing=function(){this.pingedAt=r()},t.prototype.recordConnect=function(){this.reconnectAttempts=0,this.recordPing(),delete this.disconnectedAt,n.log("ConnectionMonitor recorded connect")},t.prototype.recordDisconnect=function(){this.disconnectedAt=r(),n.log("ConnectionMonitor recorded disconnect")},t.prototype.startPolling=function(){this.stopPolling(),this.poll()},t.prototype.stopPolling=function(){clearTimeout(this.pollTimeout)},t.prototype.poll=function(){var t=this;this.pollTimeout=setTimeout((function(){t.reconnectIfStale(),t.poll()}),this.getPollInterval())},t.prototype.getPollInterval=function(){var t=this.constructor.pollInterval,e=t.min,n=t.max,o=t.multiplier*Math.log(this.reconnectAttempts+1);return Math.round(1e3*a(o,e,n))},t.prototype.reconnectIfStale=function(){this.connectionIsStale()&&(n.log("ConnectionMonitor detected stale connection. reconnectAttempts = "+this.reconnectAttempts+", pollInterval = "+this.getPollInterval()+" ms, time disconnected = "+c(this.disconnectedAt)+" s, stale threshold = "+this.constructor.staleThreshold+" s"),this.reconnectAttempts++,this.disconnectedRecently()?n.log("ConnectionMonitor skipping reopening recent disconnect"):(n.log("ConnectionMonitor reopening"),this.connection.reopen()))},t.prototype.connectionIsStale=function(){return c(this.pingedAt?this.pingedAt:this.startedAt)>this.constructor.staleThreshold},t.prototype.disconnectedRecently=function(){return this.disconnectedAt&&c(this.disconnectedAt)<this.constructor.staleThreshold},t.prototype.visibilityDidChange=function(){var t=this;"visible"===document.visibilityState&&setTimeout((function(){!t.connectionIsStale()&&t.connection.isOpen()||(n.log("ConnectionMonitor reopening stale connection on visibilitychange. visbilityState = "+document.visibilityState),t.connection.reopen())}),200)},t}();u.pollInterval={min:3,max:30,multiplier:5},u.staleThreshold=6;var l={message_types:{welcome:"welcome",disconnect:"disconnect",ping:"ping",confirmation:"confirm_subscription",rejection:"reject_subscription"},disconnect_reasons:{unauthorized:"unauthorized",invalid_request:"invalid_request",server_restart:"server_restart"},default_mount_path:"/cable",protocols:["actioncable-v1-json","actioncable-unsupported"]},d=l.message_types,p=l.protocols,g=p.slice(0,p.length-1),h=[].indexOf,f=function(){function t(e){i(this,t),this.open=this.open.bind(this),this.consumer=e,this.subscriptions=this.consumer.subscriptions,this.monitor=new u(this),this.disconnected=!0}return t.prototype.send=function(t){return!!this.isOpen()&&(this.webSocket.send(JSON.stringify(t)),!0)},t.prototype.open=function(){return this.isActive()?(n.log("Attempted to open WebSocket, but existing socket is "+this.getState()),!1):(n.log("Opening WebSocket, current state is "+this.getState()+", subprotocols: "+p),this.webSocket&&this.uninstallEventHandlers(),this.webSocket=new e.WebSocket(this.consumer.url,p),this.installEventHandlers(),this.monitor.start(),!0)},t.prototype.close=function(){if((arguments.length>0&&void 0!==arguments[0]?arguments[0]:{allowReconnect:!0}).allowReconnect||this.monitor.stop(),this.isActive())return this.webSocket.close()},t.prototype.reopen=function(){if(n.log("Reopening WebSocket, current state is "+this.getState()),!this.isActive())return this.open();try{return this.close()}catch(t){n.log("Failed to reopen WebSocket",t)}finally{n.log("Reopening WebSocket in "+this.constructor.reopenDelay+"ms"),setTimeout(this.open,this.constructor.reopenDelay)}},t.prototype.getProtocol=function(){if(this.webSocket)return this.webSocket.protocol},t.prototype.isOpen=function(){return this.isState("open")},t.prototype.isActive=function(){return this.isState("open","connecting")},t.prototype.isProtocolSupported=function(){return h.call(g,this.getProtocol())>=0},t.prototype.isState=function(){for(var t=arguments.length,e=Array(t),n=0;n<t;n++)e[n]=arguments[n];return h.call(e,this.getState())>=0},t.prototype.getState=function(){if(this.webSocket)for(var t in e.WebSocket)if(e.WebSocket[t]===this.webSocket.readyState)return t.toLowerCase();return null},t.prototype.installEventHandlers=function(){for(var t in this.events){var e=this.events[t].bind(this);this.webSocket["on"+t]=e}},t.prototype.uninstallEventHandlers=function(){for(var t in this.events)this.webSocket["on"+t]=function(){}},t}();f.reopenDelay=500,f.prototype.events={message:function(t){if(this.isProtocolSupported()){var e=JSON.parse(t.data),o=e.identifier,i=e.message,s=e.reason,r=e.reconnect;switch(e.type){case d.welcome:return this.monitor.recordConnect(),this.subscriptions.reload();case d.disconnect:return n.log("Disconnecting. Reason: "+s),this.close({allowReconnect:r});case d.ping:return this.monitor.recordPing();case d.confirmation:return this.subscriptions.notify(o,"connected");case d.rejection:return this.subscriptions.reject(o);default:return this.subscriptions.notify(o,"received",i)}}},open:function(){if(n.log("WebSocket onopen event, using '"+this.getProtocol()+"' subprotocol"),this.disconnected=!1,!this.isProtocolSupported())return n.log("Protocol is unsupported. Stopping monitor and disconnecting."),this.close({allowReconnect:!1})},close:function(t){if(n.log("WebSocket onclose event"),!this.disconnected)return this.disconnected=!0,this.monitor.recordDisconnect(),this.subscriptions.notifyAll("disconnected",{willAttemptReconnect:this.monitor.isRunning()})},error:function(){n.log("WebSocket onerror event")}};var m=function(t,e){if(null!=e)for(var n in e){var o=e[n];t[n]=o}return t},b=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},o=arguments[2];i(this,t),this.consumer=e,this.identifier=JSON.stringify(n),m(this,o)}return t.prototype.perform=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return e.action=t,this.send(e)},t.prototype.send=function(t){return this.consumer.send({command:"message",identifier:this.identifier,data:JSON.stringify(t)})},t.prototype.unsubscribe=function(){return this.consumer.subscriptions.remove(this)},t}(),y=function(){function t(e){i(this,t),this.consumer=e,this.subscriptions=[]}return t.prototype.create=function(t,e){var n=t,i="object"===(void 0===n?"undefined":o(n))?n:{channel:n},s=new b(this.consumer,i,e);return this.add(s)},t.prototype.add=function(t){return this.subscriptions.push(t),this.consumer.ensureActiveConnection(),this.notify(t,"initialized"),this.sendCommand(t,"subscribe"),t},t.prototype.remove=function(t){return this.forget(t),this.findAll(t.identifier).length||this.sendCommand(t,"unsubscribe"),t},t.prototype.reject=function(t){var e=this;return this.findAll(t).map((function(t){return e.forget(t),e.notify(t,"rejected"),t}))},t.prototype.forget=function(t){return this.subscriptions=this.subscriptions.filter((function(e){return e!==t})),t},t.prototype.findAll=function(t){return this.subscriptions.filter((function(e){return e.identifier===t}))},t.prototype.reload=function(){var t=this;return this.subscriptions.map((function(e){return t.sendCommand(e,"subscribe")}))},t.prototype.notifyAll=function(t){for(var e=this,n=arguments.length,o=Array(n>1?n-1:0),i=1;i<n;i++)o[i-1]=arguments[i];return this.subscriptions.map((function(n){return e.notify.apply(e,[n,t].concat(o))}))},t.prototype.notify=function(t,e){for(var n=arguments.length,o=Array(n>2?n-2:0),i=2;i<n;i++)o[i-2]=arguments[i];return("string"==typeof t?this.findAll(t):[t]).map((function(t){return"function"==typeof t[e]?t[e].apply(t,o):void 0}))},t.prototype.sendCommand=function(t,e){var n=t.identifier;return this.consumer.send({command:e,identifier:n})},t}(),v=function(){function t(e){i(this,t),this._url=e,this.subscriptions=new y(this),this.connection=new f(this)}return t.prototype.send=function(t){return this.connection.send(t)},t.prototype.connect=function(){return this.connection.open()},t.prototype.disconnect=function(){return this.connection.close({allowReconnect:!1})},t.prototype.ensureActiveConnection=function(){if(!this.connection.isActive())return this.connection.open()},s(t,[{key:"url",get:function(){return S(this._url)}}]),t}();function S(t){if("function"==typeof t&&(t=t()),t&&!/^wss?:/i.test(t)){var e=document.createElement("a");return e.href=t,e.href=e.href,e.protocol=e.protocol.replace("http","ws"),e.href}return t}function w(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:A("url")||l.default_mount_path;return new v(t)}function A(t){var e=document.head.querySelector("meta[name='action-cable-"+t+"']");if(e)return e.getAttribute("content")}t.Connection=f,t.ConnectionMonitor=u,t.Consumer=v,t.INTERNAL=l,t.Subscription=b,t.Subscriptions=y,t.adapters=e,t.createWebSocketURL=S,t.logger=n,t.createConsumer=w,t.getConfig=A,Object.defineProperty(t,"__esModule",{value:!0})}(e)},function(t,e,n){"use strict";n.r(e);var o=n(1),i=n(0);const s=function(){const t=this;function e(t){const e=document.createElement("div");return e.textContent=t,t=e.textContent}t.settings={},t.settings.debug=!1,t.settings.inbox=document.querySelector("#chat-inbox"),t.settings.messageInput=document.querySelector("#chat-messageInput"),t.settings.sendButton=document.querySelector("#chat-sendButton"),t.settings.messagesListContainer=document.querySelector("#chat-messagesList-container"),t.settings.messagesList=document.querySelector("#chat-messagesList"),t.settings.timezonedDate=t=>{let e;try{e=t.toLocaleString("en-US",{day:"numeric",weekday:"short",year:"numeric",month:"short",hour:"numeric",minute:"numeric",hour12:!0,timeZone:api.profile.timezone.friendly_name_with_region.replace(" - ","/")})}catch{e="object"==typeof Intl&&"function"==typeof Intl.NumberFormat?t.toLocaleString("en-US",{day:"numeric",weekday:"short",year:"numeric",month:"short",hour:"numeric",minute:"numeric",hour12:!0,timeZone:"Etc/UTC"}):""}return e},t.settings.messageTemplate=n=>{let o=new Date(n.created_at);const i=e(n.message).replace(/(\r\n|\r|\n)/g,"<br>");return`\n    <p class="flex text-xs text-supplementary ${"sent"===n.status?"justify-end":"justify-start"}">\n      ${t.settings.timezonedDate(o)}\n    </p>\n    <li class="flex mb-2 break-words ${"sent"===n.status?"justify-end":"justify-start"}">\n      <div\n        class="max-w-full rounded py-2 px-3 ${"sent"===n.status?"bg-interactive-disabled":"bg-highlighted"}"\n      >\n        <p class="text-sm mt-1">${i}</p>\n      </div>\n    </li>\n    `},t.settings.currentUserId=t.settings.messageInput.getAttribute("data-current-profile-id"),t.settings.currentUserTimezone=api.profile.timezone,t.settings.loadingIndicator=document.querySelector("#chat-loadingIndicator"),t.settings.currentPage=1,t.settings.morePages="true"===t.settings.loadingIndicator.dataset.more,t.settings.lostConnection=t.settings.inbox.getAttribute("data-error-connection"),t.channel=null,t.conversationId=t.settings.messageInput.getAttribute("data-conversation-id"),t.errorNotification=null;const n=()=>{t.settings.messagesListContainer.scrollTo(0,t.settings.messagesList.scrollHeight)};t.createSubscription=()=>{t.channel=o.a.subscriptions.create({channel:"conversate",room_id:t.conversationId,sender_name:t.settings.messageInput.getAttribute("data-from-name"),autor_id:t.settings.messageInput.getAttribute("data-current-profile-id"),authenticity_token:Object(i.a)()},{received:function(e){t.showMessage(Object.assign(e,{status:t.settings.currentUserId==e.autor_id?"sent":"received"})),t.settings.debug&&(console.log("[Inbox] Message received"),console.log(e))},connected:function(){t.settings.messageInput.disabled=!1,t.settings.messageInput.focus(),t.errorNotification&&t.errorNotification.hide(),t.settings.debug&&console.log("[Inbox] Connected to channel and joined room "+t.conversationId)},rejected:function(){t.blocked(),t.settings.debug&&console.log("[Inbox] The connection was rejected by the server")},disconnected:function(){t.blocked(),t.settings.debug&&console.log("[Inbox] You've been disconnected from the server")}})},t.sendMessage=n=>{let o={message:e(n),autor_id:t.settings.currentUserId,sender_name:t.settings.messageInput.getAttribute("data-from-name"),created_at:new Date};t.channel.send(Object.assign(o,{create:!0})),t.settings.debug&&(console.log("[Inbox] Message sent"),console.log(o))},t.showMessage=e=>{t.settings.messagesList.insertAdjacentHTML("beforeend",t.settings.messageTemplate(e)),t.settings.messagesListContainer.scrollTo({top:t.settings.messagesListContainer.scrollHeight-t.settings.messagesListContainer.clientHeight,left:0,behavior:"smooth"}),t.settings.debug&&console.log("[Inbox] Message shown in chat")},t.loadPage=(e=1,n=30)=>{let o=t.settings.messagesList.querySelector("li:nth-of-type(2)");t.settings.loadingIndicator.style.display="block",fetch(`/api/chat/messages.json?conversation_id=${t.conversationId}&page=${e}&per_page=${n}`).then(t=>t.ok?t.json():Promise.reject(t)).then(e=>{let n="";Object.entries(e.results).reverse().forEach(([e,o])=>{o=Object.assign(o,{status:t.settings.currentUserId==o.autor_id?"sent":"received"}),n+=t.settings.messageTemplate(o)}),t.settings.messagesList.insertAdjacentHTML("afterbegin",n),e.has_next_page||(t.settings.morePages=!1)}).catch(t=>{console.log(t),t.json().then(t=>console.log(t))}).finally(()=>{t.settings.loadingIndicator.style.display="none",o&&(t.settings.messagesListContainer.scrollTop=o.offsetTop-t.settings.messagesListContainer.clientHeight)})},t.blocked=()=>{t.settings.messageInput.disabled=!0,t.errorNotification=new posComponents.flash("error","We cannot connect to the server. Check your internet connection or try reloading the page.")},t.parseDates=()=>{document.querySelectorAll("[data-message-time]").forEach(e=>{let n=new Date(e.dataset.messageTime);e.innerText=t.settings.timezonedDate(n)})},t.init=()=>{t.settings.inbox.style.height=`calc(100vh - ${t.settings.inbox.offsetTop}px - 412px)`,t.createSubscription(),n(),t.parseDates();let e=!0;/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)&&(e=!1),t.settings.messageInput.addEventListener("keypress",n=>{13==n.which&&e&&!n.shiftKey&&t.settings.messageInput.value.trim()&&(t.sendMessage(t.settings.messageInput.value.trim()),setTimeout(()=>{t.settings.messageInput.value=""},100))}),t.settings.messageInput.addEventListener("paste",t=>{t.preventDefault();const e=t.clipboardData.getData("text/plain");document.execCommand("insertHTML",!1,e)}),t.settings.sendButton.addEventListener("click",()=>{t.settings.messageInput.value.trim()&&(t.sendMessage(t.settings.messageInput.value.trim()),setTimeout(()=>{t.settings.messageInput.value=""},100))}),document.addEventListener("message",e=>{t.showMessage(e.detail),n()});let o="";t.settings.messagesListContainer.addEventListener("scroll",()=>{!0===t.settings.morePages&&(clearTimeout(o),o=setTimeout(()=>{0===t.settings.messagesListContainer.scrollTop&&(t.settings.currentPage=t.settings.currentPage+1,t.loadPage(t.settings.currentPage))},300))})},t.init()};document.addEventListener("DOMContentLoaded",()=>{document.querySelector("#chat-messagesList-container")&&(document.chat=new s)});const r=function(t){const e=this;e.settings={},e.sendMessageButton=t.sendMessageButton?t.sendMessageButton:document.querySelector(".chat-sendMessage"),e.preventDoubleClick=()=>{e.sendMessageButton.addEventListener("click",()=>{e.sendMessageButton.setAttribute("disabled","disabled")})},e.init=()=>{e.preventDoubleClick()},e.init()};document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".chat-sendMessage").forEach(t=>{new r({sendMessageButton:t})})})}]);
+/*
+  a very simple implementation of bi-directional chat module for platformOS
+  that uses WebSockets and Action Cable library to handle them
+
+  https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API
+  https://www.npmjs.com/package/actioncable
+*/
+
+
+
+// imports
+// ------------------------------------------------------------------------
+import consumer from './consumer.js?t=1111111111111111111';
+
+// purpose:		handles sending and receiving messages as well as the inbox page
+// ************************************************************************
+const chat = function(){
+
+  // cache 'this' value not to be overwritten later
+  const module = this;
+
+  // purpose:		settings that are being used across the module
+  // ------------------------------------------------------------------------
+  module.settings = {};
+  // do you want to enable debug mode that logs to console (bool)
+  module.settings.debug = true;
+  // the main container with the chat inbox (dom node)
+  module.settings.inbox = document.querySelector('#chat-inbox');
+  // the input for typing new message (dom node)
+  module.settings.messageInput = document.querySelector('#chat-messageInput');
+  // the send button for new message (dom node)
+  module.settings.sendButton = document.querySelector('#chat-sendButton');
+  // the box that contains the messages list and that can scroll (dom node)
+  module.settings.messagesListContainer = document.querySelector('#chat-messagesList-container');
+  // the box with all the messages stored (dom node)
+  module.settings.messagesList = document.querySelector('#chat-messagesList');
+  // tries to parse the date with toLocaleString (function that gets Date object and returns parsed date or empty string if fails)
+  module.settings.timezonedDate = date => {
+    let timezonedDate;
+
+    try {
+      // the back-end returns the timezone formatted not according to tz identifier, so I'm going to risk the 'replace' here to make it work with .toLocaleString automatically
+      timezonedDate = date.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: posChat.profile.timezone.friendly_name_with_region.replace(' - ', '/') });
+    } catch {
+      if(typeof Intl == 'object' && typeof Intl.NumberFormat == 'function'){
+        timezonedDate = date.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: 'Etc/UTC' });
+      } else {
+        timezonedDate = '';
+      }
+    }
+
+    return timezonedDate;
+  }
+  // the html template for the single message (function that returns template literal);
+  module.settings.messageTemplate = data => {
+    let date = new Date(data.created_at);
+``
+    const message = encodeHtml(data.message).replace(/(\r\n|\r|\n)/g, "<br>");
+
+    return `
+    <p class="flex text-xs text-supplementary ${ data.status === 'sent' ? 'justify-end' : 'justify-start' }">
+      ${module.settings.timezonedDate(date)}
+    </p>
+    <li class="flex mb-2 break-words ${ data.status === 'sent' ? 'justify-end' : 'justify-start' }">
+      <div
+        class="max-w-full rounded py-2 px-3 ${ data.status === 'sent' ? 'bg-interactive-disabled' : 'bg-highlighted' }"
+      >
+        <p class="text-sm mt-1">${message}</p>
+      </div>
+    </li>
+    `;
+  };
+  // the id of the currently logged user (string)
+  module.settings.currentUserId = module.settings.messageInput.getAttribute('data-current-profile-id');
+  // converting the dates to user timezone if set in profile (string)
+  module.settings.currentUserTimezone = posChat.profile.timezone;
+  // the loading indicator when loading messages (dom node)
+  module.settings.loadingIndicator = document.querySelector('#chat-loadingIndicator');
+  // current page of messages (int)
+  module.settings.currentPage = 1;
+  // are there more pages (bool)
+  module.settings.morePages = module.settings.loadingIndicator.dataset.more === 'true';
+  // the message that will appear when the connection is lost
+  module.settings.lostConnection = module.settings.inbox.getAttribute('data-error-connection');
+
+  // the channel to send messages through (Action Cable channel)
+  module.channel = null;
+  // the id for the conversation (string)
+  module.conversationId = module.settings.messageInput.getAttribute('data-conversation-id');
+  // the message that will appear when something fails
+  module.errorNotification = null;
+
+
+  // purpose:		escapes the html to a browser-safe string
+  // arguments:	a html string to be escaped (string/html)
+  // returns:		a browser-safe string
+  // ------------------------------------------------------------------------
+  function encodeHtml(string){
+    const element = document.createElement('div');
+    element.textContent = string;
+    string = element.textContent;
+    return string;
+  }
+
+  // purpose:		measures the height of the screen and fits the inbox
+  // ------------------------------------------------------------------------
+  const resizeInbox = () => {
+    module.settings.inbox.style.height = `calc(100vh - ${module.settings.inbox.offsetTop}px - 412px)`;
+  };
+
+
+  // purpose:		scrolls the chat window to the bottom
+  // ------------------------------------------------------------------------
+  const scrollBottom = () => {
+    module.settings.messagesListContainer.scrollTo(0, module.settings.messagesList.scrollHeight);
+  };
+
+
+  // purpose:		creates a subscription to a room between users
+  // returns:		triggers a 'message' event on document when new message
+  //				    appears on the channel (send or received), passess the message details
+  // ------------------------------------------------------------------------
+  module.createSubscription = () => {
+    module.channel = consumer.subscriptions.create(
+      {
+        channel: 'conversate',
+        room_id: module.conversationId,
+        sender_name: module.settings.messageInput.getAttribute('data-from-name'),
+        autor_id: module.settings.messageInput.getAttribute('data-current-profile-id'),
+        authenticity_token: posChat.csrfToken
+      },
+      {
+        received: function(data){
+          console.log(received);
+          module.showMessage(
+            Object.assign(data, {
+              status: (module.settings.currentUserId == data.autor_id) ? 'sent' : 'received'
+            })
+          );
+          //document.dispatchEvent(new CustomEvent('message', {detail: Object.assign(data, { status: (module.settings.currentUserId == data.autor_id) ? 'sent' : 'received'})}));
+
+          if(module.settings.debug){
+            console.log('[Inbox] Message received');
+            console.log(data);
+          }
+        },
+
+        initialized: function(){
+          console.log('initialized');
+        },  
+
+        connected: function(){
+          console.log('conntected');
+          module.settings.messageInput.disabled = false;
+          module.settings.messageInput.focus();
+
+          // remove the error notification when connected
+          if(module.errorNotification){
+            module.errorNotification.hide();
+          }
+
+          if(module.settings.debug){
+            console.log(`[Inbox] Connected to channel and joined room ${module.conversationId}`);
+          }
+        },
+
+        rejected: function(){
+          console.log('rejected');
+          module.blocked();
+
+          if(module.settings.debug){
+            console.log('[Inbox] The connection was rejected by the server');
+          }
+        },
+
+        disconnected: function(){
+          console.log('disconnected')
+          module.blocked();
+
+          if(module.settings.debug){
+            console.log(`[Inbox] You've been disconnected from the server`);
+          }
+        }
+      }
+    );
+  };
+
+
+  // purpose:		sends the message through the Action Cable
+  // arguments:	the message to send (string)
+  // ------------------------------------------------------------------------
+  module.sendMessage = (message) => {
+    let messageData = {
+      message: encodeHtml(message),
+      autor_id: module.settings.currentUserId,
+      sender_name: module.settings.messageInput.getAttribute('data-from-name'),
+      created_at: new Date()
+    };
+
+    module.channel.send(Object.assign(messageData, { create: true }));
+
+    if(module.settings.debug){
+      console.log('[Inbox] Message sent');
+      console.log(messageData);
+    }
+  };
+
+
+  // purpose:		appends a message to the chat box
+  // arguments:	all the message data that needs to be shown
+  //				    according to the template in messageTemplate (object)
+  // ------------------------------------------------------------------------
+  module.showMessage = (messageData) => {
+    module.settings.messagesList.insertAdjacentHTML('beforeend', module.settings.messageTemplate(messageData));
+    // scroll into the view
+    module.settings.messagesListContainer.scrollTo({
+      top: module.settings.messagesListContainer.scrollHeight - module.settings.messagesListContainer.clientHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
+
+    if(module.settings.debug){
+      console.log('[Inbox] Message shown in chat');
+    }
+  };
+
+
+  // purpose:		loads messages from given page
+  // arguments:	the page number (int, default: 1)
+  //            items per page to get (int, default: 30)
+  // ------------------------------------------------------------------------
+  module.loadPage = (page = 1, perPage = 30) => {
+    let secondOldestMessage = module.settings.messagesList.querySelector('li:nth-of-type(2)');
+
+    // show the loading indicator at start
+    module.settings.loadingIndicator.style.display = 'block';
+
+    // get the data
+    fetch(`/api/chat/messages.json?conversation_id=${module.conversationId}&page=${page}&per_page=${perPage}`)
+    .then(response => {
+      // parse it to JSON if valid
+      if(response.ok){
+        return response.json();
+      } else {
+        return Promise.reject(response);
+      }
+    })
+    .then((data) => {
+      // construct HTML elements for messages
+      let html = '';
+
+      Object.entries(data.results).reverse().forEach(([key, data]) => {
+        data = Object.assign(data, { status: (module.settings.currentUserId == data.autor_id) ? 'sent' : 'received'});
+
+        html += module.settings.messageTemplate(data);
+      });
+
+      // put the messages on top
+      module.settings.messagesList.insertAdjacentHTML('afterbegin', html);
+
+      // disable loading next pages if there is nothing left
+      if(!data.has_next_page){
+        module.settings.morePages = false;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      error.json().then(data => console.log(data));
+    })
+    .finally(() => {
+      // remove the loading indicator
+      module.settings.loadingIndicator.style.display = 'none';
+      // scroll to the last seen message
+      if(secondOldestMessage) {
+        module.settings.messagesListContainer.scrollTop = secondOldestMessage.offsetTop - module.settings.messagesListContainer.clientHeight;
+      }
+    });
+  };
+
+
+  // purpose:		blocks the chat when there is a critical error
+  // ------------------------------------------------------------------------
+  module.blocked = () => {
+    module.settings.messageInput.disabled = true;
+    module.errorNotification = new posComponents.flash(
+      'error',
+      'We cannot connect to the server. Check your internet connection or try reloading the page.'
+    );
+  };
+
+
+  // purpose:		parses the dates outputted from BE with JS so that everyting uses browser locale
+  // ------------------------------------------------------------------------
+  module.parseDates = () => {
+    document.querySelectorAll('[data-message-time]').forEach(date => {
+      let currentDate = new Date(date.dataset.messageTime);
+      date.innerText = module.settings.timezonedDate(currentDate);
+    });
+  };
+
+
+  // purpose:		initializes the module
+  // ------------------------------------------------------------------------
+  module.init = () => {
+    // resize the inbox to the screen
+    resizeInbox();
+
+    // create subscription for the channel
+    module.createSubscription();
+
+    // scroll to bottom after loading the messages
+    scrollBottom();
+
+    // parse dates from BE to be in the same format as browser locale
+    module.parseDates();
+
+    let is_desktop = true;
+
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      is_desktop = false;
+    }
+
+    // handling what will happen on pressing enter in the input
+    module.settings.messageInput.addEventListener('keypress', (event) => {
+      if(event.which == 13 && is_desktop && !event.shiftKey && module.settings.messageInput.value.trim()){
+        module.sendMessage(module.settings.messageInput.value.trim());
+        setTimeout(() => {
+          module.settings.messageInput.value = '';
+        }, 100);
+      }
+    });
+
+    module.settings.messageInput.addEventListener("paste", (event) => {
+      event.preventDefault();
+      const text = event.clipboardData.getData("text/plain");
+      document.execCommand("insertHTML", false, text);
+    });
+
+    // handling send button click
+    module.settings.sendButton.addEventListener('click', () => {
+      if(module.settings.messageInput.value.trim()) {
+        module.sendMessage(module.settings.messageInput.value.trim());
+        setTimeout(() => {
+          module.settings.messageInput.value = '';
+        }, 100);
+      }
+    });
+
+    // what will happen when new message appears in channel
+    document.addEventListener('message', event => {
+      module.showMessage(event.detail);
+      scrollBottom();
+
+      // if(event.detail.status === 'sent'){
+      //   document.chatNotifications.send(event.detail.to_id, event.detail);
+      // }
+    });
+
+    // load previous messages when user scrolls to top
+    let messagesListTimeout = '';
+    module.settings.messagesListContainer.addEventListener('scroll', () => {
+      if(module.settings.morePages === true){
+        clearTimeout(messagesListTimeout);
+        messagesListTimeout = setTimeout(() => {
+          if(module.settings.messagesListContainer.scrollTop === 0){
+            module.settings.currentPage = module.settings.currentPage + 1;
+            module.loadPage(module.settings.currentPage);
+          }
+        }, 300);
+      }
+    });
+
+  };
+
+  module.init();
+
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  if(document.querySelector('#chat-messagesList-container')){
+    document.chat = new chat();
+  }
+});
+
+
+
+// purpose:		handles the behavior of 'send message' button
+// argumenst: configurable settings (object)
+// ************************************************************************
+const sendMessageButton = function(userSettings){
+
+	// cache 'this' value not to be overwritten later
+	const module = this;
+
+
+  // purpose:		settings that are being used across the module
+  // ------------------------------------------------------------------------
+	module.settings = {};
+	// the 'send message' button (dom node)
+  module.sendMessageButton = userSettings.sendMessageButton ? userSettings.sendMessageButton : document.querySelector('.chat-sendMessage');
+
+
+  // purpose:		blocks the button after first click to prevent
+  //            cloning the conversations to a single user
+  // ------------------------------------------------------------------------
+  module.preventDoubleClick = () => {
+    module.sendMessageButton.addEventListener('click', () => {
+      module.sendMessageButton.setAttribute('disabled', 'disabled');
+    });
+  };
+
+
+  // purpose:		initializes the module
+  // ------------------------------------------------------------------------
+  module.init = () => {
+    module.preventDoubleClick();
+  };
+
+  module.init();
+
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.chat-sendMessage').forEach((item) => {
+    new sendMessageButton({
+      sendMessageButton: item
+    });
+  });
+});

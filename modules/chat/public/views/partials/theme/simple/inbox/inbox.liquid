@@ -1,3 +1,10 @@
+  <script>
+    pos ||= {}
+
+    pos.profile || = {};
+    pos.profile.timezone = {% if current_profile.timezone %} {{ current_user_timezone }} {% else %} null {% endif %};
+  </script>
+  
   <div
     class="container"
     id="chat-inbox"
@@ -102,3 +109,5 @@
         </div>
       </div>
   </div>
+
+  <script defer src="{{ 'modules/chat/js/chat.js' | asset_url }}"></script>
