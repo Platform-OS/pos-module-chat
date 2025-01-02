@@ -10,7 +10,7 @@
 
 // imports
 // ------------------------------------------------------------------------
-import consumer from './consumer.js?t=1111111111111111111';
+import consumer from 'consumer.js';
 
 // purpose:		handles sending and receiving messages as well as the inbox page
 // ************************************************************************
