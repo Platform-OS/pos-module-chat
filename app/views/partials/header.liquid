@@ -1,13 +1,21 @@
 <header class="pos-chat-header">
-  <a href="/inbox">Inbox</a>
+
+  <nav>
+    <ul>
+      <li {% if context.page.slug == '/' %} class="active" {% endif %}><a href="/">People</a></li>
+      <li {% if context.page.slug == 'inbox' %} class="active" {% endif %}><a href="/inbox">Inbox</a></li>
+    </ul>
+    <div id="pos-chat-header-activeIndicator"></div>
+  </nav>
 
   Logged in as {{ current_profile.first_name }} ({{ context.current_user.email }})
 
   <form action="/sessions" method="post">
     <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}">
     <input type="hidden" name="_method" value="delete">
-    <button type="submit">
+    <button type="submit" class="pos-button">
       {{ 'modules/user/users.logout' | t }}
     </button>
   </form>
+  
 </header>

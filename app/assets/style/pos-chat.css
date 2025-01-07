@@ -23,11 +23,104 @@ body {
     gap: var(--pos-gap-navigation);
 
     border-bottom: 1px solid var(--pos-color-divider);
+
+    line-height: 1em;
 }
 
-.pos-chat-header :first-child {
+.pos-chat-header nav {
     margin-inline-end: auto;
+    position: relative;
+    display: flex;
 }
+
+.pos-chat-header nav ul {
+    display: flex;
+    gap: var(--pos-gap-navigation);
+}
+
+.pos-chat-header nav li {
+    display: flex;
+}
+
+  .pos-chat-header nav li a {
+    display: flex;
+    align-items: center;
+  }
+
+  .pos-chat-header nav li.active {
+      anchor-name: --pos-chat-header-active;
+
+      color: var(--pos-color-interactive-text);
+  }
+
+  .pos-chat-header nav:has(li:hover) li.active {
+      anchor-name: --null;
+  }
+
+  .pos-chat-header nav:has(li:hover) li:hover {
+      anchor-name: --pos-chat-header-active;
+  }
+
+  #pos-chat-header-activeIndicator {
+    width: anchor-size(width);
+    height: 4px;
+    position: absolute;
+
+    position-anchor: --pos-chat-header-active;
+    inset-inline-start: anchor(start);
+    inset-inline-end: anchor(end);
+    inset-block-end: calc(0px - var(--pos-padding-page) - 1px);
+
+    background-color: var(--pos-color-content-foreground);
+
+    transition: all .2s ease-in-out;
+  }
+
+  @supports (anchor-name: --pos-chat-header-active) {
+
+    #pos-chat-header-activeIndicator:before {
+      width: 8px;
+      height: 4px;
+      position: absolute;
+      inset-inline-start: calc(50% - 4px);
+      inset-block-end: -4px;
+
+      background-color: var(--pos-color-content-foreground);
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+
+      content: '';
+    }
+
+    .pos-chat-header nav li.active {
+      color: revert;
+    }
+
+  }
+
+/* .pos-chat-header nav .active:before {
+    height: 4px;
+    position: absolute;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    inset-block-end: calc(var(--pos-padding-page) * -1 - var(--pos-border-input));
+
+    background-color: var(--pos-color-content-foreground);
+
+    content: '';
+}
+
+.pos-chat-header nav .active:after {
+    width: 6px;
+    height: 4px;
+    position: absolute;
+    inset-inline-start: calc(50% - 3px);
+    inset-block-end: calc(var(--pos-padding-page) * -1 - var(--pos-border-input) - 4px);
+
+    background-color: var(--pos-color-content-foreground);
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+
+    content: '';
+} */
 
 
 
