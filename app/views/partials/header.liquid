@@ -1,0 +1,13 @@
+<header class="pos-chat-header">
+  <a href="/inbox">Inbox</a>
+
+  Logged in as {{ current_profile.first_name }} ({{ context.current_user.email }})
+
+  <form action="/sessions" method="post">
+    <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit">
+      {{ 'modules/user/users.logout' | t }}
+    </button>
+  </form>
+</header>

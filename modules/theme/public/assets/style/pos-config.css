@@ -1,0 +1,128 @@
+/*
+  stores all configurable variables used for styling
+
+  colors
+  fonts
+  spacing
+
+
+
+
+  sizes
+  easing functions
+*/
+
+
+
+  /* colors
+  ============================================================================ */
+  :root {
+
+    /* general content */
+    --pos-color-content-background: #f5f5f5;
+    --pos-color-content-foreground: #000; /* figma: normal */
+    --pos-color-content-inverted-background: #303030;
+    --pos-color-content-inverted-foreground: #fff;
+
+    /* content selection */
+    --pos-color-selection-background: #2e70c1;
+    --pos-color-selection-foreground: #fff;
+
+    /* frames */
+    --pos-color-divider: #e2e2e2;
+
+
+
+
+
+
+    --pos-color-prominent: 0, 0, 0;
+
+    --supplementary: 99, 108, 127;
+    --graphic: 64, 85, 104;
+    --interactive-graphic: 203, 61, 41;
+    --interactive-text: 203, 61, 41;
+    --interactive-hover: 237, 107, 6;
+    --interactive-disabled: 255, 211, 177;
+  
+    /* prominent elements */
+    --colorful: 204, 18, 146;
+    --colorful-hover: 238, 81, 189;
+    --colorful-foreground: 255, 255, 255;
+    --colorful-supplementary: rgba(255, 255, 255, 0.5);
+    --gradient1-from: 246, 122, 44;
+    --gradient1-to: 238, 81, 189;
+    --gradient2-from: 203, 61, 41;
+    --gradient2-to: 202, 21, 144;
+    --ribbon: 237, 107, 6;
+    --ribbon-text: 255, 255, 255;
+  
+    /* backgrounds */
+    --panel: 255, 255, 255;
+    --base: 243, 244, 246;
+    --highlighted: 231, 236, 243;
+    --divider: 168, 182, 205;
+    --shadow: 0, 0, 0;
+  
+    /* primary buttons */
+    --button-primary: var(--gradient1-from);
+    --button-primary-hover: 203, 61, 41;
+    --button-primary-stroke: var(--gradient1-from);
+    --button-primary-stroke-hover: var(--button-primary-hover);
+    --button-primary-foreground: 255, 255, 255;
+    --button-primary-foreground-hover: 255, 255, 255;
+  
+    /* secondary buttons */
+    --button-secondary0: 255, 255, 255;
+    --button-secondary: 255, 255, 255;
+    --button-sedondary-hover0: 255, 255, 255;
+    --button-secondary-hover: 255, 255, 255;
+    --button-secondary-stroke: 64, 85, 104;
+    --button-secondary-stroke-hover: 203, 61, 41;
+    --button-secondary-foreground: 203, 61, 41;
+    --button-secondary-foreground-hover: 203, 61, 41;
+  
+    --button-secondary-border-width: 1px;
+  
+    /* input fields */ 
+    --input-border: 99, 108, 127;
+    --input: 255, 255, 255;
+    --input-foreground: 55, 65, 81;
+  
+    /* utility */
+    --important: 185, 28, 28;
+    --important-hover: 202, 58, 49;
+    --important-disabled: 254, 202, 202;
+    --confirmation: 15, 123, 10;
+    --confirmation-hover: 9, 143, 105;
+    --confirmation-disabled: 187, 221, 211;
+    --warning: 243, 177, 78;
+    --warning-hover: 255, 190, 91;
+    --warning-disabled: 255, 233, 200;
+  }
+
+
+/* fonts
+============================================================================ */
+:root {
+  --pos-font-default: system-ui, sans-serif;
+}
+
+
+/* spacing
+============================================================================ */
+:root {
+  --pos-padding-page: 1rem;
+
+  --pos-gap-navigation: 1rem;
+}
+
+
+
+  
+  
+  /* buttons shape */
+  :root {
+    --radius-button: 22px;
+    --radius-surface: 4px;
+  }

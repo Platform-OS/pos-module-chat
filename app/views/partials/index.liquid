@@ -1,0 +1,23 @@
+{% if current_profile.id %}
+
+  <section class="pos-chat-people">
+    <ul>
+      {% for profile in profiles.results %}
+        {% if profile.id == current_profile.id %}{% continue %}{% endif %}
+
+        {% assign chat_url = '/inbox/?to_uuid=' | append: profile.uuid %}
+        <li>{{ profile.name }} - <a href="{{ chat_url }}">Message</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+
+
+{% else %}
+
+
+  <a href="/users/new">Register</a><br/>
+  <a href="/sessions/new">Log in</a><br/>
+  <a href="/passwords/reset">Reset password</a>
+
+
+{% endif %}

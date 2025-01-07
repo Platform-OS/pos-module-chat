@@ -1,0 +1,38 @@
+/*
+  styling for the example chat application
+
+  page background and font
+  main header
+  people list
+*/
+
+
+
+/* page background and font
+============================================================================ */
+body {
+    padding: 0;
+}
+
+
+/* main header
+============================================================================ */
+.pos-chat-header {
+    padding: var(--pos-padding-page);
+    display: flex;
+    gap: var(--pos-gap-navigation);
+
+    border-bottom: 1px solid var(--pos-color-divider);
+}
+
+.pos-chat-header :first-child {
+    margin-inline-end: auto;
+}
+
+
+
+/* people list
+============================================================================ */
+.pos-chat-people {
+    padding: var(--pos-padding-page);
+}

@@ -1,16 +1,29 @@
+{% liquid 
+
+  function current_profile = 'modules/profile/queries/profiles/find', user_id: context.current_user.id, id: null, uuid: null, first_name: null, last_name: null
+
+%}
+
 <!DOCTYPE html>
 <html>
-    <head>
+  <head>
 
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="{{ 'modules/chat/assets/css/pos-chat.css' | asset_url }}">
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="{{ 'modules/theme/style/pos-reset.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'modules/theme/style/pos-config.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'modules/theme/style/pos-page.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'style/pos-chat.css' | asset_url }}">
 
-        <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=yes">
+      <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
 
-    </head>
-    <body>
-        
-        {{ content_for_layout }}
+  </head>
+  <body>
 
-    </body>
+      {% if current_profile.id %}
+          {% render 'header', current_profile: current_profile %}
+      {% endif %}
+      
+      {{ content_for_layout }}
+
+  </body>
 </html>
