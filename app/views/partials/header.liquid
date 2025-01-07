@@ -1,21 +1,47 @@
 <header class="pos-chat-header">
 
-  <nav>
-    <ul>
-      <li {% if context.page.slug == '/' %} class="active" {% endif %}><a href="/">People</a></li>
-      <li {% if context.page.slug == 'inbox' %} class="active" {% endif %}><a href="/inbox">Inbox</a></li>
-    </ul>
-    <div id="pos-chat-header-activeIndicator"></div>
+  <nav class="pos-chat-header-nav-primary">
+
+    <div class="pos-chat-header-nav-primary-content">
+      <ul>
+        <li {% if context.page.slug == '/' %} class="active" {% endif %}><a href="/">People</a></li>
+        <li {% if context.page.slug == 'inbox' %} class="active" {% endif %}><a href="/inbox">Inbox</a></li>
+      </ul>
+      <div id="pos-chat-header-activeIndicator"></div>
+    </div>
+
+    <label for="pos-chat-header-secondaryNavigationToggle">
+      {{ current_profile.first_name }}
+    </label>
+
   </nav>
 
-  Logged in as {{ current_profile.first_name }} ({{ context.current_user.email }})
+  <input type="checkbox" id="pos-chat-header-secondaryNavigationToggle">
+  <nav class="pos-chat-header-nav-secondary">
 
-  <form action="/sessions" method="post">
-    <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}">
-    <input type="hidden" name="_method" value="delete">
-    <button type="submit" class="pos-button">
-      {{ 'modules/user/users.logout' | t }}
-    </button>
-  </form>
+    <div class="pos-chat-header-nav-secondary-content">
+
+      <ul class="pos-chat-header-user">
+        <li>
+          {{ current_profile.first_name }} (<strong>{{ context.current_user.email }}</strong>)
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+          <form action="/sessions" method="post">
+            <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit">
+              {{ 'modules/user/users.logout' | t }}
+            </button>
+          </form>
+        </li>
+      </ul>
+    
+    </div>
+
+  </nav>
   
+
 </header>

@@ -17,110 +17,145 @@ body {
 
 /* main header
 ============================================================================ */
+#pos-chat-header-secondaryNavigationToggle {
+  position: absolute;
+  inset-inline-start: -100vw;
+}
+
+.pos-chat-header:has(#pos-chat-header-secondaryNavigationToggle:checked) {
+  
+}
+
 .pos-chat-header {
-    padding: var(--pos-padding-page);
+  width: 100%;
+  position: sticky;
+  inset-block-start: 0;
+}
+
+/* primary navigation */
+.pos-chat-header-nav-primary {
+  padding-inline: var(--pos-padding-page);
+  display: flex;
+  justify-content: space-between;
+  
+  border-bottom: 1px solid var(--pos-color-divider);
+  background-color: var(--pos-color-content-background);
+}
+
+  .pos-chat-header-nav-primary ul {
     display: flex;
     gap: var(--pos-gap-navigation);
+  }
 
-    border-bottom: 1px solid var(--pos-color-divider);
+  .pos-chat-header-nav-primary li.active {
+    anchor-name: --pos-chat-header-active;
 
-    line-height: 1em;
-}
+    color: var(--pos-color-interactive-text);
+  }
 
-.pos-chat-header nav {
-    margin-inline-end: auto;
-    position: relative;
+  .pos-chat-header-nav-primary a,
+  .pos-chat-header-nav-primary label {
+    padding-block: var(--pos-gap-navigation);
     display: flex;
-}
-
-.pos-chat-header nav ul {
-    display: flex;
-    gap: var(--pos-gap-navigation);
-}
-
-.pos-chat-header nav li {
-    display: flex;
-}
-
-  .pos-chat-header nav li a {
-    display: flex;
-    align-items: center;
   }
 
-  .pos-chat-header nav li.active {
-      anchor-name: --pos-chat-header-active;
+    @supports (anchor-name: --pos-chat-header-active) {
 
-      color: var(--pos-color-interactive-text);
-  }
+      #pos-chat-header-activeIndicator:before {
+        width: 8px;
+        height: 4px;
+        position: absolute;
+        inset-inline-start: calc(50% - 4px);
+        inset-block-end: -4px;
 
-  .pos-chat-header nav:has(li:hover) li.active {
-      anchor-name: --null;
-  }
+        background-color: var(--pos-color-content-foreground);
+        clip-path: polygon(50% 100%, 0 0, 100% 0);
 
-  .pos-chat-header nav:has(li:hover) li:hover {
-      anchor-name: --pos-chat-header-active;
-  }
+        content: '';
+      }
 
-  #pos-chat-header-activeIndicator {
-    width: anchor-size(width);
-    height: 4px;
-    position: absolute;
+      .pos-chat-header-nav-primary li.active {
+        color: revert;
+      }
 
-    position-anchor: --pos-chat-header-active;
-    inset-inline-start: anchor(start);
-    inset-inline-end: anchor(end);
-    inset-block-end: calc(0px - var(--pos-padding-page) - 1px);
+      .pos-chat-header-nav-primary:has(li:hover) li.active {
+        anchor-name: --null;
+      }
 
-    background-color: var(--pos-color-content-foreground);
+      .pos-chat-header-nav-primary:has(li:hover) li:hover {
+        anchor-name: --pos-chat-header-active;
+      }
 
-    transition: all .2s ease-in-out;
-  }
+      #pos-chat-header-activeIndicator {
+        width: anchor-size(width);
+        height: 4px;
+        position: absolute;
+    
+        position-anchor: --pos-chat-header-active;
+        inset-inline-start: anchor(start);
+        inset-inline-end: anchor(end);
+        inset-block-end: 0;
+    
+        background-color: var(--pos-color-content-foreground);
+    
+        transition: all .2s ease-in-out;
+      }
 
-  @supports (anchor-name: --pos-chat-header-active) {
-
-    #pos-chat-header-activeIndicator:before {
-      width: 8px;
-      height: 4px;
-      position: absolute;
-      inset-inline-start: calc(50% - 4px);
-      inset-block-end: -4px;
-
-      background-color: var(--pos-color-content-foreground);
-      clip-path: polygon(50% 100%, 0 0, 100% 0);
-
-      content: '';
     }
 
-    .pos-chat-header nav li.active {
-      color: revert;
-    }
+/* secondary navigation */
+.pos-chat-header-nav-secondary {
+  padding: var(--pos-padding-page);
+  position: absolute;
+  inset-inline-end: 0;
+  overflow: hidden;
 
-  }
+  scale: 0;
+  translate: calc(var(--pos-padding-page) * -1) calc(var(--pos-padding-page) * -1);
+  transform-origin: top right;
 
-/* .pos-chat-header nav .active:before {
-    height: 4px;
-    position: absolute;
-    inset-inline-start: 0;
-    inset-inline-end: 0;
-    inset-block-end: calc(var(--pos-padding-page) * -1 - var(--pos-border-input));
-
-    background-color: var(--pos-color-content-foreground);
-
-    content: '';
+  transition: all .2s ease-in-out;
 }
 
-.pos-chat-header nav .active:after {
-    width: 6px;
-    height: 4px;
-    position: absolute;
-    inset-inline-start: calc(50% - 3px);
-    inset-block-end: calc(var(--pos-padding-page) * -1 - var(--pos-border-input) - 4px);
+  .pos-chat-header:has(#pos-chat-header-secondaryNavigationToggle:checked) .pos-chat-header-nav-secondary {
+    translate: 0 0;
+    scale: 1;
+  }
 
-    background-color: var(--pos-color-content-foreground);
-    clip-path: polygon(50% 100%, 0 0, 100% 0);
+  @media (max-width: 700px) {
+    .pos-chat-header-nav-secondary {
+      height: 80vh;
+      inset-inline-start: 0;
+    }
+  }
 
-    content: '';
-} */
+  .pos-chat-header-nav-secondary-content {
+    overflow: auto;
+
+    background-color: var(--pos-color-content-background);
+    border: 1px solid var(--pos-color-divider);
+
+    border-radius: var(--pos-radius-panel);
+  }
+
+  .pos-chat-header-nav-secondary ul:not(:first-child) {
+    border-block-start: 1px solid var(--pos-color-divider);
+  }
+
+  .pos-chat-header-nav-secondary a,
+  .pos-chat-header-nav-secondary button,
+  .pos-chat-header-nav-secondary li:not(:has(a)):not(:has(button)) {
+    padding: var(--pos-gap-navigation);
+    display: flex;
+  }
+
+  .pos-chat-header-nav-secondary strong {
+    font-weight: 500;
+  }
+
+
+/* dialog toggle
+============================================================================ */
 
 
 
