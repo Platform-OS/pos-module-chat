@@ -131,7 +131,6 @@ const chat = function(){
       },
       {
         received: function(data){
-          console.log(received);
           module.showMessage(
             Object.assign(data, {
               status: (module.settings.currentUserId == data.autor_id) ? 'sent' : 'received'
