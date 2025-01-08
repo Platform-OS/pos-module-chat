@@ -24,7 +24,7 @@ slug: inbox
   function conversations = 'modules/chat/lib/queries/conversations/search_by_participant', participant_id: current_profile.id, limit: 20, page: 1
 
   if conversations.total_entries > 0
-    theme_render_rc 'components/pages/inbox', current_conversation: current_conversation, conversations: conversations, current_profile: current_profile
+    theme_render_rc 'inbox', current_conversation: current_conversation, conversations: conversations, current_profile: current_profile
   else
     render 'modules/chat/blank'
   endif

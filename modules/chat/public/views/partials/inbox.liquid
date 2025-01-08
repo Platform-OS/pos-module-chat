@@ -1,11 +1,3 @@
----
-metadata:
-  name: Chat Inbox
-  params:
-    current_conversation: {}
-    conversations: {}
-    current_profile: {}
----
 <script type="importmap">
   {
     "imports": {
@@ -18,25 +10,24 @@ metadata:
     }
   }
 </script>
+
 <script>
   let posChat = {};
   posChat.csrfToken = '{{ context.authenticity_token }}';
   posChat.profile = {};
   posChat.profile.timezone = {% if current_profile.timezone %} {{ current_user_timezone }} {% else %} null {% endif %};
+
+  posChat.strings = {
+    connectionError: '{{ 'modules/chat/error_connection' | t }}'
+  }
 </script>
 <script type="module" defer src="{{ 'modules/chat/js/chat.js' | asset_url }}"></script>
 
-<div
-  class="container"
-  id="chat-inbox"
-  style="min-height: calc((100vh - 112px) - 100px)"
-  data-error-connection="{{ 'modules/chat/error_connection' | t }}"
->
-  <div class="flex flex-col h-full">
-    <div class="flex {% unless current_conversation %}flex-col-reverse md:flex-row md:{% endunless %}h-full">
-      <div class="md:w-1/3 {% if current_conversation %}hidden md:flex{% else %}flex{% endif %} flex-col relative z-18">
-        <div class="flex-1 overflow-auto">
-          <div class="bg-panel relative h-14 flex items-center font-bold p-4 shadow-card rounded-tl-lg">Messaging</div>
+
+<div id="pos-chat-inbox">
+
+    <div class="{% unless current_conversation %}flex-col-reverse md:flex-row md:{% endunless %}" style="display: flex;">
+      <div class="md:w-1/3 {% if current_conversation %}hidden md:flex{% else %}flex{% endif %} flex-col relative z-18" id="pos-chat-conversations">
           {% liquid
             for conversation in conversations.results
               assign participants = conversation.participants
@@ -68,7 +59,6 @@ metadata:
               endif
             endfor
           %}
-        </div>
       </div>
 
       {% if current_conversation %}
@@ -144,5 +134,5 @@ metadata:
         </div>
       {% endif %}
     </div>
-  </div>
+
 </div>

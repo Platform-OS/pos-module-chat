@@ -1,0 +1,13 @@
+/*
+  stores all configurable variables used for this particular app
+
+  fonts
+*/
+
+
+
+/* fonts
+============================================================================ */
+:root {
+    --pos-font-navigation: 'Source Code Pro', 'Consolas', monospace;
+}

@@ -4,6 +4,7 @@
   page background and font
   main header
   people list
+  empty list information
 */
 
 
@@ -11,7 +12,9 @@
 /* page background and font
 ============================================================================ */
 body {
-    padding: 0;
+  padding: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 
@@ -20,10 +23,6 @@ body {
 #pos-chat-header-secondaryNavigationToggle {
   position: absolute;
   inset-inline-start: -100vw;
-}
-
-.pos-chat-header:has(#pos-chat-header-secondaryNavigationToggle:checked) {
-  
 }
 
 .pos-chat-header {
@@ -40,6 +39,10 @@ body {
   
   border-bottom: 1px solid var(--pos-color-divider);
   background-color: var(--pos-color-content-background);
+
+  text-transform: uppercase;
+  font-family: var(--pos-font-navigation);
+  font-weight: 500;
 }
 
   .pos-chat-header-nav-primary ul {
@@ -49,17 +52,88 @@ body {
 
   .pos-chat-header-nav-primary li.active {
     anchor-name: --pos-chat-header-active;
-
-    color: var(--pos-color-interactive-text);
   }
 
-  .pos-chat-header-nav-primary a,
-  .pos-chat-header-nav-primary label {
+  /* fallback active indicator for browsers not supporting anchor positioning */
+  .pos-chat-header-nav-primary li.active {
+    position: relative;
+  }
+
+  .pos-chat-header-nav-primary li.active:before {
+    height: 3px;
+    position: absolute;
+
+    inset-inline: 0;
+    inset-block-end: -1px;
+
+    background-color: var(--pos-color-content-foreground);
+
+    content: '';
+  }
+
+  .pos-chat-header-nav-primary li.active:after {
+    width: 8px;
+    height: 4px;
+    position: absolute;
+    inset-inline-start: calc(50% - 4px);
+    inset-block-end: -4px;
+
+    background-color: var(--pos-color-content-foreground);
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+
+    content: '';
+  }
+  /* end fallback */
+
+  .pos-chat-header-nav-primary a {
     padding-block: var(--pos-gap-navigation);
     display: flex;
   }
 
+  /* profile menu */
+  #pos-chat-header-nav-primary-profile {
+    margin-inline-end: calc(var(--pos-padding-page) / -2);
+    padding-inline: calc(var(--pos-padding-page) / 2);
+    padding-block: calc(var(--pos-gap-navigation) / 2);
+    margin-block: calc(var(--pos-gap-navigation) / 2);
+
+    border-radius: var(--pos-radius-panel);
+    background-color: transparent;
+
+    transition: background-color .2s ease-in-out;
+  }
+
+  #pos-chat-header-nav-primary-profile:hover {
+    background-color: var(--pos-color-navigation-hover);
+  }
+
     @supports (anchor-name: --pos-chat-header-active) {
+
+      /* disable fallback */
+      .pos-chat-header-nav-primary li.active:before {
+        display: none;
+      }
+
+      .pos-chat-header-nav-primary li.active:after {
+        display: none;
+      }
+
+      /* end disable fallback */
+
+      #pos-chat-header-activeIndicator {
+        width: anchor-size(width);
+        height: 3px;
+        position: absolute;
+    
+        position-anchor: --pos-chat-header-active;
+        inset-inline-start: anchor(start);
+        inset-inline-end: anchor(end);
+        inset-block-end: 0;
+    
+        background-color: var(--pos-color-content-foreground);
+    
+        transition: all .2s ease-in-out;
+      }
 
       #pos-chat-header-activeIndicator:before {
         width: 8px;
@@ -86,32 +160,17 @@ body {
         anchor-name: --pos-chat-header-active;
       }
 
-      #pos-chat-header-activeIndicator {
-        width: anchor-size(width);
-        height: 4px;
-        position: absolute;
-    
-        position-anchor: --pos-chat-header-active;
-        inset-inline-start: anchor(start);
-        inset-inline-end: anchor(end);
-        inset-block-end: 0;
-    
-        background-color: var(--pos-color-content-foreground);
-    
-        transition: all .2s ease-in-out;
-      }
-
     }
 
 /* secondary navigation */
 .pos-chat-header-nav-secondary {
-  padding: var(--pos-padding-page);
+  padding: var(--pos-gap-navigation);
   position: absolute;
   inset-inline-end: 0;
   overflow: hidden;
 
   scale: 0;
-  translate: calc(var(--pos-padding-page) * -1) calc(var(--pos-padding-page) * -1);
+  translate: calc(var(--pos-padding-page) * -1) calc(var(--pos-gap-page) * -1);
   transform-origin: top right;
 
   transition: all .2s ease-in-out;
@@ -154,13 +213,42 @@ body {
   }
 
 
-/* dialog toggle
-============================================================================ */
-
-
 
 /* people list
 ============================================================================ */
 .pos-chat-people {
-    padding: var(--pos-padding-page);
+    padding: calc(var(--pos-padding-page) - var(--pos-gap-navigation));
+}
+
+.pos-chat-people ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pos-gap-list);
+}
+
+.pos-chat-people a {
+  padding: var(--pos-gap-navigation);
+  display: flex;
+
+  border-radius: var(--pos-radius-panel);
+
+  font-weight: 500;
+
+  transition: background-color .1s linear;
+}
+
+.pos-chat-people a:hover {
+  background-color: var(--pos-color-navigation-hover);
+}
+
+
+/* empty list information
+============================================================================ */
+.pos-chat-info {
+  padding: var(--pos-padding-page);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pos-gap-list);
 }

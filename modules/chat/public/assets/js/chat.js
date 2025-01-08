@@ -25,7 +25,7 @@ const chat = function(){
   // do you want to enable debug mode that logs to console (bool)
   module.settings.debug = true;
   // the main container with the chat inbox (dom node)
-  module.settings.inbox = document.querySelector('#chat-inbox');
+  module.settings.inbox = document.querySelector('#pos-chat-inbox');
   // the input for typing new message (dom node)
   module.settings.messageInput = document.querySelector('#chat-messageInput');
   // the send button for new message (dom node)
@@ -81,7 +81,7 @@ const chat = function(){
   // are there more pages (bool)
   module.settings.morePages = module.settings.loadingIndicator.dataset.more === 'true';
   // the message that will appear when the connection is lost
-  module.settings.lostConnection = module.settings.inbox.getAttribute('data-error-connection');
+  module.settings.lostConnection = posChat.strings.connectionError;
 
   // the channel to send messages through (Action Cable channel)
   module.channel = null;
@@ -302,7 +302,7 @@ const chat = function(){
   // ------------------------------------------------------------------------
   module.init = () => {
     // resize the inbox to the screen
-    resizeInbox();
+    // resizeInbox();
 
     // create subscription for the channel
     module.createSubscription();

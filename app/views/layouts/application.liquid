@@ -12,10 +12,34 @@
       <link rel="stylesheet" href="{{ 'modules/theme/style/pos-reset.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'modules/theme/style/pos-config.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'modules/theme/style/pos-button.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'modules/theme/style/pos-typography.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'modules/theme/style/pos-page.css' | asset_url }}">
-      <link rel="stylesheet" href="{{ 'style/pos-chat.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'style/chat-config.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'style/chat-typography.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'style/chat.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'style/chat-inbox.css' | asset_url }}">
 
       <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+
+      <style>
+
+        @font-face {
+          font-family: 'Source Code Pro';
+          font-style: normal;
+          font-weight: 200 900;
+          font-display: swap;
+          src: url('{{ 'font/SourceCodePro-VariableFont_wght.ttf' | asset_url }}') format('truetype');
+        }
+      
+        @font-face {
+          font-family: 'Source Code Pro';
+          font-style: italic;
+          font-weight: 200 900;
+          font-display: swap;
+          src: url('{{ 'SourceCodePro-Italic-VariableFont_wght.woff2' | asset_url }}') format('woff2');
+        }
+      
+      </style>
 
   </head>
   <body>

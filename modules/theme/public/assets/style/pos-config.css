@@ -20,10 +20,12 @@
   :root {
 
     /* general content */
-    --pos-color-content-background: #f4f4f4;
+    --pos-color-content-background: #f2f2f2;
     --pos-color-content-foreground: #303030; /* figma: normal */
     --pos-color-content-inverted-background: #303030;
     --pos-color-content-inverted-foreground: #fff;
+
+    --pos-color-content-supplementary: #adadad;
 
     --pos-color-focused: #39ac74;
 
@@ -42,9 +44,13 @@
     --pos-color-button-default-hover-foreground: #303030;
     --pos-color-button-default-hover-frame: #303030;
 
+    --pos-color-navigation-highlight: #ebebeb;
+
     /* links and interactive elements */
     --pos-color-interactive-text: #299c64;
     --pos-color-interactive-hover: #39ac74;
+
+    --pos-color-navigation-hover: #fff;
 
 
 
@@ -53,7 +59,7 @@
 
     --pos-color-prominent: 0, 0, 0;
 
-    --supplementary: 99, 108, 127;
+    
     --graphic: 64, 85, 104;
     --interactive-graphic: 203, 61, 41;
     --interactive-text: 203, 61, 41;
@@ -121,15 +127,17 @@
 ============================================================================ */
 :root {
   --pos-font-default: system-ui, sans-serif;
+  --pos-font-heading: 'Source Code Pro', 'Consolas', monospace;
 }
 
 
 /* spacing
 ============================================================================ */
 :root {
-  --pos-padding-page: 1rem;
+  --pos-padding-page: 2rem;
 
   --pos-gap-navigation: 1rem;
+  --pos-gap-list: .2rem;
 }
 
 
