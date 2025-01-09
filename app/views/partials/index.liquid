@@ -22,9 +22,26 @@
 {% else %}
 
 
-  <a href="/users/new">Register</a><br/>
-  <a href="/sessions/new">Log in</a><br/>
-  <a href="/passwords/reset">Reset password</a>
+  <main class="app-chat-intro">
+
+    <section class="app-chat-intro-content">
+      <h2 class="pos-heading-2">
+        <img src="{{ 'images/pos-sign.svg' | asset_url }}" width="28" height="25" loading="eager" alt="">
+        Example platformOS chat application
+      </h2>
+      <nav>
+        <ul class="app-chat-intro-nav">
+          <li><a href="/sessions/new">Log in</a></li>
+          <li><a href="/users/new">Register</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <footer class="app-chat-intro-footer">
+      Powered by <a href="https://platformos.com">platformOS</a>
+    </footer>
+
+  </main>
 
 
 {% endif %}

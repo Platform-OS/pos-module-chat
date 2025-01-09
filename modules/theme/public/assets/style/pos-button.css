@@ -18,7 +18,7 @@ button,
 }
 
 .pos-button {
-  padding-inline: 1.5em;
+  padding-inline: var(--pos-padding-input);
   height: var(--pos-height-input);
   position: relative;
   z-index: 1;

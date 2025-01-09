@@ -144,6 +144,8 @@
 /* buttons and inputs shape
 ============================================================================ */
 :root {
+  --pos-padding-input: 1.5em;
+
   --pos-height-input: 2.6rem;
 
   --pos-border-input: 1px;

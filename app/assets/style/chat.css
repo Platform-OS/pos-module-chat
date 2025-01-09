@@ -2,6 +2,7 @@
   styling for the example chat application
 
   page background and font
+  intro page
   main header
   people list
   empty list information
@@ -17,6 +18,89 @@ body {
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
+}
+
+
+/* intro page
+============================================================================ */
+.app-chat-intro {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  justify-content: center;
+  grid-row: 1 / 3;
+}
+
+/* heading */
+.app-chat-intro .pos-heading-2 {
+  margin-block-end: var(--pos-padding-page);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pos-gap-navigation);
+}
+
+  .app-chat-intro .pos-heading-2 img {
+    width: 3rem;
+    height: auto;
+  }
+
+/* navigation */
+.app-chat-intro-nav {
+  display: flex;
+  position: relative;
+  justify-content: center;
+
+  font-weight: 500;
+}
+
+  .app-chat-intro-nav a {
+    height: var(--pos-height-input);
+    padding-inline: var(--pos-padding-input);
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-chat-intro-nav li:hover {
+    anchor-name: --app-chat-intro-nav-active;
+  }
+
+  .app-chat-intro-nav:before {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    z-index: -1;
+
+    border-radius: var(--pos-radius-panel);
+    background-color: transparent;
+
+    transition: all .2s ease-in-out;
+
+    content: '';
+  }
+
+  .app-chat-intro-nav:has(li:hover):before {
+    background-color: var(--pos-color-navigation-hover);
+  }
+
+  @supports (anchor-name: --app-chat-intro-nav-active) {
+    .app-chat-intro-nav:before {
+      width: anchor-size(width);
+      height: anchor-size(height);
+      position-anchor: --app-chat-intro-nav-active;
+      inset-inline-start: anchor(start);
+    }
+  }
+
+/* footer */
+.app-chat-intro-footer {
+  margin-block-start: auto;
+  padding: var(--pos-padding-page);
+
+  text-align: center;
+  color: var(--pos-color-content-supplementary);
 }
 
 
