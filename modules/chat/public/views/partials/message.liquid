@@ -28,14 +28,14 @@ metadata:
   assign message = message | markdown: '{ "elements": [ "br" ] }'
 %}
 
-<div class="flex text-xs text-supplementary {{ justify }}" data-message-time="{{ created_at }}">
-  {{ created_at | l: 'long', timezone }}
-</div>
+<li class="pos-chat-message {% if authored %} pos-chat-message-authored {% endif %}">
 
-<li class="flex mb-2 break-words {{ justify }}">
-  <div class="max-w-full rounded py-2 px-3 {{ bg_color }}">
-    <p class="text-sm mt-1">
-      {{ message }}
-    </p>
+  <time datetime="{{ created_at }}" data-message-time="{{ created_at }}">
+    {{ created_at | l: 'long', timezone }}
+  </time>
+
+  <div class="pos-chat-message-content">
+    {{ message }}
   </div>
+
 </li>

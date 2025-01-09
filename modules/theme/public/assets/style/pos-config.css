@@ -44,8 +44,6 @@
     --pos-color-button-default-hover-foreground: #303030;
     --pos-color-button-default-hover-frame: #303030;
 
-    --pos-color-navigation-highlight: #ebebeb;
-
     /* links and interactive elements */
     --pos-color-interactive-text: #299c64;
     --pos-color-interactive-hover: #39ac74;
@@ -135,6 +133,7 @@
 ============================================================================ */
 :root {
   --pos-padding-page: 2rem;
+  --pos-padding-panel: 1rem;
 
   --pos-gap-navigation: 1rem;
   --pos-gap-list: .2rem;

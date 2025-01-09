@@ -1,29 +1,15 @@
 /*
-  styling for the inbox
+  custom styling for the inbox
 
-  page background and font
   converstations list
 */
 
 
 
-/* 
-============================================================================ */
-#pos-chat-inbox {
-  display: grid;
-  grid-template-columns: auto 1fr;
-}
-
-
-
 /* conversations list
 ============================================================================ */
-#pos-chat-conversations {
-  padding: var(--pos-padding-page);
-
-  border-inline-end: 1px solid var(--pos-color-divider);
-}
-
-.pos-chat-conversationCard {
-  display: flex;
+.pos-chat-conversationCard-name {
+  letter-spacing: -.05em;
+  font-family: var(--pos-font-navigation);
+  font-weight: 600;
 }
