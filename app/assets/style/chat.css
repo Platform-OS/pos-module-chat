@@ -12,9 +12,11 @@
 /* page background and font
 ============================================================================ */
 body {
+  max-height: 100vh;
   padding: 0;
   display: grid;
   grid-template-rows: auto 1fr;
+  overflow: hidden;
 }
 
 

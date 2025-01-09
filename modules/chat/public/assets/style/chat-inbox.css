@@ -13,6 +13,7 @@
 #pos-chat-inbox {
   display: grid;
   grid-template-columns: auto 1fr;
+  overflow: hidden;
 }
 
 
@@ -25,10 +26,13 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--pos-gap-list);
 
   border-inline-end: 1px solid var(--pos-color-divider);
 }
+
+  .pos-chat-conversations li:not(:last-child) {
+    padding-block-end: var(--pos-gap-list);
+  }
 
 
 /* conversation card */
@@ -79,7 +83,7 @@
       anchor-name: --pos-chat-conversation-active;
     }
 
-    .pos-chat-conversationCard:hover {
+    .pos-chat-conversations li:hover .pos-chat-conversationCard {
       anchor-name: --pos-chat-conversation-active;
     }
   }
@@ -132,6 +136,7 @@
 .pos-chat-conversation {
   display: grid;
   grid-template-rows: auto 1fr auto;
+  overflow: auto;
 }
 
 .pos-chat-conversation-header {
@@ -144,7 +149,11 @@
   font-weight: 500;
 }
 
-.pos-chat-messagesList {
+.pos-chat-conversation-messagesContainer {
+  overflow: auto;
+}
+
+.pos-chat-messages {
   padding: var(--pos-padding-page);
   display: flex;
   flex-direction: column;

@@ -26,39 +26,44 @@
 
 <div id="pos-chat-inbox">
 
-  <div class="pos-chat-conversations" id="pos-chat-conversations">
+  <ul class="pos-chat-conversations" id="pos-chat-conversations">
+    {% for conversation in conversations.results %}
+      {% liquid
+        assign participants = conversation.participants
+        assign current_participants = participants | select: id: current_profile.id
+        assign other_participants = participants | subtract_array: current_participants
+        assign from_profile = other_participants | first
+
+        if conversation.id != current_conversation.id
+          assign current = false
+        else
+          assign current = true
+        endif
+
+        if conversation.participant_read_ids contains current_profile.id
+          assign unread = false
+        else
+          assign unread = true
+        endif
+
+        assign name = from_profile.first_name | append: ' ' | append: from_profile.last_name | default: from_profile.name
+        assign imageSrc = from_profile.avatar.photo.versions.sm
+        assign last_message = conversation.last_message.message
+        assign created_at = conversation.last_message.created_at
+
+        if conversation.id == current_conversation.id
+          assign other_participant = from_profile
+        endif
+      %}
+      {% if conversation.last_message %}
+        <li>
           {% liquid
-            for conversation in conversations.results
-              assign participants = conversation.participants
-              assign current_participants = participants | select: id: current_profile.id
-              assign other_participants = participants | subtract_array: current_participants
-              assign from_profile = other_participants | first
-
-              if conversation.id != current_conversation.id
-                assign current = false
-              else
-                assign current = true
-              endif
-
-              if conversation.participant_read_ids contains current_profile.id
-                assign unread = false
-              else
-                assign unread = true
-              endif
-
-              assign name = from_profile.first_name | append: ' ' | append: from_profile.last_name | default: from_profile.name
-              assign imageSrc = from_profile.avatar.photo.versions.sm
-              assign last_message = conversation.last_message.message
-              assign created_at = conversation.last_message.created_at
-              if conversation.last_message
-                theme_render_rc 'conversation', id: conversation.id, current: current, unread: unread, name: name, imageSrc: imageSrc, last_message: last_message, created_at: created_at, timezone: current_profile.timezone
-              endif
-              if conversation.id == current_conversation.id
-                assign other_participant = from_profile
-              endif
-            endfor
+            theme_render_rc 'conversation', id: conversation.id, current: current, unread: unread, name: name, imageSrc: imageSrc, last_message: last_message, created_at: created_at, timezone: current_profile.timezone
           %}
-      </div>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
 
       {% if current_conversation %}
         <div class="pos-chat-conversation" id="pos-chat-conversation">
@@ -81,8 +86,8 @@
             %}
             {{ name }}
           </header>
-          <div class="flex-1 overflow-auto" id="chat-messagesList-container">
-            <ul class="pos-chat-messagesList" id="chat-messagesList">
+          <div class="pos-chat-conversation-messagesContainer" id="chat-messagesList-container">
+            <ul class="pos-chat-messages" id="chat-messagesList">
               {% liquid
                 assign list = current_conversation.messages | reverse
                 for message in list
