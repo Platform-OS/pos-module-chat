@@ -26,11 +26,15 @@
 .pos-avatar-xs {
   width: 20px;
   height: 20px;
+
+  font-size: .6rem;
 }
 
 .pos-avatar-s {
   width: 24px;
   height: 24px;
+
+  font-size: .7rem;
 }
 
 .pos-avatar-m {

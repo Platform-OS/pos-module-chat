@@ -27,7 +27,8 @@
 
     --pos-color-content-supplementary: #adadad;
 
-    --pos-color-focused: #39ac74;
+    --pos-color-focused: #39ac74; /* outline for focused elements */
+    --pos-color-highlighted: #87e9ba; /* elements that needs user attention */
 
     /* content selection */
     --pos-color-selection-background: #2e70c1;

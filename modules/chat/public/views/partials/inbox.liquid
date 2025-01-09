@@ -67,24 +67,22 @@
               {{- 'modules/chat/loading_previous' | t -}}
             </span>
           </div>
-          <div class="flex items-center w-full border-b border-divider border-l">
-            <div class="flex flex-grow md:w-full items-center p-2 md:p-4 h-14 bg-panel rounded-tr">
-              {% liquid
-                if other_participant
-                  if other_participant.first_name
-                    assign name = other_participant.first_name | append: ' ' | append: other_participant.last_name
-                  else
-                    assign name = other_participant.name
-                  endif
-
-                  theme_render_rc 'components/atoms/avatar', size: 's', name: name, imageSrc: other_participant.avatar.photo.versions.sm
+          <header class="pos-chat-conversation-header">
+            {% liquid
+              if other_participant
+                if other_participant.first_name
+                  assign name = other_participant.first_name | append: ' ' | append: other_participant.last_name
+                else
+                  assign name = other_participant.name
                 endif
-              %}
-              <p class="pl-3 text-interactive-text font-bold">{{ name }}</p>
-            </div>
-          </div>
+
+                theme_render_rc 'components/atoms/avatar', size: 's', name: name, imageSrc: other_participant.avatar.photo.versions.sm
+              endif
+            %}
+            {{ name }}
+          </header>
           <div class="flex-1 overflow-auto" id="chat-messagesList-container">
-            <ul class="max-w-full p-3 pt-16" id="chat-messagesList">
+            <ul class="pos-chat-messagesList" id="chat-messagesList">
               {% liquid
                 assign list = current_conversation.messages | reverse
                 for message in list
@@ -97,17 +95,16 @@
               %}
             </ul>
           </div>
-          <div class="px-3 py-3">
-            <div class="border-divider border-t border-b -mx-3 py-1">
-              <textarea
-                placeholder="{{ 'modules/chat/message_input_placeholder' | t }}"
-                id="chat-messageInput"
-                class="overflow-auto max-h-32 w-full px-2 py-2 border-0 focus:outline-none focus-visible:outline-none focus-visible:ring-transparent"
-                data-from-name="{{ current_profile.name }}" data-conversation-id="{{ current_conversation.id}}"
-                data-current-profile-id="{{ current_profile.id }}"
-                disabled
-              ></textarea>
-            </div>
+          <footer class="pos-chat-conversation-new">
+            <textarea
+              placeholder="{{ 'modules/chat/message_input_placeholder' | t }}"
+              class="pos-chat-conversation-input"
+              id="chat-messageInput"
+              data-from-name="{{ current_profile.name }}"
+              data-conversation-id="{{ current_conversation.id}}"
+              data-current-profile-id="{{ current_profile.id }}"
+              disabled
+            ></textarea>
             <div class="flex justify-end mt-2">
               {% liquid
                 assign button_text = 'modules/chat/send' | t
@@ -116,7 +113,7 @@
                 theme_render_rc 'components/atoms/button', size: 'small', weight: 'primary', content: button_text, attributes: attributes
               %}
             </div>
-          </div>
+          </footer>
         </div>
       {% else %}
         <div class="w-full md:shadow-card md:bg-panel flex items-center justify-center p-2">
