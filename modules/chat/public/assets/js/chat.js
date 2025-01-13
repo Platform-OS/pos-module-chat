@@ -67,11 +67,11 @@ const chat = function(){
   // converting the dates to user timezone if set in profile (string)
   module.settings.currentUserTimezone = posChat.profile.timezone;
   // the loading indicator when loading messages (dom node)
-  module.settings.loadingIndicator = document.querySelector('#chat-loadingIndicator');
+  module.settings.loadingIndicator = document.querySelector('#pos-chat-loadingIndicator');
   // current page of messages (int)
   module.settings.currentPage = 1;
   // are there more pages (bool)
-  module.settings.morePages = module.settings.loadingIndicator.dataset.more === 'true';
+  module.settings.morePages = posChat.previousPageAvailable || true;
   // the message that will appear when the connection is lost
   module.settings.lostConnection = posChat.strings.connectionError;
 
@@ -125,17 +125,17 @@ const chat = function(){
           //document.dispatchEvent(new CustomEvent('message', {detail: Object.assign(data, { status: (module.settings.currentUserId == data.autor_id) ? 'sent' : 'received'})}));
 
           if(module.settings.debug){
-            console.log('[Inbox] Message received');
-            console.log(data);
+            console.log('[pos-module-chat] Message received', data);
           }
         },
 
         initialized: function(){
-          console.log('initialized');
+          console.log('[pos-module-chat] Initialized');
         },  
 
         connected: function(){
-          console.log('conntected');
+          console.log('[pos-module-chat] Connected')
+
           module.settings.messageInput.disabled = false;
           module.settings.messageInput.focus();
 
@@ -145,7 +145,7 @@ const chat = function(){
           }
 
           if(module.settings.debug){
-            console.log(`[Inbox] Connected to channel and joined room ${module.conversationId}`);
+            console.log(`[pos-module-chat] Connected to channel and joined room ${module.conversationId}`);
           }
         },
 
@@ -154,7 +154,7 @@ const chat = function(){
           module.blocked();
 
           if(module.settings.debug){
-            console.log('[Inbox] The connection was rejected by the server');
+            console.log('[pos-module-chat] The connection was rejected by the server');
           }
         },
 
@@ -163,7 +163,7 @@ const chat = function(){
           module.blocked();
 
           if(module.settings.debug){
-            console.log(`[Inbox] You've been disconnected from the server`);
+            console.log(`[pos-module-chat] You've been disconnected from the server`);
           }
         }
       }
@@ -185,8 +185,7 @@ const chat = function(){
     module.channel.send(Object.assign(messageData, { create: true }));
 
     if(module.settings.debug){
-      console.log('[Inbox] Message sent');
-      console.log(messageData);
+      console.log('[pos-module-chat] Message sent', messageData);
     }
   };
 
@@ -213,7 +212,7 @@ const chat = function(){
     });
 
     if(module.settings.debug){
-      console.log('[Inbox] Message shown in chat');
+      console.log('[pos-module-chat] Message shown in chat');
     }
   };
 
@@ -223,10 +222,14 @@ const chat = function(){
   //            items per page to get (int, default: 30)
   // ------------------------------------------------------------------------
   module.loadPage = (page = 1, perPage = 30) => {
+    if(module.settings.debug){
+      console.log('[pos-module-chat] Trying to load previous messages');
+    }
+
     let secondOldestMessage = module.settings.messagesList.querySelector('li:nth-of-type(2)');
 
     // show the loading indicator at start
-    module.settings.loadingIndicator.style.display = 'block';
+    module.settings.loadingIndicator.classList.add('active');
 
     // get the data
     fetch(`/api/chat/messages.json?conversation_id=${module.conversationId}&page=${page}&per_page=${perPage}`)
@@ -240,20 +243,32 @@ const chat = function(){
     })
     .then((data) => {
       // construct HTML elements for messages
-      let html = '';
+      let html = document.createDocumentFragment();
 
-      Object.entries(data.results).reverse().forEach(([key, data]) => {
-        data = Object.assign(data, { status: (module.settings.currentUserId == data.autor_id) ? 'sent' : 'received'});
+      Object.entries(data.results).reverse().forEach(([key, messageData]) => {
+        messageData = Object.assign(messageData, { status: (module.settings.currentUserId == messageData.autor_id) ? 'sent' : 'received'});
 
-        html += module.settings.messageTemplate(data);
+        // clone message template
+        const messageHtml = messageData.status === 'received' ? module.settings.messageTemplate.received.content.cloneNode(true) : module.settings.messageTemplate.sent.content.cloneNode(true);
+        // fill template with data
+        messageHtml.querySelector(module.settings.messageTemplate.dateSelector).textContent = module.settings.timezonedDate(new Date(messageData.created_at));
+        messageHtml.querySelector(module.settings.messageTemplate.dateSelector).dateTime = messageData.created_at;
+        messageHtml.querySelector(module.settings.messageTemplate.messageSelector).innerHTML = encodeHtml(messageData.message).replace(/(\r\n|\r|\n)/g, '<br>');
+
+        html.append(messageHtml);
       });
 
+
       // put the messages on top
-      module.settings.messagesList.insertAdjacentHTML('afterbegin', html);
+      module.settings.messagesList.prepend(html);
 
       // disable loading next pages if there is nothing left
       if(!data.has_next_page){
         module.settings.morePages = false;
+      }
+
+      if(module.settings.debug){
+        console.log('[pos-module-chat] Previous messages loaded');
       }
     })
     .catch((error) => {
@@ -262,10 +277,14 @@ const chat = function(){
     })
     .finally(() => {
       // remove the loading indicator
-      module.settings.loadingIndicator.style.display = 'none';
+      module.settings.loadingIndicator.classList.remove('active');
       // scroll to the last seen message
       if(secondOldestMessage) {
         module.settings.messagesListContainer.scrollTop = secondOldestMessage.offsetTop - module.settings.messagesListContainer.clientHeight;
+      }
+
+      if(module.settings.debug){
+        console.log('[pos-module-chat] Finished trying to load previous messages');
       }
     });
   };

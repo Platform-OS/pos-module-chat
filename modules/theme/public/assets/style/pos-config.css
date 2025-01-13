@@ -30,6 +30,11 @@
     --pos-color-focused: #39ac74; /* outline for focused elements */
     --pos-color-highlighted: #87e9ba; /* elements that needs user attention */
 
+    /* colorful elements */
+    --pos-color-colorful-background: #299c64;
+    --pos-color-colorful-foreground: #fff;
+    --pos-color-colorful-hover: #39ac74;
+
     /* content selection */
     --pos-color-selection-background: #2e70c1;
     --pos-color-selection-foreground: #fff;
@@ -66,10 +71,7 @@
     --interactive-disabled: 255, 211, 177;
   
     /* prominent elements */
-    --colorful: 204, 18, 146;
-    --colorful-hover: 238, 81, 189;
-    --colorful-foreground: 255, 255, 255;
-    --colorful-supplementary: rgba(255, 255, 255, 0.5);
+
     --gradient1-from: 246, 122, 44;
     --gradient1-to: 238, 81, 189;
     --gradient2-from: 203, 61, 41;

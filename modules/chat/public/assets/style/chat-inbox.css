@@ -129,9 +129,33 @@
 
 /* conversation
 ============================================================================ */
-#chat-loadingIndicator {
-  display: none;
+.pos-chat-loadingIndicator {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: var(--pos-padding-page);
+  display: flex;
+  justify-content: center;
+
+  opacity: 0;
+
+  translate: 0 -4rem;
+  transition: all .2s ease-in-out;
 }
+
+  .pos-chat-loadingIndicator.active {
+    opacity: 1;
+
+    translate: 0 0;
+  }
+
+  .pos-chat-loadingIndicator span {
+    padding: .5em 1em;
+
+    background-color: var(--pos-color-colorful-background);
+    border-radius: var(--pos-radius-panel);
+
+    color: var(--pos-color-colorful-foreground);
+  }
 
 .pos-chat-conversation {
   display: grid;
@@ -150,6 +174,7 @@
 }
 
 .pos-chat-conversation-messagesContainer {
+  position: relative;
   overflow: auto;
 }
 
@@ -196,7 +221,7 @@
 }
 
 .pos-chat-conversation-input {
-  margin: 0 var(--pos-padding-page) var(--pos-gap-navigation);
+  margin: var(--pos-gap-navigation) var(--pos-padding-page) var(--pos-gap-navigation);
   padding: calc(var(--pos-padding-panel) / 2) calc(var(--pos-padding-panel) / 1.5);
 
   border-radius: var(--pos-radius-panel);
