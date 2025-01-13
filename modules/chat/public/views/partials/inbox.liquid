@@ -23,6 +23,19 @@
 </script>
 <script type="module" defer src="{{ 'modules/chat/js/chat.js' | asset_url }}"></script>
 
+<!-- message templates -->
+<template id="pos-chat-template-message-received">
+  {% liquid
+    render 'modules/chat/message', message: '', authored: false
+  %}
+</template>
+<template id="pos-chat-template-message-sent">
+  {% liquid
+    render 'modules/chat/message', message: '', authored: true
+  %}
+</template>
+<!-- end message templates -->
+
 
 <div id="pos-chat-inbox">
 
@@ -92,9 +105,9 @@
                 assign list = current_conversation.messages | reverse
                 for message in list
                   if message.autor_id != current_profile.id
-                    theme_render_rc 'message', message: message.message, created_at: message.created_at, authored: false, bg_color: 'bg-highlighted', timezone: current_profile.timezone
+                    render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: false, bg_color: 'bg-highlighted', timezone: current_profile.timezone
                   else
-                    theme_render_rc 'message', message: message.message, created_at: message.created_at, authored: true, bg_color: 'bg-interactive-disabled', timezone: current_profile.timezone
+                    render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: true, bg_color: 'bg-interactive-disabled', timezone: current_profile.timezone
                   endif
                 endfor
               %}

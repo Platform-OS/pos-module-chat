@@ -51,24 +51,16 @@ const chat = function(){
 
     return timezonedDate;
   }
-  // the html template for the single message (function that returns template literal);
-  module.settings.messageTemplate = data => {
-    let date = new Date(data.created_at);
-``
-    const message = encodeHtml(data.message).replace(/(\r\n|\r|\n)/g, "<br>");
-
-    return `
-    <p class="flex text-xs text-supplementary ${ data.status === 'sent' ? 'justify-end' : 'justify-start' }">
-      ${module.settings.timezonedDate(date)}
-    </p>
-    <li class="flex mb-2 break-words ${ data.status === 'sent' ? 'justify-end' : 'justify-start' }">
-      <div
-        class="max-w-full rounded py-2 px-3 ${ data.status === 'sent' ? 'bg-interactive-disabled' : 'bg-highlighted' }"
-      >
-        <p class="text-sm mt-1">${message}</p>
-      </div>
-    </li>
-    `;
+  // html template for the single message
+  module.settings.messageTemplate = {
+    // whole html template for sent message (dom node)
+    sent: document.querySelector('#pos-chat-template-message-sent'),
+    // whole html template for received message (dom node)
+    received: document.querySelector('#pos-chat-template-message-received'),
+    // selector for date field in the template (string)
+    dateSelector: 'time',
+    // selector for the message container (string)
+    messageSelector: '.pos-chat-message-content'
   };
   // the id of the currently logged user (string)
   module.settings.currentUserId = module.settings.messageInput.getAttribute('data-current-profile-id');
@@ -100,12 +92,6 @@ const chat = function(){
     element.textContent = string;
     string = element.textContent;
     return string;
-  }
-
-  // purpose:		measures the height of the screen and fits the inbox
-  // ------------------------------------------------------------------------
-  const resizeInbox = () => {
-    module.settings.inbox.style.height = `calc(100vh - ${module.settings.inbox.offsetTop}px - 412px)`;
   };
 
 
@@ -210,7 +196,15 @@ const chat = function(){
   //				    according to the template in messageTemplate (object)
   // ------------------------------------------------------------------------
   module.showMessage = (messageData) => {
-    module.settings.messagesList.insertAdjacentHTML('beforeend', module.settings.messageTemplate(messageData));
+
+    // clone message template
+    const messageHtml = messageData.status === 'received' ? module.settings.messageTemplate.received.content.cloneNode(true) : module.settings.messageTemplate.sent.content.cloneNode(true);
+    // fill template with data
+    messageHtml.querySelector(module.settings.messageTemplate.dateSelector).textContent = module.settings.timezonedDate(new Date(messageData.created_at));
+    messageHtml.querySelector(module.settings.messageTemplate.dateSelector).dateTime = messageData.created_at;
+    messageHtml.querySelector(module.settings.messageTemplate.messageSelector).innerHTML = encodeHtml(messageData.message).replace(/(\r\n|\r|\n)/g, '<br>');
+    // append the message to the chat
+    module.settings.messagesList.append(messageHtml);
     // scroll into the view
     module.settings.messagesListContainer.scrollTo({
       top: module.settings.messagesListContainer.scrollHeight - module.settings.messagesListContainer.clientHeight,
@@ -291,8 +285,8 @@ const chat = function(){
   // purpose:		parses the dates outputted from BE with JS so that everyting uses browser locale
   // ------------------------------------------------------------------------
   module.parseDates = () => {
-    document.querySelectorAll('[data-message-time]').forEach(date => {
-      let currentDate = new Date(date.dataset.messageTime);
+    document.querySelectorAll('.pos-chat-message time').forEach(date => {
+      let currentDate = new Date(date.dateTime);
       date.innerText = module.settings.timezonedDate(currentDate);
     });
   };
@@ -301,9 +295,6 @@ const chat = function(){
   // purpose:		initializes the module
   // ------------------------------------------------------------------------
   module.init = () => {
-    // resize the inbox to the screen
-    // resizeInbox();
-
     // create subscription for the channel
     module.createSubscription();
 
