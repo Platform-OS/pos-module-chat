@@ -27,8 +27,14 @@
 
     --pos-color-content-supplementary: #adadad;
 
-    --pos-color-focused: #39ac74; /* outline for focused elements */
+    --pos-color-focused: #35b879; /* outline for focused elements */
     --pos-color-highlighted: #87e9ba; /* elements that needs user attention */
+
+    /* interactive elements */
+    --pos-color-interactive-text: #42a274;
+    --pos-color-interactive-hover: #57be8c;
+    --pos-color-interactive-active: #2e8a5c;
+    --pos-color-interactive-disabled: #769c8a;
 
     /* colorful elements */
     --pos-color-colorful-background: #299c64;
@@ -56,6 +62,17 @@
 
     --pos-color-navigation-hover: #fff;
 
+    /* inputs */
+    --pos-color-input-default-foreground: #303030;
+    --pos-color-input-default-background: #f8f8f8;
+    --pos-color-input-default-border: var(--pos-color-divider);
+    --pos-color-input-default-hover-foreground: #303030;
+    --pos-color-input-default-hover-background: #fff;
+    --pos-color-input-default-hover-border: var(--pos-color-input-default-border);
+    --pos-color-input-default-focus-foreground: var(--pos-color-input-default-foreground);
+    --pos-color-input-default-focus-background: var(--pos-color-input-default-background);
+    --pos-color-input-default-focus-border: var(--pos-color-input-default-border);
+
 
 
 
@@ -66,9 +83,7 @@
     
     --graphic: 64, 85, 104;
     --interactive-graphic: 203, 61, 41;
-    --interactive-text: 203, 61, 41;
-    --interactive-hover: 237, 107, 6;
-    --interactive-disabled: 255, 211, 177;
+
   
     /* prominent elements */
 
@@ -152,6 +167,7 @@
 
   --pos-border-input: 1px;
 
+  --pos-radius-input: .5rem;
   --pos-radius-button: 22px;
 }
 

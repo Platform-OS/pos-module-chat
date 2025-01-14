@@ -24,9 +24,7 @@
   posChat.previousPageAvailable = true;
 </script>
 <script type="module" defer src="{{ 'modules/chat/js/chat.js' | asset_url }}"></script>
-<script>
-console.log({{current_conversation}})
-</script>
+
 <!-- message templates -->
 <template id="pos-chat-template-message-received">
   {% liquid
@@ -82,66 +80,58 @@ console.log({{current_conversation}})
     {% endfor %}
   </ul>
 
-      {% if current_conversation %}
-        <div class="pos-chat-conversation" id="pos-chat-conversation">
-          <header class="pos-chat-conversation-header">
-            {% liquid
-              if other_participant
-                if other_participant.first_name
-                  assign name = other_participant.first_name | append: ' ' | append: other_participant.last_name
-                else
-                  assign name = other_participant.name
-                endif
+  {% if current_conversation %}
+    <div class="pos-chat-conversation" id="pos-chat-conversation">
+      <header class="pos-chat-conversation-header">
+        {% liquid
+          if other_participant
+            if other_participant.first_name
+              assign name = other_participant.first_name | append: ' ' | append: other_participant.last_name
+            else
+              assign name = other_participant.name
+            endif
 
-                theme_render_rc 'components/atoms/avatar', size: 's', name: name, imageSrc: other_participant.avatar.photo.versions.sm
+            theme_render_rc 'components/atoms/avatar', size: 's', name: name, imageSrc: other_participant.avatar.photo.versions.sm
+          endif
+        %}
+        {{ name }}
+      </header>
+      <div class="pos-chat-conversation-messagesContainer" id="chat-messagesList-container">
+        <div class="pos-chat-loadingIndicator" id="pos-chat-loadingIndicator">
+          <span>
+            {{- 'modules/chat/loading_previous' | t -}}
+          </span>
+        </div>
+        <ul class="pos-chat-messages" id="chat-messagesList">
+          {% liquid
+            assign list = current_conversation.messages | reverse
+            for message in list
+              if message.autor_id != current_profile.id
+                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: false, bg_color: 'bg-highlighted', timezone: current_profile.timezone
+              else
+                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: true, bg_color: 'bg-interactive-disabled', timezone: current_profile.timezone
               endif
-            %}
-            {{ name }}
-          </header>
-          <div class="pos-chat-conversation-messagesContainer" id="chat-messagesList-container">
-            <div class="pos-chat-loadingIndicator" id="pos-chat-loadingIndicator">
-              <span>
-                {{- 'modules/chat/loading_previous' | t -}}
-              </span>
-            </div>
-            <ul class="pos-chat-messages" id="chat-messagesList">
-              {% liquid
-                assign list = current_conversation.messages | reverse
-                for message in list
-                  if message.autor_id != current_profile.id
-                    render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: false, bg_color: 'bg-highlighted', timezone: current_profile.timezone
-                  else
-                    render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: true, bg_color: 'bg-interactive-disabled', timezone: current_profile.timezone
-                  endif
-                endfor
-              %}
-            </ul>
-          </div>
-          <footer class="pos-chat-conversation-new">
-            <textarea
-              placeholder="{{ 'modules/chat/message_input_placeholder' | t }}"
-              class="pos-chat-conversation-input"
-              id="chat-messageInput"
-              data-from-name="{{ current_profile.name }}"
-              data-conversation-id="{{ current_conversation.id}}"
-              data-current-profile-id="{{ current_profile.id }}"
-              disabled
-            ></textarea>
-            <div class="flex justify-end mt-2">
-              {% liquid
-                assign button_text = 'modules/chat/send' | t
-                assign attributes = '{}' | parse_json
-                hash_assign attributes['id'] = "chat-sendButton"
-                theme_render_rc 'components/atoms/button', size: 'small', weight: 'primary', content: button_text, attributes: attributes
-              %}
-            </div>
-          </footer>
-        </div>
-      {% else %}
-        <div class="w-full md:shadow-card md:bg-panel flex items-center justify-center p-2">
-          {% assign heading_text = 'modules/chat/pick_conversation' | t %}
-          {% theme_render_rc 'components/atoms/heading', content: heading_text, level: 3, tag: 'span', classes: 'uppercase' %}
-        </div>
-      {% endif %}
+            endfor
+          %}
+        </ul>
+      </div>
+      <footer class="pos-chat-conversation-new">
+        <textarea
+          placeholder="{{ 'modules/chat/message_input_placeholder' | t }}"
+          class="pos-chat-conversation-input"
+          id="chat-messageInput"
+          data-from-name="{{ current_profile.name }}"
+          data-conversation-id="{{ current_conversation.id}}"
+          data-current-profile-id="{{ current_profile.id }}"
+          disabled
+        ></textarea>
+        <button type="submit" id="chat-sendButton" class="pos-button">{{ 'modules/chat/send' | t }}</button>
+      </footer>
+    </div>
+  {% else %}
+    <div class="pos-chat-inbox-empty">
+      {{ 'modules/chat/pick_conversation' | t }}
+    </div>
+  {% endif %}
 
 </div>
