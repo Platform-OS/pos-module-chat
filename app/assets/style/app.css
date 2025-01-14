@@ -209,6 +209,8 @@ body {
     border-radius: var(--pos-radius-panel);
     background-color: transparent;
 
+    user-select: none;
+
     transition: background-color .2s ease-in-out;
   }
 
@@ -283,14 +285,16 @@ body {
   inset-inline-end: 0;
   overflow: hidden;
 
+  opacity: 0;
   scale: 0;
-  translate: calc(var(--pos-padding-page) * -1) calc(var(--pos-gap-page) * -1);
+  translate: calc(var(--pos-padding-page) * -1) calc(var(--pos-gap-navigation) * -2);
   transform-origin: top right;
 
   transition: all .2s ease-in-out;
 }
 
   .pos-chat-header:has(#pos-chat-header-secondaryNavigationToggle:checked) .pos-chat-header-nav-secondary {
+    opacity: 1;
     translate: 0 0;
     scale: 1;
   }
