@@ -56,8 +56,7 @@ jobs:
     timeout-minutes: 5
     env:
       MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      #MPKIT_TOKEN: ${{ secrets.MPKIT_TOKEN }}
-      MPKIT_TOKEN: ${{ secrets.QA0_ACCESS_TOKEN }}
+      MPKIT_TOKEN: ${{ secrets.MPKIT_TOKEN }}
       MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       CI: true
     steps:
