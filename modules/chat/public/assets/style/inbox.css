@@ -215,6 +215,12 @@
   font-weight: 500;
 }
 
+  @media (min-width: 769px) {
+    .pos-chat-conversation-header-back {
+      display: none;
+    }
+  }
+
   .pos-chat-conversation-header-back {
     margin-block: calc(var(--pos-gap-navigation) * -1);
     margin-inline-start: calc(var(--pos-padding-page) * -1);
