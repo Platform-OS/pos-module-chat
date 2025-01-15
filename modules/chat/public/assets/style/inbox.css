@@ -16,6 +16,13 @@
   overflow: hidden;
 }
 
+  /* when conversation is opened just show the conversation on mobile */
+  @media (max-width: 768px) {
+    #pos-chat-inbox {
+      grid-template-columns: auto;
+    }
+  }
+
 
 
 /* conversations list
@@ -29,6 +36,17 @@
 
   border-inline-end: 1px solid var(--pos-color-divider);
 }
+
+  /* when conversation is opened just show the conversation on mobile */
+  @media (max-width: 768px) {
+    .pos-chat-conversations {
+      border-inline-end: 0;
+    }
+
+    .pos-chat-inbox-conversation-active .pos-chat-conversations {
+      display: none;
+    }
+  }
 
   .pos-chat-conversations li:not(:last-child) {
     padding-block-end: var(--pos-gap-list);
@@ -179,6 +197,14 @@
   overflow: auto;
 }
 
+  /* hide current conversation on mobile */
+  @media (max-width: 768px) {
+    #pos-chat-inbox:not(.pos-chat-inbox-conversation-active) .pos-chat-conversation,
+    #pos-chat-inbox:not(.pos-chat-inbox-conversation-active) .pos-chat-inbox-empty {
+      display: none;
+    }
+  }
+
 .pos-chat-conversation-header {
   padding: var(--pos-gap-navigation) var(--pos-padding-page);
   display: flex;
@@ -188,6 +214,17 @@
 
   font-weight: 500;
 }
+
+  .pos-chat-conversation-header-back {
+    margin-block: calc(var(--pos-gap-navigation) * -1);
+    margin-inline-start: calc(var(--pos-padding-page) * -1);
+    padding: var(--pos-gap-navigation) .2em var(--pos-gap-navigation) var(--pos-padding-page);
+  }
+
+  .pos-chat-conversation-header-back .label {
+    position: absolute;
+    inset-inline-start: -100vw;
+  }
 
 .pos-chat-conversation-messagesContainer {
   position: relative;
