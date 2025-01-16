@@ -3,12 +3,14 @@ query search(
   $participant_id: [String!]
   $limit: Int = 20
   $page: Int = 1
+  $id: ID
 ) {
   messages: records(
     per_page: $limit
     page: $page
     sort: { created_at: { order: DESC } }
     filter: {
+      id: { value: $id }
       table: { exact: "modules/chat/message" },
       properties: [
         { name: "conversation_id", value_in: $conversation_id }
