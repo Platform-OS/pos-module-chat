@@ -10,7 +10,10 @@ if (!PASSWORD) {
 
 const usersToAuth = [
   users.test1,
-  users.test2
+  users.test2,
+  users.test3,
+  users.test4,
+  users.test5,
 ];
 
 for (const user of usersToAuth) {
