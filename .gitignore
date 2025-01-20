@@ -12,3 +12,5 @@ test-report.json
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+modules/core
+modules/tests
