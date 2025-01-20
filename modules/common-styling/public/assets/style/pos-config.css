@@ -20,21 +20,21 @@
   :root {
 
     /* general content */
-    --pos-color-content-background: #f2f2f2;
-    --pos-color-content-foreground: #303030; /* figma: normal */
-    --pos-color-content-inverted-background: #303030;
-    --pos-color-content-inverted-foreground: #fff;
+    --pos-color-content-background: #f7f8fa;
+    --pos-color-content-foreground: #384150;
+    --pos-color-content-inverted-background: var(--pos-color-content-foreground);
+    --pos-color-content-inverted-foreground: var(--pos-color-content-background);
 
-    --pos-color-content-supplementary: #adadad;
+    --pos-color-content-supplementary: #6c727f;
 
-    --pos-color-focused: #35b879; /* outline for focused elements */
-    --pos-color-highlighted: #87e9ba; /* elements that needs user attention */
+    --pos-color-focused: #2e70c1; /* outline for focused elements */
+    --pos-color-highlighted: #78e677; /* elements that needs user attention */
 
     /* interactive elements */
-    --pos-color-interactive-text: #42a274;
-    --pos-color-interactive-hover: #57be8c;
-    --pos-color-interactive-active: #2e8a5c;
-    --pos-color-interactive-disabled: #769c8a;
+    --pos-color-interactive-text: #2e70c1;
+    --pos-color-interactive-hover: #214d8e;
+    --pos-color-interactive-active: #214d8e;
+    --pos-color-interactive-disabled: #daeafb;
 
     /* colorful elements */
     --pos-color-colorful-background: #299c64;
@@ -42,54 +42,55 @@
     --pos-color-colorful-hover: #39ac74;
 
     /* content selection */
-    --pos-color-selection-background: #2e70c1;
+    --pos-color-selection-background: #214d8e;
     --pos-color-selection-foreground: #fff;
 
     /* frames */
-    --pos-color-divider: #e2e2e2;
+    --pos-color-divider: #e2e8f0;
 
     /* buttons */
-    --pos-color-button-default-background: #f5f5f5;
-    --pos-color-button-default-foreground: #303030;
-    --pos-color-button-default-frame: #e2e2e2;
-    --pos-color-button-default-hover-background: #f5f5f5;
-    --pos-color-button-default-hover-foreground: #303030;
-    --pos-color-button-default-hover-frame: #303030;
+    --pos-color-button-default-background: #141414;
+    --pos-color-button-default-foreground: #ffffff;
+    --pos-color-button-default-frame: var(--pos-color-button-default-background);
+    --pos-color-button-default-hover-background: #2e70c1;
+    --pos-color-button-default-hover-foreground: #ffffff;
+    --pos-color-button-default-hover-frame: var(--pos-color-button-default-frame);
 
-    --pos-color-button-secondary-background: #f5f5f5;
-    --pos-color-button-secondary-foreground: #303030;
-    --pos-color-button-secondary-frame: #e2e2e2;
-    --pos-color-button-secondary-hover-background: #f5f5f5;
-    --pos-color-button-secondary-hover-foreground: #303030;
-    --pos-color-button-secondary-hover-frame: #303030;
+    --pos-color-button-secondary-background: #ffffff;
+    --pos-color-button-secondary-foreground: #2e70c1;
+    --pos-color-button-secondary-frame: #e2e8f0;
+    --pos-color-button-secondary-hover-background: #ffffff;
+    --pos-color-button-secondary-hover-foreground: #141414;
+    --pos-color-button-secondary-hover-frame: #141414;
 
     /* links and interactive elements */
-    --pos-color-interactive-text: #299c64;
-    --pos-color-interactive-hover: #39ac74;
+    --pos-color-interactive-text: #2e70c1;
+    --pos-color-interactive-hover: #214d8e;
 
-    --pos-color-navigation-hover: #fff;
+    --pos-color-navigation-hover: #daeafb;
 
     /* inputs */
-    --pos-color-input-default-foreground: #303030;
-    --pos-color-input-default-background: #f8f8f8;
-    --pos-color-input-default-border: var(--pos-color-divider);
-    --pos-color-input-default-hover-foreground: #303030;
-    --pos-color-input-default-hover-background: #fff;
+    --pos-color-input-default-placeholder: var(--pos-color-content-supplementary);
+    --pos-color-input-default-background: #ffffff;
+    --pos-color-input-default-foreground: #384150;
+    --pos-color-input-default-border: #6c727f;
+    --pos-color-input-default-hover-background: #ffffffX;
+    --pos-color-input-default-hover-foreground: #384150;
     --pos-color-input-default-hover-border: var(--pos-color-input-default-border);
-    --pos-color-input-default-focus-foreground: var(--pos-color-input-default-foreground);
     --pos-color-input-default-focus-background: var(--pos-color-input-default-background);
+    --pos-color-input-default-focus-foreground: var(--pos-color-input-default-foreground);
     --pos-color-input-default-focus-border: var(--pos-color-input-default-border);
   
     /* utility */
-    --pos-color-important: 185, 28, 28;
-    --pos-color-important-hover: 202, 58, 49;
-    --pos-color-important-disabled: 254, 202, 202;
-    --pos-color-confirmation: 15, 123, 10;
-    --pos-color-confirmation-hover: 9, 143, 105;
-    --pos-color-confirmation-disabled: 187, 221, 211;
-    --pos-color-warning: 243, 177, 78;
-    --pos-color-warning-hover: 255, 190, 91;
-    --pos-color-warning-disabled: 255, 233, 200;
+    --pos-color-important: #b62324;
+    --pos-color-important-hover: #c73e37;
+    --pos-color-important-disabled: #fccbcb;
+    --pos-color-confirmation: #167b16;
+    --pos-color-confirmation-hover: #198f6a;
+    --pos-color-confirmation-disabled: #bcddd3;
+    --pos-color-warning: #f0b357;
+    --pos-color-warning-hover: #fcc064;
+    --pos-color-warning-disabled: #feeaca;
   }
 
 
@@ -115,14 +116,14 @@
 /* buttons and inputs shape
 ============================================================================ */
 :root {
-  --pos-padding-input: 1.5em;
+  --pos-padding-input: 8px;
 
-  --pos-height-input: 2.6rem;
+  --pos-height-input: 44px;
 
   --pos-border-input: 1px;
 
-  --pos-radius-input: .5rem;
-  --pos-radius-button: 22px;
+  --pos-radius-input: 0;
+  --pos-radius-button: 4px;
 }
 
 
