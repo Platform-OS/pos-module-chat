@@ -44,6 +44,19 @@ mkdir -p app/modules/user/public/lib/queries/role_permissions
 cp modules/user/public/lib/queries/role_permissions/permissions.liquid app/modules/user/public/lib/queries/role_permissions/permissions.liquid
 ```
 
+4. Add the following to the `<head>` section of your application layout
+
+```
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-reset.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-config.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-button.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-typography.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-avatar.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-forms.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-page.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/chat/style/inbox.css' | asset_url }}">
+```
+
 ### Managing Module Files
 
 The default behavior of modules is that **the files are never deleted**. It is assumed that developers might not have access to all of the files, and thanks to this feature, they can still overwrite some of the module's files without breaking them. Since the User Module is fully public, it is recommended to delete files on deployment. To do this, ensure your `app/config.yml` includes the User Module and its dependencies in the list `modules_that_allow_delete_on_deploy`:
