@@ -39,7 +39,7 @@
 <!-- end message templates -->
 
 
-<div id="pos-chat-inbox" class="{% if current_conversation %} pos-chat-inbox-conversation-active {% endif %}">
+<div id="pos-chat-inbox" class="pos-app {% if current_conversation %} pos-chat-inbox-conversation-active {% endif %}">
 
   <ul class="pos-chat-conversations" id="pos-chat-conversations">
     {% for conversation in conversations.results %}

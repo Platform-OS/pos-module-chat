@@ -5,61 +5,61 @@
 
 
 
-*:where(:not(html, iframe, canvas, img, svg, video, audio, input):not(svg *, symbol *)) {
+:where(.pos-app) *:where(:not(html, iframe, canvas, img, svg, video, audio, input):not(svg *, symbol *)) {
   all: unset;
   display: revert;
 }
 
-*,
-*::before,
-*::after {
+:where(.pos-app) *,
+:where(.pos-app) *::before,
+:where(.pos-app) *::after {
   box-sizing: border-box;
 }
 
-a,
-button {
+:where(.pos-app) a,
+:where(.pos-app) button {
   cursor: revert;
 }
 
-label {
+:where(.pos-app) label {
   cursor: pointer;
 }
 
-ol, ul, menu {
+:where(.pos-app) ol, :where(.pos-app) ul, :where(.pos-app) menu {
   list-style: none;
 }
 
-img {
+:where(.pos-app) img {
   max-width: 100%;
   height: auto;
 }
 
-table {
+:where(.pos-app) table {
   border-collapse: collapse;
 }
 
-input, textarea {
+:where(.pos-app) input, :where(.pos-app) textarea {
   -webkit-user-select: auto;
 }
 
-textarea {
+:where(.pos-app) textarea {
   white-space: revert;
 }
 
-meter {
+:where(.pos-app) meter {
   -webkit-appearance: revert;
   appearance: revert;
 }
 
-::placeholder {
+:where(.pos-app) ::placeholder {
   color: unset;
 }
 
-:where([hidden]) {
+:where(.pos-app) :where([hidden]) {
   display: none;
 }
 
-:where([contenteditable]:not([contenteditable="false"])) {
+:where(.pos-app) :where([contenteditable]:not([contenteditable="false"])) {
   -moz-user-modify: read-write;
   -webkit-user-modify: read-write;
   overflow-wrap: break-word;
@@ -67,15 +67,11 @@ meter {
   -webkit-user-select: auto;
 }
 
-:where([draggable="true"]) {
+:where(.pos-app) :where([draggable="true"]) {
   -webkit-user-drag: element;
 }
 
-html {
-  font-family: sans-serif;
-}
-
-q:before,
-q:after {
+:where(.pos-app) q:before,
+:where(.pos-app) q:after {
   display: none;
 }

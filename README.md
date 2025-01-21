@@ -44,7 +44,7 @@ mkdir -p app/modules/user/public/lib/queries/role_permissions
 cp modules/user/public/lib/queries/role_permissions/permissions.liquid app/modules/user/public/lib/queries/role_permissions/permissions.liquid
 ```
 
-4. Add the following to the `<head>` section of your application layout
+4. Add the following to the `<head>` section of your application layout to get the basic styling provided with the module. To overwrite the colors and spacings you can overwrite the `pos-config.css` 
 
 ```
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-reset.css' | asset_url }}">
@@ -55,6 +55,23 @@ cp modules/user/public/lib/queries/role_permissions/permissions.liquid app/modul
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-forms.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-page.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'modules/chat/style/inbox.css' | asset_url }}">
+```
+
+5. Add the following to the `<head>` section of your application layout *before any other `<script>` tag on the page. Or - you you already using an import map, just extend it with the following:
+
+```
+<script type="importmap">
+  {
+    "imports": {
+      "/": "{{ 'modules/chat/js/' | asset_url }}",
+      "chat.js": "{{ 'modules/chat/js/chat.js' | asset_url }}",
+      "consumer.js": "{{ 'modules/chat/js/consumer.js' | asset_url }}",
+      "csrfToken.js": "{{ 'modules/chat/js/csrfToken.js' | asset_url }}",
+      "notifications.js": "{{ 'modules/chat/js/notifications.js' | asset_url }}",
+      "./": "./"
+    }
+  }
+</script>
 ```
 
 ### Managing Module Files
