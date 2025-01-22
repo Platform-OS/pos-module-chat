@@ -1,0 +1,134 @@
+/*
+  stores all configurable variables used for styling
+
+  colors
+  fonts
+  spacing
+  buttons shape
+
+
+
+
+  sizes
+  easing functions
+*/
+
+
+
+  /* colors
+  ============================================================================ */
+  :root {
+
+    /* general content */
+    --pos-color-content-background: #f7f8fa;
+    --pos-color-content-foreground: #384150;
+    --pos-color-content-inverted-background: var(--pos-color-content-foreground);
+    --pos-color-content-inverted-foreground: var(--pos-color-content-background);
+
+    --pos-color-content-supplementary: #6c727f;
+
+    --pos-color-focused: #2e70c1; /* outline for focused elements */
+    --pos-color-highlighted: #78e677; /* elements that needs user attention */
+
+    /* interactive elements */
+    --pos-color-interactive-text: #2e70c1;
+    --pos-color-interactive-hover: #214d8e;
+    --pos-color-interactive-active: #214d8e;
+    --pos-color-interactive-disabled: #daeafb;
+
+    /* colorful elements */
+    --pos-color-colorful-background: #299c64;
+    --pos-color-colorful-foreground: #fff;
+    --pos-color-colorful-hover: #39ac74;
+
+    /* content selection */
+    --pos-color-selection-background: #214d8e;
+    --pos-color-selection-foreground: #fff;
+
+    /* frames */
+    --pos-color-divider: #e2e8f0;
+
+    /* buttons */
+    --pos-color-button-default-background: #141414;
+    --pos-color-button-default-foreground: #ffffff;
+    --pos-color-button-default-frame: var(--pos-color-button-default-background);
+    --pos-color-button-default-hover-background: #2e70c1;
+    --pos-color-button-default-hover-foreground: #ffffff;
+    --pos-color-button-default-hover-frame: var(--pos-color-button-default-frame);
+
+    --pos-color-button-secondary-background: #ffffff;
+    --pos-color-button-secondary-foreground: #2e70c1;
+    --pos-color-button-secondary-frame: #e2e8f0;
+    --pos-color-button-secondary-hover-background: #ffffff;
+    --pos-color-button-secondary-hover-foreground: #141414;
+    --pos-color-button-secondary-hover-frame: #141414;
+
+    /* links and interactive elements */
+    --pos-color-interactive-text: #2e70c1;
+    --pos-color-interactive-hover: #214d8e;
+
+    --pos-color-navigation-hover: #daeafb;
+
+    /* inputs */
+    --pos-color-input-default-placeholder: var(--pos-color-content-supplementary);
+    --pos-color-input-default-background: #ffffff;
+    --pos-color-input-default-foreground: #384150;
+    --pos-color-input-default-border: #6c727f;
+    --pos-color-input-default-hover-background: #ffffffX;
+    --pos-color-input-default-hover-foreground: #384150;
+    --pos-color-input-default-hover-border: var(--pos-color-input-default-border);
+    --pos-color-input-default-focus-background: var(--pos-color-input-default-background);
+    --pos-color-input-default-focus-foreground: var(--pos-color-input-default-foreground);
+    --pos-color-input-default-focus-border: var(--pos-color-input-default-border);
+  
+    /* utility */
+    --pos-color-important: #b62324;
+    --pos-color-important-hover: #c73e37;
+    --pos-color-important-disabled: #fccbcb;
+    --pos-color-confirmation: #167b16;
+    --pos-color-confirmation-hover: #198f6a;
+    --pos-color-confirmation-disabled: #bcddd3;
+    --pos-color-warning: #f0b357;
+    --pos-color-warning-hover: #fcc064;
+    --pos-color-warning-disabled: #feeaca;
+  }
+
+
+/* fonts
+============================================================================ */
+:root {
+  --pos-font-default: system-ui, sans-serif;
+  --pos-font-heading: 'Source Code Pro', 'Consolas', monospace;
+}
+
+
+/* spacing
+============================================================================ */
+:root {
+  --pos-padding-page: 2rem;
+  --pos-padding-panel: 1rem;
+
+  --pos-gap-navigation: 1rem;
+  --pos-gap-list: .2rem;
+}
+
+
+/* buttons and inputs shape
+============================================================================ */
+:root {
+  --pos-padding-input: 8px;
+
+  --pos-height-input: 44px;
+
+  --pos-border-input: 1px;
+
+  --pos-radius-input: 0;
+  --pos-radius-button: 4px;
+}
+
+
+/* card and panel shape
+============================================================================ */
+:root {
+  --pos-radius-panel: 1rem;
+}

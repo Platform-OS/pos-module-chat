@@ -29,6 +29,8 @@ body {
   align-items: center;
   justify-content: center;
   grid-row: 1 / 3;
+
+  text-align: center;
 }
 
 /* heading */
@@ -63,7 +65,13 @@ body {
     justify-content: center;
   }
 
-  .app-chat-intro-nav li:hover {
+  .app-chat-intro-nav a:hover,
+  .app-chat-intro-nav a:active {
+    color: inherit;
+  }
+
+  .app-chat-intro-nav li:hover,
+  .app-chat-intro-nav li:has(a:focus-visible) {
     anchor-name: --app-chat-intro-nav-active;
   }
 
@@ -81,7 +89,8 @@ body {
     content: '';
   }
 
-  .app-chat-intro-nav:has(li:hover):before {
+  .app-chat-intro-nav:has(li:hover):before,
+  .app-chat-intro-nav:has(a:focus-visible):before {
     background-color: var(--pos-color-navigation-hover);
   }
 
@@ -92,6 +101,10 @@ body {
       position-anchor: --app-chat-intro-nav-active;
       inset-inline-start: anchor(start);
     }
+  }
+
+  .app-chat-intro-nav:has(a:active):before {
+    scale: .96;
   }
 
 /* footer */
@@ -115,6 +128,7 @@ body {
   width: 100%;
   position: sticky;
   inset-block-start: 0;
+  z-index: 10;
 }
 
 /* primary navigation */
@@ -176,6 +190,15 @@ body {
     display: flex;
   }
 
+  .pos-chat-header-nav-primary a:hover,
+  .pos-chat-header-nav-primary a:active {
+    color: inherit;
+  }
+
+  .pos-chat-header-nav-primary a:focus-visible {
+    color: var(--pos-color-interactive-hover);
+  }
+
   /* profile menu */
   #pos-chat-header-nav-primary-profile {
     margin-inline-end: calc(var(--pos-padding-page) / -2);
@@ -186,11 +209,19 @@ body {
     border-radius: var(--pos-radius-panel);
     background-color: transparent;
 
+    user-select: none;
+
     transition: background-color .2s ease-in-out;
   }
 
   #pos-chat-header-nav-primary-profile:hover {
     background-color: var(--pos-color-navigation-hover);
+  }
+
+  #pos-chat-header-nav-primary-profile:focus-visible {
+    background-color: var(--pos-color-navigation-hover);
+
+    color: var(--pos-color-interactive-hover);
   }
 
     @supports (anchor-name: --pos-chat-header-active) {
@@ -254,14 +285,16 @@ body {
   inset-inline-end: 0;
   overflow: hidden;
 
+  opacity: 0;
   scale: 0;
-  translate: calc(var(--pos-padding-page) * -1) calc(var(--pos-gap-page) * -1);
+  translate: calc(var(--pos-padding-page) * -1) calc(var(--pos-gap-navigation) * -2);
   transform-origin: top right;
 
   transition: all .2s ease-in-out;
 }
 
   .pos-chat-header:has(#pos-chat-header-secondaryNavigationToggle:checked) .pos-chat-header-nav-secondary {
+    opacity: 1;
     translate: 0 0;
     scale: 1;
   }
@@ -324,6 +357,12 @@ body {
 
 .pos-chat-people a:hover {
   background-color: var(--pos-color-navigation-hover);
+}
+
+.pos-chat-people a:focus-visible {
+  background-color: var(--pos-color-navigation-hover);
+
+  color: var(--pos-color-interactive-hover)
 }
 
 

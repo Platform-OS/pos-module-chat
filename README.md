@@ -44,6 +44,36 @@ mkdir -p app/modules/user/public/lib/queries/role_permissions
 cp modules/user/public/lib/queries/role_permissions/permissions.liquid app/modules/user/public/lib/queries/role_permissions/permissions.liquid
 ```
 
+4. Add the following to the `<head>` section of your application layout to get the basic styling provided with the module. To overwrite the colors and spacings you can overwrite the CSS variables in `pos-config.css`.
+
+```
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-reset.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-config.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-button.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-typography.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-avatar.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-forms.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-page.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/chat/style/inbox.css' | asset_url }}">
+```
+
+5. Add the following to the `<head>` section of your application layout **before any other `<script>` tag on the page**. Or - if you already using an import map, just extend it with the following:
+
+```
+<script type="importmap">
+  {
+    "imports": {
+      "/": "{{ 'modules/chat/js/' | asset_url }}",
+      "chat.js": "{{ 'modules/chat/js/chat.js' | asset_url }}",
+      "consumer.js": "{{ 'modules/chat/js/consumer.js' | asset_url }}",
+      "csrfToken.js": "{{ 'modules/chat/js/csrfToken.js' | asset_url }}",
+      "notifications.js": "{{ 'modules/chat/js/notifications.js' | asset_url }}",
+      "./": "./"
+    }
+  }
+</script>
+```
+
 ### Managing Module Files
 
 The default behavior of modules is that **the files are never deleted**. It is assumed that developers might not have access to all of the files, and thanks to this feature, they can still overwrite some of the module's files without breaking them. Since the User Module is fully public, it is recommended to delete files on deployment. To do this, ensure your `app/config.yml` includes the User Module and its dependencies in the list `modules_that_allow_delete_on_deploy`:
@@ -87,3 +117,8 @@ The table below outlines the [resourceful routes](https://documentation.platform
 #### CRUD commands 
 
 ...
+
+
+## Customizing the looks
+
+The chat module by default uses styling provided by the platformOS Common Styling module. It's built with the intention to easily overwrite the colors, fonts and spacings by overwriting the CSS variables stored in `modules/common-styling/style/pos-config.css`. You can create your own `.css` file and just overwrite any value of any variable. If you need more CSS customization you can obviously just use standard styling techniques and if you need to change the HTML structure even further, you can overwrite any liquid partial used in the chat.

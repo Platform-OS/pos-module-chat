@@ -23,7 +23,7 @@ const chat = function(){
   // ------------------------------------------------------------------------
   module.settings = {};
   // do you want to enable debug mode that logs to console (bool)
-  module.settings.debug = true;
+  module.settings.debug = false;
   // the main container with the chat inbox (dom node)
   module.settings.inbox = document.querySelector('#pos-chat-inbox');
   // the input for typing new message (dom node)
@@ -130,11 +130,15 @@ const chat = function(){
         },
 
         initialized: function(){
-          console.log('[pos-module-chat] Initialized');
+          if(module.settings.debug){
+            console.log('[pos-module-chat] Initialized');
+          }
         },  
 
         connected: function(){
-          console.log('[pos-module-chat] Connected')
+          if(module.settings.debug){
+            console.log('[pos-module-chat] Connected')
+          }
 
           module.settings.messageInput.disabled = false;
           module.settings.messageInput.focus();
