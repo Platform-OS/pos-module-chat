@@ -13,13 +13,11 @@ method: get
 {% endcomment %}
 
 {% liquid
-  function current_user = 'modules/user/queries/user/current'
+  function current_profile = 'modules/profile/helpers/current_profile'
 
   # platformos-check-disable ConvertIncludeToRenderl, UnreachableCode
-  include 'modules/user/helpers/can_do_or_unauthorized', requester: current_user, do: 'chat.inbox', return_url: '/'
+  include 'modules/user/helpers/can_do_or_unauthorized', requester: current_profile, do: 'chat.inbox', return_url: '/'
   # platformos-check-enable ConvertIncludeToRender, UnreachableCode
-
-  function current_profile = 'modules/profile/queries/profiles/find', user_id: current_user.id, id: null, uuid: null, first_name: null, last_name: null
 
   assign conversation_id = context.params.conversation_id
   assign page = context.params.page | plus: 0 | default: 1
