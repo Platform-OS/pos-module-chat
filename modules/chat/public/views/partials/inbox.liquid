@@ -95,7 +95,7 @@
               assign name = other_participant.name
             endif
 
-            theme_render_rc 'components/atoms/avatar', size: 's', name: name, imageSrc: other_participant.avatar.photo.versions.sm
+            render 'modules/common-styling/user/avatar', size: 's', name: name, imageSrc: other_participant.avatar.photo.versions.sm
           endif
         %}
         {{ name }}
