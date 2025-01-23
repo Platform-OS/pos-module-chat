@@ -125,7 +125,9 @@ const chat = function(){
           //document.dispatchEvent(new CustomEvent('message', {detail: Object.assign(data, { status: (module.settings.currentUserId == data.autor_id) ? 'sent' : 'received'})}));
 
           if(module.settings.debug){
-            console.log('[pos-module-chat] Message received', data);
+            if(data.status === 'received'){
+              console.log('[pos-module-chat] Message received', data);
+            }
           }
         },
 

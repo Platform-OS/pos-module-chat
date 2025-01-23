@@ -39,13 +39,13 @@ metadata:
 ---
 {% parse_json sizes %}
 {
-  "xxxl": "pos-avatar-xxxl ",
-  "xxl": "pos-avatar-xxl ",
-  "xl": "pos-avatar-xl ",
-  "l": "pos-avatar-l ",
-  "m": "pos-avatar-m ",
-  "s": "pos-avatar-s ",
-  "xs": "pos-avatar-xs "
+  "xxxl": "w-48 h-48 text-7xl ",
+  "xxl": "w-40 h-40 text-6xl ",
+  "xl": "w-24 h-24 text-4xl ",
+  "l": "w-12 h-12 text-xl ",
+  "m": "w-8 h-8 text-xs ",
+  "s": "w-6 h-6 text-xs ",
+  "xs": "w-5 h-5 text-xs "
 }
 {% endparse_json %}
 {% parse_json colors %}
@@ -85,11 +85,11 @@ metadata:
 %}
 
 {% if imageSrc == blank %}
-<div class="{{stringClasses}} pos-avatar">
+<div class="{{stringClasses}}">
     {{names[0] | slice: 0}}{{names[1] | slice: 0}}
 </div>
 {% else %}
-<div class="{{imageClasses}} pos-avatar">
+<div class="{{imageClasses}}">
   <img src="{{imageSrc}}" class="object-cover {{sizes[size]}}" data-avatar="">
 </div>
 {% endif %}

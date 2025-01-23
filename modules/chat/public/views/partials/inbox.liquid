@@ -15,7 +15,7 @@
   let posChat = {};
   posChat.csrfToken = '{{ context.authenticity_token }}';
   posChat.profile = {};
-  posChat.profile.timezone = {% if current_profile.timezone %} {{ current_user_timezone }} {% else %} null {% endif %};
+  posChat.profile.timezone = {% if current_profile.timezone %} {{ current_profile.timezone }} {% else %} null {% endif %};
 
   posChat.strings = {
     connectionError: '{{ 'modules/chat/error_connection' | t }}'
