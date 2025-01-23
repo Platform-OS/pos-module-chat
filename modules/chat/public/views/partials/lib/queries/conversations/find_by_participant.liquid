@@ -18,7 +18,7 @@
   assign participants = '[]' | parse_json
 
   for participant_id in conversation.participant_ids
-    function profile = 'modules/profile/queries/profiles/find_proxy', id: participant_id
+    function profile = 'modules/profile/queries/profiles/find', id: participant_id
     assign participants = participants | add_to_array: profile
   endfor
 
