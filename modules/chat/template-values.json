@@ -6,7 +6,7 @@
   "dependencies": {
     "core": "^1.0.0",
     "profile": "^1.1.0",
-    "user": "^1.0.0",
+    "user": "^3.0.0",
     "common-styling": "0.0.4"
   }
 }
