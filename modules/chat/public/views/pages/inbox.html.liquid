@@ -4,19 +4,23 @@ slug: inbox
 {% liquid
   function current_profile = 'modules/profile/helpers/current_profile'
 
-  # platformos-check-disable ConvertIncludeToRenderl, UnreachableCode
+  # platformos-check-disable ConvertIncludeToRender, UnreachableCode
   include 'modules/user/helpers/can_do_or_unauthorized', requester: current_profile, do: 'chat.inbox', return_url: '/'
   # platformos-check-enable ConvertIncludeToRender, UnreachableCode
 
-  function record = 'modules/chat/lib/queries/records/find_by_uuid', uuid: context.params['to_uuid']
+  if context.params.to_uuid != blank
+    function record = 'modules/chat/lib/queries/records/find_by_uuid', uuid: context.params['to_uuid']
+  endif
   assign object = null | hash_merge: to_id: record.id, conversation_id: context.params['conversation_id']
 
-  function current_conversation = 'modules/chat/lib/commands/conversations/find_or_create', object: object, current_profile: current_profile
+  if record or context.params.conversation_id
+    function current_conversation = 'modules/chat/lib/commands/conversations/find_or_create', object: object, current_profile: current_profile
+  endif
   if current_conversation.valid == false
     assign current_conversation = null
   endif
   if current_conversation
-    function res = 'modules/chat/lib/commands/conversations/mark_read', conversation: current_conversation, participant_id: current_profile.id
+    function _res = 'modules/chat/lib/commands/conversations/mark_read', conversation: current_conversation, participant_id: current_profile.id
   endif
   function conversations = 'modules/chat/lib/queries/conversations/search_by_participant', participant_id: current_profile.id, limit: 20, page: 1
 

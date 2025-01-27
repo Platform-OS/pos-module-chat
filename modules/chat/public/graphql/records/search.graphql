@@ -4,6 +4,7 @@ query records_count(
   records(
     per_page: 1
     filter: {
+      table: { value: "modules/profile/profile" }
       properties: [
         { name: "uuid", value: $uuid }
       ]
