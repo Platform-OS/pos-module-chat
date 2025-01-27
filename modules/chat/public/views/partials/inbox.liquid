@@ -12,16 +12,29 @@
 </script>
 
 <script>
-  let posChat = {};
-  posChat.csrfToken = '{{ context.authenticity_token }}';
-  posChat.profile = {};
-  posChat.profile.timezone = {% if current_profile.timezone %} {{ current_profile.timezone }} {% else %} null {% endif %};
-
-  posChat.strings = {
-    connectionError: '{{ 'modules/chat/error_connection' | t }}'
+  /* namespace */
+  if(typeof window.pos !== 'object'){
+    window.pos = {};
+    window.pos.modules = {};
+    window.pos.translations = {};
   }
 
-  posChat.previousPageAvailable = true;
+  if(typeof window.pos.csrfToken !== 'string'){
+    window.pos.csrfToken = '{{ context.authenticity_token }}';
+  }
+
+  /* profile namespace */
+  if(typeof window.pos.profile !== 'object'){
+    window.pos.profile = {};
+  }
+
+  window.pos.profile.timezone = {% if current_profile.timezone %} {{ current_profile.timezone }} {% else %} null {% endif %};
+
+  /* translations used in module */
+  window.pos.translations = {
+    ...window.pos.translations,
+    connectionError: '{{ 'modules/chat/error_connection' | t }}'
+  }
 </script>
 <script type="module" defer src="{{ 'modules/chat/js/chat.js' | asset_url }}"></script>
 

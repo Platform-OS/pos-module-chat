@@ -12,6 +12,8 @@
 // ------------------------------------------------------------------------
 import consumer from 'consumer.js';
 
+
+
 // purpose:		handles sending and receiving messages as well as the inbox page
 // ************************************************************************
 const chat = function(){
@@ -40,7 +42,7 @@ const chat = function(){
 
     try {
       // the back-end returns the timezone formatted not according to tz identifier, so I'm going to risk the 'replace' here to make it work with .toLocaleString automatically
-      timezonedDate = date.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: posChat.profile.timezone.friendly_name_with_region.replace(' - ', '/') });
+      timezonedDate = date.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: window.pos.profile.timezone.friendly_name_with_region.replace(' - ', '/') });
     } catch {
       if(typeof Intl == 'object' && typeof Intl.NumberFormat == 'function'){
         timezonedDate = date.toLocaleString('en-US', { day: 'numeric', weekday: 'short', year: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true, timeZone: 'Etc/UTC' });
@@ -64,16 +66,14 @@ const chat = function(){
   };
   // the id of the currently logged user (string)
   module.settings.currentUserId = module.settings.messageInput.getAttribute('data-current-profile-id');
-  // converting the dates to user timezone if set in profile (string)
-  module.settings.currentUserTimezone = posChat.profile.timezone;
   // the loading indicator when loading messages (dom node)
   module.settings.loadingIndicator = document.querySelector('#pos-chat-loadingIndicator');
   // current page of messages (int)
   module.settings.currentPage = 1;
   // are there more pages (bool)
-  module.settings.morePages = posChat.previousPageAvailable || true;
+  module.settings.morePages = true
   // the message that will appear when the connection is lost
-  module.settings.lostConnection = posChat.strings.connectionError;
+  module.settings.lostConnection = pos.translations.connectionError;
 
   // the channel to send messages through (Action Cable channel)
   module.channel = null;
@@ -113,7 +113,7 @@ const chat = function(){
         room_id: module.conversationId,
         sender_name: module.settings.messageInput.getAttribute('data-from-name'),
         autor_id: module.settings.messageInput.getAttribute('data-current-profile-id'),
-        authenticity_token: posChat.csrfToken
+        authenticity_token: window.pos.csrfToken
       },
       {
         received: function(data){
