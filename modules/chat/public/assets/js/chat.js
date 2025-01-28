@@ -65,7 +65,9 @@ const chat = function(){
     messageSelector: '.pos-chat-message-content'
   };
   // the id of the currently logged user (string)
-  module.settings.currentUserId = module.settings.messageInput.getAttribute('data-current-profile-id');
+  module.settings.currentUserId = window.pos.profile.id;
+  // current user name
+  module.settings.currentUserName = window.pos.profile.name;
   // the loading indicator when loading messages (dom node)
   module.settings.loadingIndicator = document.querySelector('#pos-chat-loadingIndicator');
   // current page of messages (int)
@@ -78,7 +80,7 @@ const chat = function(){
   // the channel to send messages through (Action Cable channel)
   module.channel = null;
   // the id for the conversation (string)
-  module.conversationId = module.settings.messageInput.getAttribute('data-conversation-id');
+  module.conversationId = module.settings.inbox.getAttribute('data-conversation-id');
   // the message that will appear when something fails
   module.errorNotification = null;
 
@@ -184,7 +186,7 @@ const chat = function(){
     let messageData = {
       message: encodeHtml(message),
       autor_id: module.settings.currentUserId,
-      sender_name: module.settings.messageInput.getAttribute('data-from-name'),
+      sender_name: module.settings.currentUserName,
       created_at: new Date()
     };
 
@@ -338,6 +340,8 @@ const chat = function(){
     // handling what will happen on pressing enter in the input
     module.settings.messageInput.addEventListener('keypress', (event) => {
       if(event.which == 13 && is_desktop && !event.shiftKey && module.settings.messageInput.value.trim()){
+        event.preventDefault();
+
         module.sendMessage(module.settings.messageInput.value.trim());
         setTimeout(() => {
           module.settings.messageInput.value = '';
@@ -393,7 +397,7 @@ const chat = function(){
 
 document.addEventListener('DOMContentLoaded', () => {
   if(document.querySelector('#chat-messagesList-container')){
-    document.chat = new chat();
+    window.pos.modules.chat = new chat();
   }
 });
 

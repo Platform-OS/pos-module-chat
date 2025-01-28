@@ -25,7 +25,7 @@
 
   /* profile namespace */
   if(typeof window.pos.profile !== 'object'){
-    window.pos.profile = {};
+    window.pos.profile = {{ current_profile }};
   }
 
   window.pos.profile.timezone = {% if current_profile.timezone %} {{ current_profile.timezone }} {% else %} null {% endif %};
@@ -52,7 +52,11 @@
 <!-- end message templates -->
 
 
-<div id="pos-chat-inbox" class="pos-app {% if current_conversation %} pos-chat-inbox-conversation-active {% endif %}">
+<div
+  id="pos-chat-inbox"
+  data-conversation-id="{{ current_conversation.id }}"
+  class="pos-app {% if current_conversation %} pos-chat-inbox-conversation-active {% endif %}"
+>
 
   <ul class="pos-chat-conversations" id="pos-chat-conversations">
     {% for conversation in conversations.results %}
@@ -137,9 +141,6 @@
           placeholder="{{ 'modules/chat/message_input_placeholder' | t }}"
           class="pos-chat-conversation-input"
           id="chat-messageInput"
-          data-from-name="{{ current_profile.name }}"
-          data-conversation-id="{{ current_conversation.id}}"
-          data-current-profile-id="{{ current_profile.id }}"
           disabled
         ></textarea>
         <button type="submit" id="chat-sendButton" class="pos-button">{{ 'modules/chat/send' | t }}</button>
