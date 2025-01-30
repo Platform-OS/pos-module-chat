@@ -4,13 +4,13 @@
   basic
     icon
     label for screen readers
+    secondary
 */
 
 
 
 /* basic
 ============================================================================ */
-button,
 .pos-button {
   user-select: none;
   -webkit-user-select: none;
@@ -61,10 +61,17 @@ button,
   box-shadow: 0 0 6px 1px var(--pos-color-focused);
 }
 
+.pos-button:disabled {
+  background-color: var(--pos-color-button-default-disabled-background);
+  border-color: var(--pos-color-button-default-disabled-frame);
+
+  color: var(--pos-color-button-default-disabled-foreground);
+}
+
 /* icon */
 .pos-button svg {
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   flex-shrink: 0;
 
   fill: currentColor;
@@ -81,4 +88,33 @@ button,
     position: absolute;
     left: -200vw;
     top: -100vh;
+}
+
+
+
+/* secondary
+============================================================================ */
+.pos-button-secondary {
+  background-color: var(--pos-color-button-secondary-background);
+  border-color: var(--pos-color-button-secondary-frame);
+
+  color: var(--pos-color-button-secondary-foreground);
+}
+
+.pos-button-secondary:hover {
+  background-color: var(--pos-color-button-secondary-hover-background);
+  border-color: var(--pos-color-button-secondary-hover-frame);
+
+  color: var(--pos-color-button-secondary-hover-foreground);
+}
+
+.pos-button-secondary:active {
+  transform: scale(98%);
+}
+
+.pos-button-secondary:disabled {
+  background-color: var(--pos-color-button-secondary-disabled-background);
+  border-color: var(--pos-color-button-secondary-disabled-frame);
+
+  color: var(--pos-color-button-secondary-disabled-foreground);
 }

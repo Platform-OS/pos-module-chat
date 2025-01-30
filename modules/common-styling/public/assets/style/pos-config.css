@@ -55,6 +55,9 @@
     --pos-color-button-default-hover-background: #2e70c1;
     --pos-color-button-default-hover-foreground: #ffffff;
     --pos-color-button-default-hover-frame: var(--pos-color-button-default-frame);
+    --pos-color-button-default-disabled-background: #7fa9dd;
+    --pos-color-button-default-disabled-foreground: #ffffff;
+    --pos-color-button-default-disabled-frame: var(--pos-color-button-default-disabled-background);
 
     --pos-color-button-secondary-background: #ffffff;
     --pos-color-button-secondary-foreground: #2e70c1;
@@ -62,6 +65,9 @@
     --pos-color-button-secondary-hover-background: #ffffff;
     --pos-color-button-secondary-hover-foreground: #141414;
     --pos-color-button-secondary-hover-frame: #141414;
+    --pos-color-button-secondary-disabled-background: #ffffff;
+    --pos-color-button-secondary-disabled-foreground: #82abdd;
+    --pos-color-button-secondary-disabled-frame: var(--pos-color-button-secondary-frame);
 
     /* links and interactive elements */
     --pos-color-interactive-text: #2e70c1;
