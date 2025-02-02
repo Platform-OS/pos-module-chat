@@ -17,6 +17,12 @@ Add those to your layout's `<head>` section:
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-page.css' | asset_url }}">
 ```
 
+There is an optional CSS reset available. It's not recommended to use in on an existing app probably, but you can safely use it on a fresh one. To use it just place the following CSS reference on top of every other one.
+
+```
+<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-reset.css' | asset_url }}">
+```
+
 
 ## Customizing CSS
 When using the `common-styling` module you can easiliy configure the looks of components by overwriting the CSS variables stored in `pos-config.css`. Just copy the variables you need to overwrite to the CSS of your app so they can be overwritten.
@@ -29,9 +35,9 @@ When naming your module CSS files, please prefix them with `pos-` for coinsisten
 
 When naming your CSS classes, please prefix those with `pos-`. We are trying to make sure that the CSS from modules won't interfere with any other CSS that could be used in the project. Keep in mind that the module can be used in various contextes so any styling needs to be scoped just to the module code.
 
-[THIS NEEDS AN UPDATE, THIS IS WRONG. CSS SHOULD BE SCOPED JUST TO COMPONENT, NO GLOBAL RESET, JUST RESET WHAT YOU ARE CURRENTLY STYLING AND ALLOW THE GLOBAL RESET TO BE HANDLED ON THE APP LEVEL IF NEEDED]
--There are some CSS rules that will be inherited when the parent container has a specific class. For example, the `pos-reset.css` file resets all the default CSS styling, but only for containers that has `.pos-app` class. The same goes to the forms. One can use `.pos-form` class on a container to style all of the children inputs.-
-[/]
+Every CSS is placed inside a `common-styling` CSS layer to lower it's specificity and so that you could always easily overwrite them without having to worry about selectors used.
+
+There are some CSS rules that will be inherited when the parent container has a specific class. Example of`.pos-form` class on a container will style the inputs, buttons and form-related stuff inside the container.
 
 Each component should have it's own separate CSS file.
 

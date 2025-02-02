@@ -9,6 +9,9 @@
 /* no-image avatar
 ============================================================================ */
 .pos-avatar {
+  all: unset;
+  display: revert;
+
   width: 48px;
   height: 48px;
   display: flex;
