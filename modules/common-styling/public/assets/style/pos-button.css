@@ -13,6 +13,11 @@
 
   /* basic
   ============================================================================ */
+  .pos-button,
+  .pos-button * {
+    box-sizing: border-box;
+  }
+
   .pos-button {
     all: unset;
     display: revert;
@@ -47,7 +52,7 @@
     font-weight: 500;
     color: var(--pos-color-button-default-foreground);
 
-    transition: all .1s ease-in-out;
+    transition: all .1s linear;
   }
 
   .pos-button:hover {

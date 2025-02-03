@@ -81,7 +81,7 @@ const chat = function(){
   module.channel = null;
   // the id for the conversation (string)
   module.conversationId = module.settings.inbox.getAttribute('data-conversation-id');
-  // the message that will appear when something fails
+  // instance of the toast notification shown when something fails
   module.errorNotification = null;
 
 
@@ -302,9 +302,9 @@ const chat = function(){
   // ------------------------------------------------------------------------
   module.blocked = () => {
     module.settings.messageInput.disabled = true;
-    module.errorNotification = new posComponents.flash(
+    module.errorNotification = new window.pos.modules.toast(
       'error',
-      'We cannot connect to the server. Check your internet connection or try reloading the page.'
+      window.pos.translations.chat.connectionError
     );
   };
 

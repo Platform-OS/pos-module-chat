@@ -33,7 +33,9 @@
   /* translations used in module */
   window.pos.translations = {
     ...window.pos.translations,
-    connectionError: '{{ 'modules/chat/error_connection' | t }}'
+    chat: {
+      connectionError: '{{ 'modules/chat/error_connection' | t }}'
+    }
   }
 </script>
 <script type="module" defer src="{{ 'modules/chat/js/chat.js' | asset_url }}"></script>

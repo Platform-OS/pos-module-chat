@@ -2,9 +2,9 @@
   handles showing the floating notifications
 
   usage:
-    new posComponents.flash('type', 'message');
+    new window.pos.modules.toast('type', 'message');
     or
-    let notification = new api.flash('type', 'message')
+    let notification = new window.pos.modules.toast('type', 'message')
     notification.remove();
 
   types:
@@ -20,7 +20,7 @@
 //            the message to show (string)
 //            settings to overwrite the defaults (object)
 // ************************************************************************
-window.pos.modules.flash = function(type, message, userSettings){
+window.pos.modules.toast = function(type, message, userSettings){
 
   // cache 'this' value not to be overwritten later
   const module = this;
@@ -29,13 +29,13 @@ window.pos.modules.flash = function(type, message, userSettings){
   // ------------------------------------------------------------------------
   module.settings = {};
   // notifications container (dom node)
-  module.settings.container = document.querySelector('[data-pos-component="flashes"]');
+  module.settings.container = document.querySelector('#pos-toasts');
   // the html template to be used for notifications (dom node)
-  module.settings.template = module.settings.container.querySelector('[data-flash-template]');
+  module.settings.template = module.settings.container.querySelector('#pos-toast-template');
   // the selector for the text content in the template (string)
-  module.settings.contentSelector = '[data-flash-content]';
+  module.settings.contentSelector = '.pos-toast-content';
   // the selector for the button that closes the notification (string)
-  module.settings.close = '[data-flash-close]';
+  module.settings.closeSelector = '.pos-toast-close';
   // the notification in dom (dom object)
   module.settings.notification = null;
   // if you want to overwrite the default autohide (bool)
@@ -66,6 +66,7 @@ window.pos.modules.flash = function(type, message, userSettings){
         module.hide();
       }, (module.settings.debug) ? 700 : 5000);
     }
+
   };
 
 
@@ -75,23 +76,19 @@ window.pos.modules.flash = function(type, message, userSettings){
     // clone the template
     module.settings.notification = module.settings.template.content.firstElementChild.cloneNode(true);
 
-    // remove the notification styles for all other types than the currently selected
-    module.settings.notification.querySelectorAll('[data-flash] > div > div').forEach((item) => {
-      if(!item.matches(`[data-flash-${type}]`)){
-        item.remove();
-      }
-    });
+    // add class corresponding to the severity
+    module.settings.notification.classList.add(`pos-toast-${type}`);
 
     // apply the message to content
     module.settings.notification.querySelector(module.settings.contentSelector).innerHTML = message;
 
     // set the option to close notification when clicking on close button
-    module.settings.notification.querySelector(module.settings.close).addEventListener('click', () => {
+    module.settings.notification.querySelector(module.settings.closeSelector).addEventListener('click', () => {
       module.hide();
     }, {once: true});
 
     // add the class that will animate the appearing
-    module.settings.notification.classList.add('flash-loading');
+    module.settings.notification.classList.add('pos-toast-loading');
 
     // when we append the template to the container we are loosing the reference so we need to get it back
     module.settings.notification = module.settings.container.appendChild(module.settings.notification);
@@ -106,7 +103,7 @@ window.pos.modules.flash = function(type, message, userSettings){
     clearTimeout(autoHideTimeout);
 
     // add a class that will animate removing the node
-    module.settings.notification.classList.add('flash-unloading');
+    module.settings.notification.classList.add('pos-toast-unloading');
 
     // remove the node from DOM as it's not needed anymore
     module.settings.notification.addEventListener('animationend', () => {
@@ -119,4 +116,4 @@ window.pos.modules.flash = function(type, message, userSettings){
 
 };
 
-document.dispatchEvent(new Event('apiFlashReady'));
+document.dispatchEvent(new Event('pos-modules-toast-ready'));

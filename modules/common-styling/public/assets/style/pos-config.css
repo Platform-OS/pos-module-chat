@@ -340,7 +340,7 @@
   /* utility */
   --pos-color-important: var(--pos-color-dark-important);
   --pos-color-important-hover: var(--pos-color-dark-important-hover);
-  --pos-color-important-disabled: var(--pos-color-dark-important);
+  --pos-color-important-disabled: var(--pos-color-dark-important-disabled);
   --pos-color-confirmation: var(--pos-color-dark-confirmation);
   --pos-color-confirmation-hover: var(--pos-color-dark-confirmation);
   --pos-color-confirmation-disabled: var(--pos-color-dark-confirmation-disabled);
@@ -422,7 +422,7 @@
     /* utility */
     --pos-color-important: var(--pos-color-dark-important);
     --pos-color-important-hover: var(--pos-color-dark-important-hover);
-    --pos-color-important-disabled: var(--pos-color-dark-important);
+    --pos-color-important-disabled: var(--pos-color-dark-important-disabled);
     --pos-color-confirmation: var(--pos-color-dark-confirmation);
     --pos-color-confirmation-hover: var(--pos-color-dark-confirmation);
     --pos-color-confirmation-disabled: var(--pos-color-dark-confirmation-disabled);
