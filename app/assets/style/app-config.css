@@ -3,14 +3,7 @@
 
   colors
   fonts
-  spacing
-  buttons shape
-
-
-
-
-  sizes
-  easing functions
+  buttons and inputs shape
 */
 
 
@@ -87,17 +80,6 @@
 }
 
 
-/* spacing
-============================================================================ */
-:root {
-  --pos-padding-page: 2rem;
-  --pos-padding-panel: 1rem;
-
-  --pos-gap-navigation: 1rem;
-  --pos-gap-list: .2rem;
-}
-
-
 /* buttons and inputs shape
 ============================================================================ */
 :root {
@@ -109,11 +91,4 @@
 
   --pos-radius-input: .5rem;
   --pos-radius-button: 22px;
-}
-
-
-/* card and panel shape
-============================================================================ */
-:root {
-  --pos-radius-panel: 1rem;
 }
