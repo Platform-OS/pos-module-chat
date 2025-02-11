@@ -2,10 +2,10 @@
   {
     "imports": {
       "/": "{{ 'modules/chat/js/' | asset_url }}",
-      "chat.js": "{{ 'modules/chat/js/chat.js' | asset_url }}",
-      "consumer.js": "{{ 'modules/chat/js/consumer.js' | asset_url }}",
-      "csrfToken.js": "{{ 'modules/chat/js/csrfToken.js' | asset_url }}",
-      "notifications.js": "{{ 'modules/chat/js/notifications.js' | asset_url }}",
+      "pos-chat.js": "{{ 'modules/chat/js/pos-chat.js' | asset_url }}",
+      "pos-chat-consumer.js": "{{ 'modules/chat/js/pos-chat-consumer.js' | asset_url }}",
+      "pos-chat-csrfToken.js": "{{ 'modules/chat/js/pos-chat-csrfToken.js' | asset_url }}",
+      "pos-chat-notifications.js": "{{ 'modules/chat/js/pos-chat-notifications.js' | asset_url }}",
       "./": "./"
     }
   }
@@ -38,7 +38,7 @@
     }
   }
 </script>
-<script type="module" defer src="{{ 'modules/chat/js/chat.js' | asset_url }}"></script>
+<script type="module" defer src="{{ 'modules/chat/js/pos-chat.js' | asset_url }}"></script>
 
 <!-- message templates -->
 <template id="pos-chat-template-message-received">

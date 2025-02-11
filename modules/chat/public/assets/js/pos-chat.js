@@ -10,7 +10,7 @@
 
 // imports
 // ------------------------------------------------------------------------
-import consumer from 'consumer.js';
+import consumer from 'pos-chat-consumer.js';
 
 
 

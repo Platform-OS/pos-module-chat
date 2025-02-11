@@ -51,6 +51,10 @@
     }
   }
 
+  .pos-chat-conversations li {
+    z-index: 1;
+  }
+
   .pos-chat-conversations li:not(:last-child) {
     padding-block-end: var(--pos-gap-list);
   }
@@ -98,7 +102,6 @@
       width: anchor-size(width);
       height: anchor-size(height);
       position: absolute;
-      z-index: -1;
       position-anchor: --pos-chat-conversation-active;
       inset-block-start: anchor(start);
   
