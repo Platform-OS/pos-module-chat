@@ -54,7 +54,7 @@ cp modules/user/public/lib/queries/role_permissions/permissions.liquid app/modul
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-avatar.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-forms.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-page.css' | asset_url }}">
-<link rel="stylesheet" href="{{ 'modules/chat/style/inbox.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/chat/style/pos-chat-inbox.css' | asset_url }}">
 ```
 
 5. Add the following to the `<head>` section of your application layout **before any other `<script>` tag on the page**. Or - if you already using an import map, just extend it with the following:
@@ -64,10 +64,10 @@ cp modules/user/public/lib/queries/role_permissions/permissions.liquid app/modul
   {
     "imports": {
       "/": "{{ 'modules/chat/js/' | asset_url }}",
-      "chat.js": "{{ 'modules/chat/js/chat.js' | asset_url }}",
-      "consumer.js": "{{ 'modules/chat/js/consumer.js' | asset_url }}",
-      "csrfToken.js": "{{ 'modules/chat/js/csrfToken.js' | asset_url }}",
-      "notifications.js": "{{ 'modules/chat/js/notifications.js' | asset_url }}",
+      "pos-chat.js": "{{ 'modules/chat/js/pos-chat.js' | asset_url }}",
+      "pos-chat-consumer.js": "{{ 'modules/chat/js/pos-chat-consumer.js' | asset_url }}",
+      "pos-chat-csrfToken.js": "{{ 'modules/chat/js/pos-chat-csrfToken.js' | asset_url }}",
+      "pos-chat-notifications.js": "{{ 'modules/chat/js/pos-chat-notifications.js' | asset_url }}",
       "./": "./"
     }
   }
