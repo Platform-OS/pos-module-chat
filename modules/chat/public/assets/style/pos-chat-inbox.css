@@ -157,6 +157,7 @@
     overflow: hidden;
 
     text-overflow: ellipsis;
+    font-size: inherit;
     white-space: nowrap;
   }
 
