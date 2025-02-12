@@ -14,10 +14,11 @@
 {% endcomment %}
 
 {% liquid
-  function current_profile = 'modules/community/helpers/current_profile', user_id: context.current_user.id
+  function current_profile = 'modules/profile/helpers/current_profile'
+
   assign room_id = context.params.room_id
 
-  function conversation = 'modules/chat/lib/queries/conversations/find_by_participant', id: room_id, participant_id: current_profile.id
+  function conversation = 'modules/chat/lib/queries/conversations/find_by_participant', id: room_id, participant_id: current_profile.id, include_messages: null
   if conversation
     assign message_safe = context.params.message | raw_escape_string
     assign object = '{}' | parse_json

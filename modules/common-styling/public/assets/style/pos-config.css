@@ -1,0 +1,479 @@
+/*
+  stores all configurable variables used for styling
+
+  [TO DO: THIS NEEDS TO BE ADJUSTED WITH FIGMA, BOTH WAYS PROBABLY SO WE CAN JUST COPY THE VAR NAME, 1:1 WOULD BE NICE]
+
+  colors
+    light mode
+    dark mode
+    colors based on the choosen theme
+  fonts
+  spacing
+  buttons and inputs shape
+  card and panel shape
+*/
+
+
+
+/* colors
+============================================================================ */
+
+/* colors: light mode
+------------------------------ */
+:root {
+  /* general content */
+  --pos-color-light-content-background: #f7f8fa;
+  --pos-color-light-content-foreground: #384150;
+  --pos-color-light-content-inverted-background: var(--pos-color-content-foreground);
+  --pos-color-light-content-inverted-foreground: var(--pos-color-content-background);
+
+  --pos-color-light-content-supplementary: #6c727f;
+
+  --pos-color-light-focused: #2e70c1; /* outline for focused elements */
+  --pos-color-light-highlighted: #78e677; /* elements that needs user attention */
+
+  /* interactive elements */
+  --pos-color-light-interactive-text: #2e70c1;
+  --pos-color-light-interactive-hover: #214d8e;
+  --pos-color-light-interactive-active: #214d8e;
+  --pos-color-light-interactive-disabled: #daeafb;
+
+  /* colorful elements */
+  --pos-color-light-colorful-background: #299c64;
+  --pos-color-light-colorful-foreground: #fff;
+  --pos-color-light-colorful-hover: #39ac74;
+
+  /* content selection */
+  --pos-color-light-selection-background: #214d8e;
+  --pos-color-light-selection-foreground: #fff;
+
+  /* frames */
+  --pos-color-light-divider: #e2e8f0;
+
+  /* buttons */
+  --pos-color-light-button-default-background: #141414;
+  --pos-color-light-button-default-foreground: #ffffff;
+  --pos-color-light-button-default-frame: var(--pos-color-button-default-background);
+  --pos-color-light-button-default-hover-background: #2e70c1;
+  --pos-color-light-button-default-hover-foreground: #ffffff;
+  --pos-color-light-button-default-hover-frame: var(--pos-color-button-default-frame);
+  --pos-color-light-button-default-disabled-background: #7fa9dd;
+  --pos-color-light-button-default-disabled-foreground: #ffffff;
+  --pos-color-light-button-default-disabled-frame: var(--pos-color-button-default-disabled-background);
+
+  --pos-color-light-button-secondary-background: #ffffff;
+  --pos-color-light-button-secondary-foreground: #2e70c1;
+  --pos-color-light-button-secondary-frame: #e2e8f0;
+  --pos-color-light-button-secondary-hover-background: #ffffff;
+  --pos-color-light-button-secondary-hover-foreground: #141414;
+  --pos-color-light-button-secondary-hover-frame: #141414;
+  --pos-color-light-button-secondary-disabled-background: #ffffff;
+  --pos-color-light-button-secondary-disabled-foreground: #82abdd;
+  --pos-color-light-button-secondary-disabled-frame: var(--pos-color-button-secondary-frame);
+
+  /* links and interactive elements */
+  --pos-color-light-interactive-text: #2e70c1;
+  --pos-color-light-interactive-hover: #214d8e;
+
+  --pos-color-light-navigation-hover: #daeafb;
+
+  /* inputs */
+  --pos-color-light-input-default-placeholder: var(--pos-color-content-supplementary);
+  --pos-color-light-input-default-background: #ffffff;
+  --pos-color-light-input-default-foreground: #384150;
+  --pos-color-light-input-default-border: #6c727f;
+  --pos-color-light-input-default-hover-background: #ffffffX;
+  --pos-color-light-input-default-hover-foreground: #384150;
+  --pos-color-light-input-default-hover-border: var(--pos-color-input-default-border);
+  --pos-color-light-input-default-focus-background: var(--pos-color-input-default-background);
+  --pos-color-light-input-default-focus-foreground: var(--pos-color-input-default-foreground);
+  --pos-color-light-input-default-focus-border: var(--pos-color-input-default-border);
+
+  /* utility */
+  --pos-color-light-important: #b62324;
+  --pos-color-light-important-hover: #c73e37;
+  --pos-color-light-important-disabled: #fccbcb;
+  --pos-color-light-confirmation: #167b16;
+  --pos-color-light-confirmation-hover: #198f6a;
+  --pos-color-light-confirmation-disabled: #bcddd3;
+  --pos-color-light-warning: #f0b357;
+  --pos-color-light-warning-hover: #fcc064;
+  --pos-color-light-warning-disabled: #feeaca;
+}
+
+/* colors: dark mode
+------------------------------ */
+:root {
+  /* general content */
+  --pos-color-dark-content-background: #f7f8fa;
+  --pos-color-dark-content-foreground: #384150;
+  --pos-color-dark-content-inverted-background: var(--pos-color-content-foreground);
+  --pos-color-dark-content-inverted-foreground: var(--pos-color-content-background);
+
+  --pos-color-dark-content-supplementary: #6c727f;
+
+  --pos-color-dark-focused: #2e70c1; /* outline for focused elements */
+  --pos-color-dark-highlighted: #78e677; /* elements that needs user attention */
+
+  /* interactive elements */
+  --pos-color-dark-interactive-text: #2e70c1;
+  --pos-color-dark-interactive-hover: #214d8e;
+  --pos-color-dark-interactive-active: #214d8e;
+  --pos-color-dark-interactive-disabled: #daeafb;
+
+  /* colorful elements */
+  --pos-color-dark-colorful-background: #299c64;
+  --pos-color-dark-colorful-foreground: #fff;
+  --pos-color-dark-colorful-hover: #39ac74;
+
+  /* content selection */
+  --pos-color-dark-selection-background: #214d8e;
+  --pos-color-dark-selection-foreground: #fff;
+
+  /* frames */
+  --pos-color-dark-divider: #e2e8f0;
+
+  /* buttons */
+  --pos-color-dark-button-default-background: #141414;
+  --pos-color-dark-button-default-foreground: #ffffff;
+  --pos-color-dark-button-default-frame: var(--pos-color-button-default-background);
+  --pos-color-dark-button-default-hover-background: #2e70c1;
+  --pos-color-dark-button-default-hover-foreground: #ffffff;
+  --pos-color-dark-button-default-hover-frame: var(--pos-color-button-default-frame);
+  --pos-color-dark-button-default-disabled-background: #7fa9dd;
+  --pos-color-dark-button-default-disabled-foreground: #ffffff;
+  --pos-color-dark-button-default-disabled-frame: var(--pos-color-button-default-disabled-background);
+
+  --pos-color-dark-button-secondary-background: #ffffff;
+  --pos-color-dark-button-secondary-foreground: #2e70c1;
+  --pos-color-dark-button-secondary-frame: #e2e8f0;
+  --pos-color-dark-button-secondary-hover-background: #ffffff;
+  --pos-color-dark-button-secondary-hover-foreground: #141414;
+  --pos-color-dark-button-secondary-hover-frame: #141414;
+  --pos-color-dark-button-secondary-disabled-background: #ffffff;
+  --pos-color-dark-button-secondary-disabled-foreground: #82abdd;
+  --pos-color-dark-button-secondary-disabled-frame: var(--pos-color-button-secondary-frame);
+
+  /* links and interactive elements */
+  --pos-color-dark-interactive-text: #2e70c1;
+  --pos-color-dark-interactive-hover: #214d8e;
+
+  --pos-color-dark-navigation-hover: #daeafb;
+
+  /* inputs */
+  --pos-color-dark-input-default-placeholder: var(--pos-color-content-supplementary);
+  --pos-color-dark-input-default-background: #ffffff;
+  --pos-color-dark-input-default-foreground: #384150;
+  --pos-color-dark-input-default-border: #6c727f;
+  --pos-color-dark-input-default-hover-background: #ffffffX;
+  --pos-color-dark-input-default-hover-foreground: #384150;
+  --pos-color-dark-input-default-hover-border: var(--pos-color-input-default-border);
+  --pos-color-dark-input-default-focus-background: var(--pos-color-input-default-background);
+  --pos-color-dark-input-default-focus-foreground: var(--pos-color-input-default-foreground);
+  --pos-color-dark-input-default-focus-border: var(--pos-color-input-default-border);
+
+  /* utility */
+  --pos-color-dark-important: #b62324;
+  --pos-color-dark-important-hover: #c73e37;
+  --pos-color-dark-important-disabled: #fccbcb;
+  --pos-color-dark-confirmation: #167b16;
+  --pos-color-dark-confirmation-hover: #198f6a;
+  --pos-color-dark-confirmation-disabled: #bcddd3;
+  --pos-color-dark-warning: #f0b357;
+  --pos-color-dark-warning-hover: #fcc064;
+  --pos-color-dark-warning-disabled: #feeaca;
+}
+
+/* colors based on the theme choosen
+------------------------------ */
+:root,
+:root.pos-theme-light {
+  /* general content */
+  --pos-color-content-background: var(--pos-color-light-content-background);
+  --pos-color-content-foreground: var(--pos-color-light-content-foreground);
+  --pos-color-content-inverted-background: var(--pos-color-light-content-inverted-background);
+  --pos-color-content-inverted-foreground: var(--pos-color-light-content-inverted-foreground);
+
+  --pos-color-content-supplementary: var(--pos-color-light-content-supplementary);
+
+  --pos-color-focused: var(--pos-color-light-focused);
+  --pos-color-highlighted: var(--pos-color-light-highlighted);
+
+  /* interactive elements */
+  --pos-color-interactive-text: var(--pos-color-light-interactive-text);
+  --pos-color-interactive-hover: var(--pos-color-light-interactive-hover);
+  --pos-color-interactive-active: var(--pos-color-light-interactive-active);
+  --pos-color-interactive-disabled: var(--pos-color-light-interactive-disabled);
+
+  /* colorful elements */
+  --pos-color-colorful-background: var(--pos-color-light-colorful-background);
+  --pos-color-colorful-foreground: var(--pos-color-light-colorful-foreground);
+  --pos-color-colorful-hover: var(--pos-color-light-colorful-hover);
+
+  /* content selection */
+  --pos-color-selection-background: var(--pos-color-light-selection-background);
+  --pos-color-selection-foreground: var(--pos-color-light-selection-foreground);
+
+  /* frames */
+  --pos-color-divider: var(--pos-color-light-divider);
+
+  /* buttons */
+  --pos-color-button-default-background: var(--pos-color-light-button-default-background);
+  --pos-color-button-default-foreground: var(--pos-color-light-button-default-foreground);
+  --pos-color-button-default-frame: var(--pos-color-light-button-default-frame);
+  --pos-color-button-default-hover-background: var(--pos-color-light-button-default-hover-background);
+  --pos-color-button-default-hover-foreground: var(--pos-color-light-button-default-hover-foreground);
+  --pos-color-button-default-hover-frame: var(--pos-color-light-button-default-hover-frame);
+  --pos-color-button-default-disabled-background: var(--pos-color-light-button-default-disabled-background);
+  --pos-color-button-default-disabled-foreground: var(--pos-color-light-button-default-disabled-foreground);
+  --pos-color-button-default-disabled-frame: var(--pos-color-light-button-default-disabled-frame);
+
+  --pos-color-button-secondary-background: var(--pos-color-light-button-secondary-background);
+  --pos-color-button-secondary-foreground: var(--pos-color-light-button-secondary-foreground);
+  --pos-color-button-secondary-frame: var(--pos-color-light-button-secondary-frame);
+  --pos-color-button-secondary-hover-background: var(--pos-color-light-button-secondary-hover-background);
+  --pos-color-button-secondary-hover-foreground: var(--pos-color-light-button-secondary-hover-foreground);
+  --pos-color-button-secondary-hover-frame: var(--pos-color-light-button-secondary-hover-frame);
+  --pos-color-button-secondary-disabled-background: var(--pos-color-light-button-secondary-disabled-background);
+  --pos-color-button-secondary-disabled-foreground: var(--pos-color-light-button-secondary-disabled-foreground);
+  --pos-color-button-secondary-disabled-frame: var(--pos-color-light-button-secondary-disabled-frame);
+
+  /* links and interactive elements */
+  --pos-color-interactive-text: var(--pos-color-light-interactive-text);
+  --pos-color-interactive-hover: var(--pos-color-light-interactive-hover);
+
+  --pos-color-navigation-hover: var(--pos-color-light-navigation-hover);
+
+  /* inputs */
+  --pos-color-input-default-placeholder: var(--pos-color-light-input-default-placeholder);
+  --pos-color-input-default-background: var(--pos-color-light-input-default-background);
+  --pos-color-input-default-foreground: var(--pos-color-light-input-default-foreground);
+  --pos-color-input-default-border: var(--pos-color-light-input-default-border);
+  --pos-color-input-default-hover-background: var(--pos-color-light-input-default-hover-background);
+  --pos-color-input-default-hover-foreground: var(--pos-color-light-input-default-hover-foreground);
+  --pos-color-input-default-hover-border: var(--pos-color-light-input-default-hover-border);
+  --pos-color-input-default-focus-background: var(--pos-color-light-input-default-focus-background);
+  --pos-color-input-default-focus-foreground: var(--pos-color-light-input-default-focus-foreground);
+  --pos-color-input-default-focus-border: var(--pos-color-light-input-default-focus-border);
+
+  /* utility */
+  --pos-color-important: var(--pos-color-light-important);
+  --pos-color-important-hover: var(--pos-color-light-important-hover);
+  --pos-color-important-disabled: var(--pos-color-light-important);
+  --pos-color-confirmation: var(--pos-color-light-confirmation);
+  --pos-color-confirmation-hover: var(--pos-color-light-confirmation);
+  --pos-color-confirmation-disabled: var(--pos-color-light-confirmation-disabled);
+  --pos-color-warning: var(--pos-color-light-warning);
+  --pos-color-warning-hover: var(--pos-color-light-warning-hover);
+  --pos-color-warning-disabled: var(--pos-color-light-warning-disabled);
+}
+
+:root.pos-theme-dark {
+  /* general content */
+  --pos-color-content-background: var(--pos-color-dark-content-background);
+  --pos-color-content-foreground: var(--pos-color-dark-content-foreground);
+  --pos-color-content-inverted-background: var(--pos-color-dark-content-inverted-background);
+  --pos-color-content-inverted-foreground: var(--pos-color-dark-content-inverted-foreground);
+
+  --pos-color-content-supplementary: var(--pos-color-dark-content-supplementary);
+
+  --pos-color-focused: var(--pos-color-dark-focused);
+  --pos-color-highlighted: var(--pos-color-dark-highlighted);
+
+  /* interactive elements */
+  --pos-color-interactive-text: var(--pos-color-dark-interactive-text);
+  --pos-color-interactive-hover: var(--pos-color-dark-interactive-hover);
+  --pos-color-interactive-active: var(--pos-color-dark-interactive-active);
+  --pos-color-interactive-disabled: var(--pos-color-dark-interactive-disabled);
+
+  /* colorful elements */
+  --pos-color-colorful-background: var(--pos-color-dark-colorful-background);
+  --pos-color-colorful-foreground: var(--pos-color-dark-colorful-foreground);
+  --pos-color-colorful-hover: var(--pos-color-dark-colorful-hover);
+
+  /* content selection */
+  --pos-color-selection-background: var(--pos-color-dark-selection-background);
+  --pos-color-selection-foreground: var(--pos-color-dark-selection-foreground);
+
+  /* frames */
+  --pos-color-divider: var(--pos-color-dark-divider);
+
+  /* buttons */
+  --pos-color-button-default-background: var(--pos-color-dark-button-default-background);
+  --pos-color-button-default-foreground: var(--pos-color-dark-button-default-foreground);
+  --pos-color-button-default-frame: var(--pos-color-dark-button-default-frame);
+  --pos-color-button-default-hover-background: var(--pos-color-dark-button-default-hover-background);
+  --pos-color-button-default-hover-foreground: var(--pos-color-dark-button-default-hover-foreground);
+  --pos-color-button-default-hover-frame: var(--pos-color-dark-button-default-hover-frame);
+  --pos-color-button-default-disabled-background: var(--pos-color-dark-button-default-disabled-background);
+  --pos-color-button-default-disabled-foreground: var(--pos-color-dark-button-default-disabled-foreground);
+  --pos-color-button-default-disabled-frame: var(--pos-color-dark-button-default-disabled-frame);
+
+  --pos-color-button-secondary-background: var(--pos-color-dark-button-secondary-background);
+  --pos-color-button-secondary-foreground: var(--pos-color-dark-button-secondary-foreground);
+  --pos-color-button-secondary-frame: var(--pos-color-dark-button-secondary-frame);
+  --pos-color-button-secondary-hover-background: var(--pos-color-dark-button-secondary-hover-background);
+  --pos-color-button-secondary-hover-foreground: var(--pos-color-dark-button-secondary-hover-foreground);
+  --pos-color-button-secondary-hover-frame: var(--pos-color-dark-button-secondary-hover-frame);
+  --pos-color-button-secondary-disabled-background: var(--pos-color-dark-button-secondary-disabled-background);
+  --pos-color-button-secondary-disabled-foreground: var(--pos-color-dark-button-secondary-disabled-foreground);
+  --pos-color-button-secondary-disabled-frame: var(--pos-color-dark-button-secondary-disabled-frame);
+
+  /* links and interactive elements */
+  --pos-color-interactive-text: var(--pos-color-dark-interactive-text);
+  --pos-color-interactive-hover: var(--pos-color-dark-interactive-hover);
+
+  --pos-color-navigation-hover: var(--pos-color-dark-navigation-hover);
+
+  /* inputs */
+  --pos-color-input-default-placeholder: var(--pos-color-dark-input-default-placeholder);
+  --pos-color-input-default-background: var(--pos-color-dark-input-default-background);
+  --pos-color-input-default-foreground: var(--pos-color-dark-input-default-foreground);
+  --pos-color-input-default-border: var(--pos-color-dark-input-default-border);
+  --pos-color-input-default-hover-background: var(--pos-color-dark-input-default-hover-background);
+  --pos-color-input-default-hover-foreground: var(--pos-color-dark-input-default-hover-foreground);
+  --pos-color-input-default-hover-border: var(--pos-color-dark-input-default-hover-border);
+  --pos-color-input-default-focus-background: var(--pos-color-dark-input-default-focus-background);
+  --pos-color-input-default-focus-foreground: var(--pos-color-dark-input-default-focus-foreground);
+  --pos-color-input-default-focus-border: var(--pos-color-dark-input-default-focus-border);
+
+  /* utility */
+  --pos-color-important: var(--pos-color-dark-important);
+  --pos-color-important-hover: var(--pos-color-dark-important-hover);
+  --pos-color-important-disabled: var(--pos-color-dark-important-disabled);
+  --pos-color-confirmation: var(--pos-color-dark-confirmation);
+  --pos-color-confirmation-hover: var(--pos-color-dark-confirmation);
+  --pos-color-confirmation-disabled: var(--pos-color-dark-confirmation-disabled);
+  --pos-color-warning: var(--pos-color-dark-warning);
+  --pos-color-warning-hover: var(--pos-color-dark-warning-hover);
+  --pos-color-warning-disabled: var(--pos-color-dark-warning-disabled);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* general content */
+    --pos-color-content-background: var(--pos-color-dark-content-background);
+    --pos-color-content-foreground: var(--pos-color-dark-content-foreground);
+    --pos-color-content-inverted-background: var(--pos-color-dark-content-inverted-background);
+    --pos-color-content-inverted-foreground: var(--pos-color-dark-content-inverted-foreground);
+
+    --pos-color-content-supplementary: var(--pos-color-dark-content-supplementary);
+
+    --pos-color-focused: var(--pos-color-dark-focused);
+    --pos-color-highlighted: var(--pos-color-dark-highlighted);
+
+    /* interactive elements */
+    --pos-color-interactive-text: var(--pos-color-dark-interactive-text);
+    --pos-color-interactive-hover: var(--pos-color-dark-interactive-hover);
+    --pos-color-interactive-active: var(--pos-color-dark-interactive-active);
+    --pos-color-interactive-disabled: var(--pos-color-dark-interactive-disabled);
+
+    /* colorful elements */
+    --pos-color-colorful-background: var(--pos-color-dark-colorful-background);
+    --pos-color-colorful-foreground: var(--pos-color-dark-colorful-foreground);
+    --pos-color-colorful-hover: var(--pos-color-dark-colorful-hover);
+
+    /* content selection */
+    --pos-color-selection-background: var(--pos-color-dark-selection-background);
+    --pos-color-selection-foreground: var(--pos-color-dark-selection-foreground);
+
+    /* frames */
+    --pos-color-divider: var(--pos-color-dark-divider);
+
+    /* buttons */
+    --pos-color-button-default-background: var(--pos-color-dark-button-default-background);
+    --pos-color-button-default-foreground: var(--pos-color-dark-button-default-foreground);
+    --pos-color-button-default-frame: var(--pos-color-dark-button-default-frame);
+    --pos-color-button-default-hover-background: var(--pos-color-dark-button-default-hover-background);
+    --pos-color-button-default-hover-foreground: var(--pos-color-dark-button-default-hover-foreground);
+    --pos-color-button-default-hover-frame: var(--pos-color-dark-button-default-hover-frame);
+    --pos-color-button-default-disabled-background: var(--pos-color-dark-button-default-disabled-background);
+    --pos-color-button-default-disabled-foreground: var(--pos-color-dark-button-default-disabled-foreground);
+    --pos-color-button-default-disabled-frame: var(--pos-color-dark-button-default-disabled-frame);
+
+    --pos-color-button-secondary-background: var(--pos-color-dark-button-secondary-background);
+    --pos-color-button-secondary-foreground: var(--pos-color-dark-button-secondary-foreground);
+    --pos-color-button-secondary-frame: var(--pos-color-dark-button-secondary-frame);
+    --pos-color-button-secondary-hover-background: var(--pos-color-dark-button-secondary-hover-background);
+    --pos-color-button-secondary-hover-foreground: var(--pos-color-dark-button-secondary-hover-foreground);
+    --pos-color-button-secondary-hover-frame: var(--pos-color-dark-button-secondary-hover-frame);
+    --pos-color-button-secondary-disabled-background: var(--pos-color-dark-button-secondary-disabled-background);
+    --pos-color-button-secondary-disabled-foreground: var(--pos-color-dark-button-secondary-disabled-foreground);
+    --pos-color-button-secondary-disabled-frame: var(--pos-color-dark-button-secondary-disabled-frame);
+
+    /* links and interactive elements */
+    --pos-color-interactive-text: var(--pos-color-dark-interactive-text);
+    --pos-color-interactive-hover: var(--pos-color-dark-interactive-hover);
+
+    --pos-color-navigation-hover: var(--pos-color-dark-navigation-hover);
+
+    /* inputs */
+    --pos-color-input-default-placeholder: var(--pos-color-dark-input-default-placeholder);
+    --pos-color-input-default-background: var(--pos-color-dark-input-default-background);
+    --pos-color-input-default-foreground: var(--pos-color-dark-input-default-foreground);
+    --pos-color-input-default-border: var(--pos-color-dark-input-default-border);
+    --pos-color-input-default-hover-background: var(--pos-color-dark-input-default-hover-background);
+    --pos-color-input-default-hover-foreground: var(--pos-color-dark-input-default-hover-foreground);
+    --pos-color-input-default-hover-border: var(--pos-color-dark-input-default-hover-border);
+    --pos-color-input-default-focus-background: var(--pos-color-dark-input-default-focus-background);
+    --pos-color-input-default-focus-foreground: var(--pos-color-dark-input-default-focus-foreground);
+    --pos-color-input-default-focus-border: var(--pos-color-dark-input-default-focus-border);
+
+    /* utility */
+    --pos-color-important: var(--pos-color-dark-important);
+    --pos-color-important-hover: var(--pos-color-dark-important-hover);
+    --pos-color-important-disabled: var(--pos-color-dark-important-disabled);
+    --pos-color-confirmation: var(--pos-color-dark-confirmation);
+    --pos-color-confirmation-hover: var(--pos-color-dark-confirmation);
+    --pos-color-confirmation-disabled: var(--pos-color-dark-confirmation-disabled);
+    --pos-color-warning: var(--pos-color-dark-warning);
+    --pos-color-warning-hover: var(--pos-color-dark-warning-hover);
+    --pos-color-warning-disabled: var(--pos-color-dark-warning-disabled);
+  }
+}
+
+
+/* fonts
+============================================================================ */
+:root {
+  --pos-font-default: system-ui, sans-serif;
+  --pos-font-heading: 'Source Code Pro', 'Consolas', monospace;
+}
+
+
+/* spacing
+============================================================================ */
+:root {
+  --pos-padding-page: 2rem;
+  --pos-padding-panel: 1rem;
+
+  --pos-gap-navigation: 1rem;
+  --pos-gap-list: .2rem;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --pos-padding-page: 1rem;
+  }
+}
+
+
+/* buttons and inputs shape
+============================================================================ */
+:root {
+  --pos-padding-input: 8px;
+
+  --pos-height-input: 44px;
+
+  --pos-border-input: 1px;
+
+  --pos-radius-input: 0;
+  --pos-radius-button: 4px;
+}
+
+
+/* card and panel shape
+============================================================================ */
+:root {
+  --pos-radius-panel: 1rem;
+}

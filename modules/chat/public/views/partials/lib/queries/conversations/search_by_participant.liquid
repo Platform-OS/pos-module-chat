@@ -7,7 +7,6 @@
   assign page = page | to_positive_integer: 1
 
   graphql r = 'modules/chat/conversations/search', limit: limit, page: page, participant_id: participant_id
-  include 'modules/community/helpers/handle_graphql_response', r: r, name: 'modules/chat/conversations/search'
 
   assign result = r.conversations
   assign conversations = '[]' | parse_json
@@ -16,7 +15,7 @@
     assign participants = '[]' | parse_json
 
     for participant_id in conversation.participant_ids
-      function profile = 'modules/profile/queries/profiles/find_proxy', id: participant_id
+      function profile = 'modules/profile/queries/profiles/find', id: participant_id, user_id: null, uuid: null, filters: null
       assign participants = participants | add_to_array: profile
     endfor
 

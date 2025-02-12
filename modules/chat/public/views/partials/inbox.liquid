@@ -1,0 +1,157 @@
+<script type="importmap">
+  {
+    "imports": {
+      "/": "{{ 'modules/chat/js/' | asset_url }}",
+      "pos-chat.js": "{{ 'modules/chat/js/pos-chat.js' | asset_url }}",
+      "pos-chat-consumer.js": "{{ 'modules/chat/js/pos-chat-consumer.js' | asset_url }}",
+      "pos-chat-csrfToken.js": "{{ 'modules/chat/js/pos-chat-csrfToken.js' | asset_url }}",
+      "pos-chat-notifications.js": "{{ 'modules/chat/js/pos-chat-notifications.js' | asset_url }}",
+      "./": "./"
+    }
+  }
+</script>
+
+<script>
+  /* namespace */
+  if(typeof window.pos !== 'object'){
+    window.pos = {};
+    window.pos.modules = {};
+    window.pos.translations = {};
+  }
+
+  if(typeof window.pos.csrfToken !== 'string'){
+    window.pos.csrfToken = '{{ context.authenticity_token }}';
+  }
+
+  /* profile namespace */
+  if(typeof window.pos.profile !== 'object'){
+    window.pos.profile = {{ current_profile }};
+  }
+
+  window.pos.profile.timezone = {% if current_profile.timezone %} '{{ current_profile.timezone }}' {% else %} null {% endif %};
+
+  /* translations used in module */
+  window.pos.translations = {
+    ...window.pos.translations,
+    chat: {
+      connectionError: '{{ 'modules/chat/error_connection' | t }}'
+    }
+  }
+</script>
+<script type="module" defer src="{{ 'modules/chat/js/pos-chat.js' | asset_url }}"></script>
+
+<!-- message templates -->
+<template id="pos-chat-template-message-received">
+  {% liquid
+    render 'modules/chat/message', message: '', authored: false
+  %}
+</template>
+<template id="pos-chat-template-message-sent">
+  {% liquid
+    render 'modules/chat/message', message: '', authored: true
+  %}
+</template>
+<!-- end message templates -->
+
+
+<div
+  id="pos-chat-inbox"
+  data-conversation-id="{{ current_conversation.id }}"
+  class="pos-app {% if current_conversation %} pos-chat-inbox-conversation-active {% endif %}"
+>
+
+  <ul class="pos-chat-conversations" id="pos-chat-conversations">
+    {% for conversation in conversations.results %}
+      {% liquid
+        assign participants = conversation.participants
+        assign current_participants = participants | select: id: current_profile.id
+        assign other_participants = participants | subtract_array: current_participants
+        assign from_profile = other_participants | first
+
+        if conversation.id != current_conversation.id
+          assign current = false
+        else
+          assign current = true
+        endif
+
+        if conversation.participant_read_ids contains current_profile.id
+          assign unread = false
+        else
+          assign unread = true
+        endif
+
+        assign name = from_profile.first_name | append: ' ' | append: from_profile.last_name | default: from_profile.name
+        assign imageSrc = from_profile.avatar.photo.versions.sm
+        assign last_message = conversation.last_message.message
+        assign created_at = conversation.last_message.created_at
+
+        if conversation.id == current_conversation.id
+          assign other_participant = from_profile
+        endif
+      %}
+      {% if conversation.last_message %}
+        <li>
+          {% liquid
+            theme_render_rc 'conversation', id: conversation.id, current: current, unread: unread, name: name, imageSrc: imageSrc, last_message: last_message, created_at: created_at, timezone: current_profile.timezone
+          %}
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  {% if current_conversation %}
+    <div class="pos-chat-conversation" id="pos-chat-conversation">
+      <header class="pos-chat-conversation-header">
+        <a href="/inbox" class="pos-chat-conversation-header-back">
+          <span class="label">Show conversations list</span>
+          ←
+        </a>
+        {% liquid
+          if other_participant
+            if other_participant.first_name
+              assign name = other_participant.first_name | append: ' ' | append: other_participant.last_name
+            else
+              assign name = other_participant.name
+            endif
+
+            render 'modules/common-styling/user/avatar', size: 's', name: name, imageSrc: other_participant.avatar.photo.versions.sm
+          endif
+        %}
+        {{ name }}
+      </header>
+      <div class="pos-chat-conversation-messagesContainer" id="chat-messagesList-container">
+        <div class="pos-chat-loadingIndicator" id="pos-chat-loadingIndicator">
+          <span>
+            {{- 'modules/chat/loading_previous' | t -}}
+          </span>
+        </div>
+        <ul class="pos-chat-messages" id="chat-messagesList">
+          {% liquid
+            assign list = current_conversation.messages | reverse
+            for message in list
+              if message.autor_id != current_profile.id
+                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: false, bg_color: 'bg-highlighted', timezone: current_profile.timezone
+              else
+                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: true, bg_color: 'bg-interactive-disabled', timezone: current_profile.timezone
+              endif
+            endfor
+          %}
+        </ul>
+      </div>
+      <footer class="pos-form pos-chat-conversation-new">
+        <textarea
+          placeholder="{{ 'modules/chat/message_input_placeholder' | t }}"
+          class="pos-chat-conversation-input"
+          id="chat-messageInput"
+          disabled
+        ></textarea>
+        <button type="submit" id="chat-sendButton" class="pos-button">{{ 'modules/chat/send' | t }}</button>
+      </footer>
+    </div>
+  {% else %}
+    <div class="pos-chat-inbox-empty">
+      {{ 'modules/chat/pick_conversation' | t }}
+    </div>
+  {% endif %}
+
+</div>
