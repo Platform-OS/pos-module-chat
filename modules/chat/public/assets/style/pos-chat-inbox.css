@@ -192,10 +192,10 @@
   .pos-chat-loadingIndicator span {
     padding: .5em 1em;
 
-    background-color: var(--pos-color-colorful-background);
+    background-color: var(--pos-color-content-foreground);
     border-radius: var(--pos-radius-panel);
 
-    color: var(--pos-color-colorful-foreground);
+    color: var(--pos-color-content-background);
   }
 
 .pos-chat-conversation {
@@ -269,10 +269,13 @@
 }
 
 .pos-chat-message-content {
+  max-width: 100%;
   padding: calc(var(--pos-padding-panel) / 2) calc(var(--pos-padding-panel) / 1.5);
 
   background-color: color-mix(in srgb, var(--pos-color-content-supplementary) 30%, transparent 70%);
-  border-radius: var(--pos-radius-panel)
+  border-radius: var(--pos-radius-panel);
+
+  word-wrap: break-word;
 }
 
   .pos-chat-message-authored .pos-chat-message-content {
