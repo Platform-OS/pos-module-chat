@@ -12,7 +12,7 @@
   /* links
   ============================================================================ */
   .pos-app a {
-    color: var(--pos-color-interactive);
+    color: var(--pos-color-interactive-text);
 
     transition: color .1s linear;
   }
