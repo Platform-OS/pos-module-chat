@@ -11,21 +11,21 @@
 
   /* links
   ============================================================================ */
-  a {
+  .pos-app a {
     color: var(--pos-color-interactive);
 
     transition: color .1s linear;
   }
 
-  a:hover {
+  .pos-app a:hover {
     color: var(--pos-color-interactive-hover);
   }
 
-  a:active {
+  .pos-app a:active {
     color: var(--pos-color-interactive-active)
   }
 
-  a:focus-visible {
+  .pos-app a:focus-visible {
     color: var(--pos-color-interactive-hover);
   }
 
