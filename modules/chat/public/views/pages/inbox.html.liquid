@@ -5,7 +5,7 @@ slug: inbox
   function current_profile = 'modules/profile/helpers/current_profile'
 
   # platformos-check-disable ConvertIncludeToRender, UnreachableCode
-  include 'modules/user/helpers/can_do_or_unauthorized', requester: current_profile, do: 'chat.inbox', return_url: '/'
+  include 'modules/user/helpers/can_do_or_unauthorized', requester: current_profile, do: 'chat.inbox', return_url: '/', redirect_anonymous_to_login: true
   # platformos-check-enable ConvertIncludeToRender, UnreachableCode
 
   if context.params.to_uuid != blank
