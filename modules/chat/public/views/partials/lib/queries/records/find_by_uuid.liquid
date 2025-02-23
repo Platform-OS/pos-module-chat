@@ -4,7 +4,7 @@
     return null
   endif
 
-  graphql r = 'modules/chat/records/search', limit: 1, uuid: uuid
+  graphql r = 'modules/chat/records/search', uuid: uuid
 
   return r.records.results.first
 %}

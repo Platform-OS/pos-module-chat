@@ -30,7 +30,7 @@
       log message, 'ERROR receive message'
       echo "false"
     else
-      function res = 'modules/chat/lib/commands/conversations/mark_unread', conversation: conversation, current_profile: current_profile
+      function _res = 'modules/chat/lib/commands/conversations/mark_unread', conversation: conversation, current_profile: current_profile
     endif
   else
     log "Skippind. Message will be persisted on sender side", 'channel_actions/conversate skip_message'

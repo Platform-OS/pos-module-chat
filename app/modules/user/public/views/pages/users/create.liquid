@@ -4,16 +4,18 @@ slug: users
 ---
 {% liquid
   function current_user = 'modules/user/queries/user/current'
+  # platformos-check-disable UnreachableCode
   include 'modules/user/helpers/can_do_or_unauthorized', requester: current_user, do: 'users.register'
+  # platformos-check-enable UnreachableCode
 
   assign profile_object = context.params | deep_clone | hash_merge: user_id: '0'
   function profile_object = 'modules/profile/commands/profiles/create_validate', object: profile_object
-  function object = 'modules/user/commands/user/create', email: context.params.email, password: context.params.password
+  function object = 'modules/user/commands/user/create', email: context.params.email, password: context.params.password, hook_params: null, roles: null
   if profile_object.valid and object.valid
     assign profile_object = null | hash_merge: context.params | hash_merge: user_id: object.id
     function profile = 'modules/profile/commands/profiles/create', object: profile_object
     if profile.valid
-      function _ = 'modules/user/commands/session/create', user_id: object.id, validate_password: false
+      function _ = 'modules/user/commands/session/create', user_id: object.id, validate_password: false, email: null, password: null, hook_params: null
     else
       log profile, type: 'ERROR: users/create profile'
     endif

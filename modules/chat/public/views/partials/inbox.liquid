@@ -43,12 +43,12 @@
 <!-- message templates -->
 <template id="pos-chat-template-message-received">
   {% liquid
-    render 'modules/chat/message', message: '', authored: false
+    render 'modules/chat/message', message: '', authored: false, created_at: created_at, timezone: null
   %}
 </template>
 <template id="pos-chat-template-message-sent">
   {% liquid
-    render 'modules/chat/message', message: '', authored: true
+    render 'modules/chat/message', message: '', authored: true, created_at: created_at, timezone: null
   %}
 </template>
 <!-- end message templates -->
@@ -130,9 +130,9 @@
             assign list = current_conversation.messages | reverse
             for message in list
               if message.autor_id != current_profile.id
-                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: false, bg_color: 'bg-highlighted', timezone: current_profile.timezone
+                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: false, timezone: current_profile.timezone
               else
-                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: true, bg_color: 'bg-interactive-disabled', timezone: current_profile.timezone
+                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: true, timezone: current_profile.timezone
               endif
             endfor
           %}
