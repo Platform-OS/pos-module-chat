@@ -2,7 +2,7 @@
   "modules": {
     "profile": "1.1.1",
     "core": "2.0.6",
-    "user": "3.0.12",
+    "user": "3.1.0",
     "common-styling": "0.0.17"
   }
 }
