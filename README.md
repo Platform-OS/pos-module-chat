@@ -110,7 +110,7 @@ Inbox
 
 The table below outlines the [resourceful routes](https://documentation.platformos.com/developer-guide/modules/platformos-modules#resourceful-route-naming-convention) provided for registration functionality:
 
-| HTTP method   | slug  | page file path |  description 
+| HTTP method   | slug  | page file path |  description |
 |---|---|---|---|---|
 | GET  | /inbox | `modules/chat/public/views/pages/inbox.liquid` | Renders a chat | 
 
