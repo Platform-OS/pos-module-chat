@@ -18,11 +18,11 @@
       <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-page.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'modules/chat/style/pos-chat-inbox.css' | asset_url }}">
       {% comment %} custom styles specific for this app, some overwrite the defaults {% endcomment %}
-      <link rel="stylesheet" href="{{ 'style/app-config.css' | asset_url }}">
+      {% comment %} <link rel="stylesheet" href="{{ 'style/app-config.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'style/app-button.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'style/app-typography.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'style/app-inbox.css' | asset_url }}">
-      <link rel="stylesheet" href="{{ 'style/app.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'style/app.css' | asset_url }}"> {% endcomment %}
       {% comment %} custom js specific for this app {% endcomment %}
       <script defer src="{{ 'js/app.js' | asset_url }}"></script>
       <script defer src="{{ 'js/popup.js' | asset_url }}"></script>

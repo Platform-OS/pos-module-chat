@@ -36,7 +36,7 @@
   display: flex;
   flex-direction: column;
 
-  border-inline-end: 1px solid var(--pos-color-divider);
+  border-inline-end: 1px solid var(--pos-color-frame);
 }
 
   /* when conversation is opened just show the conversation on mobile */
@@ -56,7 +56,7 @@
   }
 
   .pos-chat-conversations li:not(:last-child) {
-    padding-block-end: var(--pos-gap-list);
+    padding-block-end: var(--pos-gap-button-button);
   }
 
   .pos-chat-conversations a:hover {
@@ -80,14 +80,14 @@
 }
 
   .pos-chat-conversations a:focus-visible .pos-chat-conversationCard {
-    background-color: color-mix(in srgb, var(--pos-color-navigation-hover) 50%, transparent 50%);
+    background-color: color-mix(in srgb, var(--pos-color-highlight-background) 50%, transparent 50%);
 
     color: var(--pos-color-interactive-hover);
   }
 
   /* fallback for browsers that don't support anchor-name */
   .pos-chat-conversationCard:hover {
-    background-color: color-mix(in srgb, var(--pos-color-navigation-hover) 50%, transparent 50%);
+    background-color: color-mix(in srgb, var(--pos-color-highlight-background) 50%, transparent 50%);
   }
   /* end fallback */
 
@@ -106,7 +106,7 @@
       inset-block-start: anchor(start);
   
       border-radius: var(--pos-radius-panel);
-      background-color: color-mix(in srgb, var(--pos-color-navigation-hover) 50%, transparent 50%);
+      background-color: color-mix(in srgb, var(--pos-color-highlight-background) 50%, transparent 50%);
 
       content: '';
   
@@ -125,7 +125,7 @@
 
   .pos-chat-conversationCard.active {
     border-radius: var(--pos-radius-panel);
-    background-color: var(--pos-color-navigation-hover);
+    background-color: var(--pos-color-highlight-background);
   }
 
 .pos-chat-conversationCard .pos-avatar {
@@ -149,7 +149,7 @@
   justify-content: space-between;
 
   font-size: .9em;
-  color: var(--pos-color-content-supplementary);
+  color: var(--pos-color-content-text-supplementary);
 }
 
   .pos-chat-conversationCard-lastMessage small {

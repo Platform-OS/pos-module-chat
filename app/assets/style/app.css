@@ -39,7 +39,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--pos-gap-navigation);
+  gap: var(--pos-gap-title-content);
 }
 
   .app-chat-intro .pos-heading-2 img {
@@ -91,7 +91,7 @@
 
   .app-chat-intro-nav:has(li:hover):before,
   .app-chat-intro-nav:has(a:focus-visible):before {
-    background-color: var(--pos-color-navigation-hover);
+    background-color: var(--pos-color-light-highlight-background);
   }
 
   @supports (anchor-name: --app-chat-intro-nav-active) {
@@ -113,7 +113,7 @@
   padding: var(--pos-padding-page);
 
   text-align: center;
-  color: var(--pos-color-content-supplementary);
+  color: var(--pos-color-content-text-supplementary);
 }
 
 
@@ -137,7 +137,7 @@
   display: flex;
   justify-content: space-between;
   
-  border-bottom: 1px solid var(--pos-color-divider);
+  border-bottom: 1px solid var(--pos-color-frame);
   background-color: var(--pos-color-content-background);
 
   text-transform: uppercase;
@@ -147,7 +147,7 @@
 
   .pos-chat-header-nav-primary ul {
     display: flex;
-    gap: var(--pos-gap-navigation);
+    gap: var(--pos-gap-button-button);
   }
 
   .pos-chat-header-nav-primary li.active {
@@ -166,7 +166,7 @@
     inset-inline: 0;
     inset-block-end: -1px;
 
-    background-color: var(--pos-color-content-foreground);
+    background-color: var(--pos-color-content-text);
 
     content: '';
   }
@@ -178,7 +178,7 @@
     inset-inline-start: calc(50% - 4px);
     inset-block-end: -4px;
 
-    background-color: var(--pos-color-content-foreground);
+    background-color: var(--pos-color-content-text);
     clip-path: polygon(50% 100%, 0 0, 100% 0);
 
     content: '';
@@ -186,7 +186,7 @@
   /* end fallback */
 
   .pos-chat-header-nav-primary a {
-    padding-block: var(--pos-gap-navigation);
+    padding-block: var(--pos-gap-button-button);
     display: flex;
   }
 
@@ -203,8 +203,8 @@
   #pos-chat-header-nav-primary-profile {
     margin-inline-end: calc(var(--pos-padding-page) / -2);
     padding-inline: calc(var(--pos-padding-page) / 2);
-    padding-block: calc(var(--pos-gap-navigation) / 2);
-    margin-block: calc(var(--pos-gap-navigation) / 2);
+    padding-block: calc(var(--pos-gap-button-button) / 2);
+    margin-block: calc(var(--pos-gap-button-button) / 2);
 
     border-radius: var(--pos-radius-panel);
     background-color: transparent;
@@ -215,11 +215,11 @@
   }
 
   #pos-chat-header-nav-primary-profile:hover {
-    background-color: var(--pos-color-navigation-hover);
+    background-color: var(--pos-color-light-highlight-background);
   }
 
   #pos-chat-header-nav-primary-profile:focus-visible {
-    background-color: var(--pos-color-navigation-hover);
+    background-color: var(--pos-color-light-highlight-background);
 
     color: var(--pos-color-interactive-hover);
   }
@@ -246,7 +246,7 @@
         inset-inline-end: anchor(end);
         inset-block-end: 0;
     
-        background-color: var(--pos-color-content-foreground);
+        background-color: var(--pos-color-content-text);
     
         transition: all .2s ease-in-out;
       }
@@ -258,7 +258,7 @@
         inset-inline-start: calc(50% - 4px);
         inset-block-end: -4px;
 
-        background-color: var(--pos-color-content-foreground);
+        background-color: var(--pos-color-content-text);
         clip-path: polygon(50% 100%, 0 0, 100% 0);
 
         content: '';
@@ -280,14 +280,14 @@
 
 /* secondary navigation */
 .pos-chat-header-nav-secondary {
-  padding: var(--pos-gap-navigation);
+  padding: var(--pos-gap-button-button);
   position: absolute;
   inset-inline-end: 0;
   overflow: hidden;
 
   opacity: 0;
   scale: 0;
-  translate: calc(var(--pos-padding-page) * -1) calc(var(--pos-gap-navigation) * -2);
+  translate: calc(var(--pos-padding-page) * -1) calc(var(--pos-gap-button-button) * -2);
   transform-origin: top right;
 
   transition: all .2s ease-in-out;
@@ -310,19 +310,19 @@
     overflow: auto;
 
     background-color: var(--pos-color-content-background);
-    border: 1px solid var(--pos-color-divider);
+    border: 1px solid var(--pos-color-frame);
 
     border-radius: var(--pos-radius-panel);
   }
 
   .pos-chat-header-nav-secondary ul:not(:first-child) {
-    border-block-start: 1px solid var(--pos-color-divider);
+    border-block-start: 1px solid var(--pos-color-frame);
   }
 
   .pos-chat-header-nav-secondary a,
   .pos-chat-header-nav-secondary button,
   .pos-chat-header-nav-secondary li:not(:has(a)):not(:has(button)) {
-    padding: var(--pos-gap-navigation);
+    padding: var(--pos-gap-button-button);
     display: flex;
   }
 
@@ -335,17 +335,17 @@
 /* people list
 ============================================================================ */
 .pos-chat-people {
-    padding: calc(var(--pos-padding-page) - var(--pos-gap-navigation));
+    padding: calc(var(--pos-padding-page) - var(--pos-gap-button-button));
 }
 
 .pos-chat-people ul {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--pos-gap-list);
+  gap: var(--pos-gap-section-elements);
 }
 
 .pos-chat-people a {
-  padding: var(--pos-gap-navigation);
+  padding: var(--pos-gap-button-button);
   display: flex;
 
   border-radius: var(--pos-radius-panel);
@@ -356,13 +356,13 @@
 }
 
 .pos-chat-people a:hover {
-  background-color: var(--pos-color-navigation-hover);
+  background-color: var(--pos-color-highlight-background);
 }
 
 .pos-chat-people a:focus-visible {
-  background-color: var(--pos-color-navigation-hover);
+  background-color: var(--pos-color-highlight-background);
 
-  color: var(--pos-color-interactive-hover)
+  color: var(--pos-color-interactive-hover);
 }
 
 
@@ -374,5 +374,5 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--pos-gap-list);
+  gap: var(--pos-gap-section-elements);
 }
