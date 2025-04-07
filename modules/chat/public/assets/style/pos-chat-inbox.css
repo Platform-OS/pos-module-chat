@@ -192,7 +192,7 @@
   .pos-chat-loadingIndicator span {
     padding: .5em 1em;
 
-    background-color: var(--pos-color-content-foreground);
+    background-color: var(--pos-color-content-text);
     border-radius: var(--pos-radius-panel);
 
     color: var(--pos-color-content-background);

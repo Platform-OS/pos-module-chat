@@ -54,6 +54,7 @@ cp modules/user/public/lib/queries/role_permissions/permissions.liquid app/modul
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-avatar.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-forms.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-page.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modules/user/style/pos-user-form.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'modules/chat/style/pos-chat-inbox.css' | asset_url }}">
 ```
 

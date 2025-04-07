@@ -3,6 +3,7 @@
 
   page background and font
   intro page
+  user login form
   main header
   people list
   empty list information
@@ -115,6 +116,21 @@
   text-align: center;
   color: var(--pos-color-content-text-supplementary);
 }
+
+
+
+/* user login form
+============================================================================ */
+.pos-app body:has(.pos-user-content) {
+  
+  grid-template-rows: 1fr;
+}
+
+.pos-user-content {
+  align-self: center;
+  justify-self: center;
+}
+
 
 
 /* main header
