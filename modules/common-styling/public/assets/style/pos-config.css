@@ -773,7 +773,6 @@
 /* corners */
 /* ================================================================================ */
 :root {
-
   /* border radius for content panels */
   --pos-radius-panel: 4px;
   /* border radius for a popup */
@@ -786,7 +785,6 @@
   --pos-radius-input: 0;
   /* border radius for a tag */
   --pos-radius-tag: 4px;
-
 }
 
 

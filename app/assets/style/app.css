@@ -19,6 +19,8 @@
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
+
+  background-color: var(--pos-color-page-background);
 }
 
 
@@ -149,12 +151,12 @@
 
 /* primary navigation */
 .pos-chat-header-nav-primary {
-  padding-inline: var(--pos-padding-page);
+  padding-inline: calc(var(--pos-padding-page) * 2);
   display: flex;
   justify-content: space-between;
   
   border-bottom: 1px solid var(--pos-color-frame);
-  background-color: var(--pos-color-content-background);
+  background-color: var(--pos-color-page-background);
 
   text-transform: uppercase;
   font-family: var(--pos-font-navigation);
@@ -204,6 +206,8 @@
   .pos-chat-header-nav-primary a {
     padding-block: var(--pos-gap-button-button);
     display: flex;
+
+    color: inherit;
   }
 
   .pos-chat-header-nav-primary a:hover,
@@ -296,8 +300,9 @@
 
 /* secondary navigation */
 .pos-chat-header-nav-secondary {
-  padding: var(--pos-gap-button-button);
+  padding: 4px var(--pos-padding-page);
   position: absolute;
+  inset-block-start: calc(100% - 4px);
   inset-inline-end: 0;
   overflow: hidden;
 
@@ -309,9 +314,23 @@
   transition: all .2s ease-in-out;
 }
 
+  /* submenu arrow */
+  .pos-chat-header-nav-secondary:before {
+    width: 8px;
+    height: 4px;
+    position: absolute;
+    inset-inline-end: calc(var(--pos-padding-page) * 3);
+    inset-block-start: 0;
+
+    background-color: var(--pos-color-frame);
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+
+    content: '';
+  }
+
   .pos-chat-header:has(#pos-chat-header-secondaryNavigationToggle:checked) .pos-chat-header-nav-secondary {
     opacity: 1;
-    translate: 0 0;
+    translate: 0 -4px;
     scale: 1;
   }
 
@@ -338,20 +357,39 @@
   .pos-chat-header-nav-secondary a,
   .pos-chat-header-nav-secondary button,
   .pos-chat-header-nav-secondary li:not(:has(a)):not(:has(button)) {
+    width: 100%;
     padding: var(--pos-gap-button-button);
     display: flex;
   }
 
+  .pos-chat-header-nav-secondary a,
+  .pos-chat-header-nav-secondary button {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .pos-chat-header-nav-secondary button:hover:after {
+    position: absolute;
+    inset: var(--pos-gap-button-button-small);
+
+    border-radius: var(--pos-radius-panel);
+    background-color: color-mix(in srgb, var(--pos-color-interactive-hover) 10%, transparent 90%);
+
+    content: '';
+  }
+  
   .pos-chat-header-nav-secondary strong {
     font-weight: 500;
   }
 
 
 
+
 /* people list
 ============================================================================ */
 .pos-chat-people {
-    padding: calc(var(--pos-padding-page) - var(--pos-gap-button-button));
+  padding-block: var(--pos-padding-page);
+  padding-inline: calc(var(--pos-padding-page) * 2 - var(--pos-gap-button-button));
 }
 
 .pos-chat-people ul {

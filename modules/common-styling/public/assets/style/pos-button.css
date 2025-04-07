@@ -24,7 +24,6 @@
 
     user-select: none;
     -webkit-user-select: none;
-    cursor: pointer;
   }
 
   .pos-button {
@@ -37,6 +36,7 @@
     align-items: center;
     gap: 1em;
     vertical-align: middle;
+    cursor: pointer;
 
     background-color: var(--pos-color-button-secondary-background);
     border-width: var(--pos-border-button);

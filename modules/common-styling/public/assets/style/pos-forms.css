@@ -75,12 +75,11 @@
     border-radius: var(--pos-radius-input);
     border-width: var(--pos-border-input);
     border-style: solid;
-    border-color: var(--pos-color-input-default-border);
-    border-radius: var(--pos-radius-input);
+    border-color: var(--pos-color-input-frame);
     outline: none;
-    background-color: var(--pos-color-input-default-background);
+    background-color: var(--pos-color-input-background);
     
-    color: var(--pos-color-input-default-text);
+    color: var(--pos-color-input-text);
 
     transition: all .1s linear;
   }
@@ -93,10 +92,10 @@
   .pos-form-input[type="password"]:hover:not(:focus),
   .pos-form [type="url"]:hover:not(:focus),
   .pos-form-input[type="url"]:hover:not(:focus) {
-    background-color: var(--pos-color-input-default-hover-background);
-    border-color: var(--pos-color-input-default-hover-border);
+    border-color: var(--pos-color-input-hover-frame);
+    background-color: var(--pos-color-input-hover-background);
 
-    color: var(--pos-color-input-default-hover-text);
+    color: var(--pos-color-input-hover-text);
   }
 
   .pos-form [type="text"]:focus,
@@ -107,10 +106,10 @@
   .pos-form-input[type="password"]:focus,
   .pos-form [type="url"]:focus,
   .pos-form-input[type="url"]:focus {
-    background-color: var(--pos-color-input-default-focus-background);
-    border-color: var(--pos-color-input-default-focus-border);
+    border-color: var(--pos-color-input-active-frame);
+    background-color: var(--pos-color-input-active-background);
 
-    color: var(--pos-color-input-default-focus-text);
+    color: var(--pos-color-input-focus-text);
   }
 
   .pos-form [type="text"]:focus-visible,

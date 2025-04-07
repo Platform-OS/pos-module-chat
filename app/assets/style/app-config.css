@@ -27,7 +27,7 @@
   /* dividers, separators, frames, table rows */
   --pos-color-light-frame: #e2e2e2;
   /* highlighted elements background, like a navigation item when it is hovered or panels that need to stand out from the rest of the page like a filters panel */
-  --pos-color-light-highlight-background: #87e9ba;
+  --pos-color-light-highlight-background: #ffffff;
   /* background of sections of the page that needs to really stand out, like call to actions */
   --pos-color-light-standout-background: #299c64;
   /* background of sections of the page that needs to really stand out when poitner hovers over */
