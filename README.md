@@ -47,13 +47,7 @@ cp modules/user/public/lib/queries/role_permissions/permissions.liquid app/modul
 4. Add the following to the `<head>` section of your application layout to get the basic styling provided with the module. To overwrite the colors and spacings you can overwrite the CSS variables in `pos-config.css`.
 
 ```
-<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-reset.css' | asset_url }}">
-<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-config.css' | asset_url }}">
-<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-button.css' | asset_url }}">
-<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-typography.css' | asset_url }}">
-<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-avatar.css' | asset_url }}">
-<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-forms.css' | asset_url }}">
-<link rel="stylesheet" href="{{ 'modules/common-styling/style/pos-page.css' | asset_url }}">
+{% render 'modules/common-styling/init' %}
 <link rel="stylesheet" href="{{ 'modules/user/style/pos-user-form.css' | asset_url }}">
 <link rel="stylesheet" href="{{ 'modules/chat/style/pos-chat-inbox.css' | asset_url }}">
 ```
