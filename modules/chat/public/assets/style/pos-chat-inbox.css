@@ -30,13 +30,13 @@
 ============================================================================ */
 .pos-chat-conversations {
   min-width: 350px;
-  padding: calc(var(--pos-padding-page) / 2);
+  padding: var(--pos-padding-page);
   position: relative;
   overflow: auto;
   display: flex;
   flex-direction: column;
 
-  border-inline-end: 1px solid var(--pos-color-divider);
+  border-inline-end: 1px solid var(--pos-color-frame);
 }
 
   /* when conversation is opened just show the conversation on mobile */
@@ -56,7 +56,7 @@
   }
 
   .pos-chat-conversations li:not(:last-child) {
-    padding-block-end: var(--pos-gap-list);
+    padding-block-end: calc(var(--pos-gap-button-button) / 4);
   }
 
   .pos-chat-conversations a:hover {
@@ -66,28 +66,32 @@
 
 /* conversation card */
 .pos-chat-conversationCard {
-  padding: var(--pos-padding-panel);
+  padding: var(--pos-padding-page);
   display: grid;
   grid-template-columns: 48px auto;
   grid-template-areas:
     'avatar name'
     'avatar message';
-  column-gap: var(--pos-padding-panel);
+  column-gap: var(--pos-padding-cell);
 
   border-radius: var(--pos-radius-panel);
 
   transition: background-color .1s linear;
 }
 
+  .pos-chat-conversations a {
+    color: inherit;
+  }
+
   .pos-chat-conversations a:focus-visible .pos-chat-conversationCard {
-    background-color: color-mix(in srgb, var(--pos-color-navigation-hover) 50%, transparent 50%);
+    background-color: color-mix(in srgb, var(--pos-color-highlight-background) 50%, transparent 50%);
 
     color: var(--pos-color-interactive-hover);
   }
 
   /* fallback for browsers that don't support anchor-name */
   .pos-chat-conversationCard:hover {
-    background-color: color-mix(in srgb, var(--pos-color-navigation-hover) 50%, transparent 50%);
+    background-color: color-mix(in srgb, var(--pos-color-highlight-background) 50%, transparent 50%);
   }
   /* end fallback */
 
@@ -106,7 +110,7 @@
       inset-block-start: anchor(start);
   
       border-radius: var(--pos-radius-panel);
-      background-color: color-mix(in srgb, var(--pos-color-navigation-hover) 50%, transparent 50%);
+      background-color: color-mix(in srgb, var(--pos-color-highlight-background) 50%, transparent 50%);
 
       content: '';
   
@@ -125,7 +129,7 @@
 
   .pos-chat-conversationCard.active {
     border-radius: var(--pos-radius-panel);
-    background-color: var(--pos-color-navigation-hover);
+    background-color: var(--pos-color-highlight-background);
   }
 
 .pos-chat-conversationCard .pos-avatar {
@@ -149,7 +153,7 @@
   justify-content: space-between;
 
   font-size: .9em;
-  color: var(--pos-color-content-supplementary);
+  color: var(--pos-color-content-text-supplementary);
 }
 
   .pos-chat-conversationCard-lastMessage small {
@@ -192,10 +196,11 @@
   .pos-chat-loadingIndicator span {
     padding: .5em 1em;
 
-    background-color: var(--pos-color-content-foreground);
-    border-radius: var(--pos-radius-panel);
+    border: 1px solid var(--pos-color-frame);
+    border-radius: var(--pos-radius-button);
+    background-color: var(--pos-color-content-background);
 
-    color: var(--pos-color-content-background);
+    color: var(--pos-color-content-text-supplementary);
   }
 
 .pos-chat-conversation {
@@ -213,11 +218,11 @@
   }
 
 .pos-chat-conversation-header {
-  padding: var(--pos-gap-navigation) var(--pos-padding-page);
+  padding: var(--pos-padding-page);
   display: flex;
-  gap: calc(var(--pos-gap-navigation) / 2);
+  gap: calc(var(--pos-gap-card-elements) / 2);
 
-  border-block-end: 1px solid var(--pos-color-divider);
+  border-block-end: 1px solid var(--pos-color-frame);
 
   font-weight: 500;
 }
@@ -229,9 +234,7 @@
   }
 
   .pos-chat-conversation-header-back {
-    margin-block: calc(var(--pos-gap-navigation) * -1);
-    margin-inline-start: calc(var(--pos-padding-page) * -1);
-    padding: var(--pos-gap-navigation) .2em var(--pos-gap-navigation) var(--pos-padding-page);
+    padding: 0 .2em 0 var(--pos-padding-page);
   }
 
   .pos-chat-conversation-header-back .label {
@@ -249,14 +252,14 @@
   padding: var(--pos-padding-page);
   display: flex;
   flex-direction: column;
-  gap: var(--pos-gap-navigation);
+  gap: var(--pos-gap-button-button-small);
 }
 
 .pos-chat-message {
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: var(--pos-gap-list);
+  gap: .2em;
 }
 
 .pos-chat-message-authored {
@@ -265,44 +268,46 @@
 
 .pos-chat-message time {
   font-size: .9rem;
-  color: var(--pos-color-content-supplementary);
+  color: var(--pos-color-content-text-supplementary);
 }
 
 .pos-chat-message-content {
   max-width: 100%;
-  padding: calc(var(--pos-padding-panel) / 2) calc(var(--pos-padding-panel) / 1.5);
+  padding: calc(var(--pos-padding-cell) / 2) calc(var(--pos-padding-cell) / 1.5);
 
-  background-color: color-mix(in srgb, var(--pos-color-content-supplementary) 30%, transparent 70%);
+  background-color: color-mix(in srgb, var(--pos-color-content-text-supplementary) 30%, transparent 70%);
   border-radius: var(--pos-radius-panel);
 
   word-wrap: break-word;
 }
 
   .pos-chat-message-authored .pos-chat-message-content {
-    background-color: var(--pos-color-highlighted);
+    background-color: var(--pos-color-highlight-background);
+
+    color: var(--pos-color-highlight-text);
   }
 
 
 /* new message panel
 ============================================================================ */
 .pos-chat-conversation-new {
-  padding: var(--pos-gap-navigation) var(--pos-padding-page) var(--pos-gap-navigation);
+  padding: var(--pos-padding-cell) var(--pos-padding-cell) var(--pos-padding-cell);
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: var(--pos-gap-navigation);
+  gap: var(--pos-gap-button-button);
   overflow: auto;
   scrollbar-gutter: stable;
 }
 
 .pos-chat-conversation-input {
-  padding: calc(var(--pos-padding-panel) / 2) calc(var(--pos-padding-panel) / 1.5);
+  padding: calc(var(--pos-padding-input) / 2) calc(var(--pos-padding-input) / 1.5);
 
   border-radius: var(--pos-radius-input);
-  background-color: color-mix(in srgb, var(--pos-color-content-supplementary) 30%, transparent 70%);
+  background-color: color-mix(in srgb, var(--pos-color-content-text-supplementary) 20%, transparent 80%);
 
   transition: background-color .1s linear
 }
 
 .pos-chat-conversation-input:focus {
-  background-color: color-mix(in srgb, var(--pos-color-content-supplementary) 20%, transparent 80%);
+  background-color: color-mix(in srgb, var(--pos-color-content-text-supplementary) 10%, transparent 90%);
 }

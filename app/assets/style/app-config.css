@@ -8,87 +8,149 @@
 
 
 
-  /* colors
-  ============================================================================ */
-  :root {
+/* colors */
+/* ================================================================================ */
 
-    /* general content */
-    --pos-color-content-background: #f2f2f2;
-    --pos-color-content-foreground: #303030;
-
-    --pos-color-content-supplementary: #adadad;
-
-    --pos-color-focused: #35b879; /* outline for focused elements */
-    --pos-color-highlighted: #87e9ba; /* elements that needs user attention */
-
-    /* interactive elements */
-    --pos-color-interactive-text: #42a274;
-    --pos-color-interactive-hover: #57be8c;
-    --pos-color-interactive-active: #2e8a5c;
-    --pos-color-interactive-disabled: #769c8a;
-
-    /* colorful elements */
-    --pos-color-colorful-background: #299c64;
-    --pos-color-colorful-foreground: #fff;
-    --pos-color-colorful-hover: #39ac74;
-
-    /* content selection */
-    --pos-color-selection-background: #2e70c1;
-
-    /* frames */
-    --pos-color-divider: #e2e2e2;
-
-    /* buttons */
-    --pos-color-button-default-background: #f5f5f5;
-    --pos-color-button-default-foreground: #303030;
-    --pos-color-button-default-frame: #e2e2e2;
-    --pos-color-button-default-hover-background: #f5f5f5;
-    --pos-color-button-default-hover-foreground: #303030;
-    --pos-color-button-default-hover-frame: #303030;
-
-    --pos-color-button-secondary-background: #f5f5f5;
-    --pos-color-button-secondary-foreground: #303030;
-    --pos-color-button-secondary-frame: #e2e2e2;
-    --pos-color-button-secondary-hover-background: #f5f5f5;
-    --pos-color-button-secondary-hover-foreground: #303030;
-    --pos-color-button-secondary-hover-frame: #303030;
-
-    /* links and interactive elements */
-    --pos-color-interactive-text: #299c64;
-    --pos-color-interactive-hover: #39ac74;
-
-    --pos-color-navigation-hover: #fff;
-
-    /* inputs */
-    --pos-color-input-default-foreground: #303030;
-    --pos-color-input-default-background: #f8f8f8;
-    --pos-color-input-default-border: var(--pos-color-divider);
-    --pos-color-input-default-hover-foreground: #303030;
-    --pos-color-input-default-hover-background: #fff;
-    --pos-color-input-default-hover-border: var(--pos-color-input-default-border);
-    --pos-color-input-default-focus-foreground: var(--pos-color-input-default-foreground);
-    --pos-color-input-default-focus-background: var(--pos-color-input-default-background);
-    --pos-color-input-default-focus-border: var(--pos-color-input-default-border);
-  }
-
-
-/* fonts
-============================================================================ */
+/* light mode */
+/* -------------------------------------------------------------------------------- */
 :root {
+
+  /* general content */
+  /* ---------------------------------------- */
+
+  /* whole page background */
+  --pos-color-light-page-background: #f2f2f2;
+  /* general content text */
+  --pos-color-light-content-text: #303030;
+  /* sidenotes, metadata, table headers */
+  --pos-color-light-content-text-supplementary: #adadad;
+  /* dividers, separators, frames, table rows */
+  --pos-color-light-frame: #e2e2e2;
+  /* highlighted elements background, like a navigation item when it is hovered or panels that need to stand out from the rest of the page like a filters panel */
+  --pos-color-light-highlight-background: #ffffff;
+  /* background of sections of the page that needs to really stand out, like call to actions */
+  --pos-color-light-standout-background: #299c64;
+  /* background of sections of the page that needs to really stand out when poitner hovers over */
+  --pos-color-light-standout-background-hover: #39ac74;
+  /* text and icons placed on the sections that needs to really stand out */
+  --pos-color-light-standout-text: #fff;
+
+
+  /* interactive elements */
+  /* ---------------------------------------- */
+
+  /* active elements suggesting a possible interaction */
+  --pos-color-light-interactive: #299c64;
+  /* active elements with possible interaction when a pointer is over them */
+  --pos-color-light-interactive-hover: #39ac74;
+  /* active elements with possible interaction when they are pressed */
+  --pos-color-light-interactive-active: #2e8a5c;
+  /* disabled elements that could become or has been interactive */
+  --pos-color-light-interactive-disabled: #769c8a;
+
+  /* primary action button background */
+  --pos-color-light-button-primary-background: #f5f5f5;
+  /* primary action button text and icons */
+  --pos-color-light-button-primary-text: #303030;
+  /* border around primary action button */
+  --pos-color-light-button-primary-frame: #e2e2e2;
+  /* primary action button background when a pointer is over it */
+  --pos-color-light-button-primary-hover-background: #f5f5f5;
+  /* primary action button text and icons icons when a pointer is over it */
+  --pos-color-light-button-primary-hover-text: #303030;
+  /* border around primary action button when a pointer is over it */
+  --pos-color-light-button-primary-hover-frame: #303030;
+
+  /* secondary action button background */
+  --pos-color-light-button-secondary-background: #f5f5f5;
+  /* secondary action button text and icons */
+  --pos-color-light-button-secondary-text: #303030;
+  /* border around secondary action button */
+  --pos-color-light-button-secondary-frame: #e2e2e2;
+  /* secondary action button background when a pointer is over it */
+  --pos-color-light-button-secondary-hover-background: #f5f5f5;
+  /* secondary action button text and icons icons when a pointer is over it */
+  --pos-color-light-button-secondary-hover-text: #303030;
+  /* border around secondary action button when a pointer is over it */
+  --pos-color-light-button-secondary-hover-frame: #303030;
+
+
+
+  /* colors user for variety of browser-related UI elements */
+  /* ---------------------------------------- */
+
+  /* outline for focused elements */
+  --pos-color-light-focused: #35b879;
+
+
+  /* forms */
+  /* ---------------------------------------- */
+
+  /* input field background */
+  --pos-color-light-input-background: #f8f8f8;
+  /* input field text and icon */
+  --pos-color-light-input-text: #303030;
+  /* border around input field */
+  --pos-color-light-input-frame: var(--pos-color-light-frame);
+  /* input field background when a pointer is over it */
+  --pos-color-light-input-hover-background: #fff;
+  /* input field text and icon when a pointer is over it */
+  --pos-color-light-input-hover-text: var(--pos-color-light-input-text);
+  /* border around input field when a pointer is over it */
+  --pos-color-light-input-hover-frame: var(--pos-color-light-input-frame);
+  /* input field background when it is being focused */
+  --pos-color-light-input-active-background: var(--pos-color-light-input-background);
+  /* input field text and icon when it is being focused */
+  --pos-color-light-input-active-text: var(--pos-color-light-input-text);
+  /* border around input field when it is being focused */
+  --pos-color-light-input-active-frame: var(--pos-color-light-interactive-active);
+
+}
+
+
+
+/* fonts */
+/* ================================================================================ */
+:root {
+  /* headings */
   --pos-font-heading: 'Source Code Pro', 'Consolas', monospace;
+  /* navigation and other UI elements */
   --pos-font-navigation: 'Source Code Pro', 'Consolas', monospace;
 }
 
 
-/* buttons and inputs shape
-============================================================================ */
+
+/* corners */
+/* ================================================================================ */
 :root {
-  --pos-padding-input: 1.5em;
-
-  --pos-height-input: 2.6rem;
-
-  --pos-border-input: 1px;
-
+  /* border radius for an input */
   --pos-radius-input: .5rem;
+  /* border radius for a button */
   --pos-radius-button: 22px;
+}
+
+
+
+/* input shape */
+/* ================================================================================ */
+:root {
+  /* horizontal padding inside the form inputs */
+  --pos-padding-input: 1.5em;
+  /* minimum fixed height for the inputs */
+  --pos-height-input: 2.6rem;
+  /* border width for inputs */
+  --pos-border-input: 1px;
+}
+
+
+
+/* button shape */
+/* ================================================================================ */
+:root {
+  /* horizontal padding for buttons */
+  --pos-padding-button: var(--pos-padding-input);
+  /* button heights (should match input computed height */
+  --pos-height-button: var(--pos-height-input);
+  /* border width for buttons */
+  --pos-border-button: var(--pos-border-input);
 }

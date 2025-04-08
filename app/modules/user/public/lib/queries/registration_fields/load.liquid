@@ -5,28 +5,16 @@
     "required": true,
     "type": "text",
     "weight": 0,
-    "label": "First name"
+    "label": "First name",
+    "placeholder": "John"
   },
   {
     "name": "last_name",
     "required": true,
     "type": "text",
     "weight": 1,
-    "label": "Last name"
-  },
-  {
-    "name": "email",
-    "required": true,
-    "type": "email",
-    "weight": 2,
-    "label": "Email"
-  },
-  {
-    "name": "password",
-    "required": true,
-    "type": "password",
-    "weight": 3,
-    "label": "Password"
+    "label": "Last name",
+    "placeholder": "Doe"
   },
   {
     "name": "timezone",
@@ -36,6 +24,6 @@
 ]
 {% endparse_json %}
 
-{%liquid
+{% liquid
   return fields
 %}

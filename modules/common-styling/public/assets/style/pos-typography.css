@@ -3,6 +3,7 @@
 
   links
   headings
+  sidenotes
 */
 
 
@@ -11,21 +12,25 @@
 
   /* links
   ============================================================================ */
-  .pos-app a {
-    color: var(--pos-color-interactive-text);
+  a {
+    color: var(--pos-color-interactive);
 
     transition: color .1s linear;
   }
 
-  .pos-app a:hover {
+  a:hover {
     color: var(--pos-color-interactive-hover);
   }
 
-  .pos-app a:active {
+  a:active {
     color: var(--pos-color-interactive-active)
   }
 
-  .pos-app a:focus-visible {
+  a:focus-visible {
+    border-radius: var(--pos-radius-button);
+    background-color: color-mix(in srgb, var(--pos-color-focused) 10%, transparent 90%);
+    box-shadow: 0 0 6px 1px var(--pos-color-focused);
+
     color: var(--pos-color-interactive-hover);
   }
 
@@ -37,11 +42,28 @@
   }
 
   .pos-heading-2 {
+    margin-inline-start: -.1ex;
     display: block;
 
     font-family: var(--pos-font-heading);
     font-size: 2rem;
     font-weight: 500;
+  }
+
+  .pos-heading-3 {
+    margin-inline-start: -.05ex;
+    display: block;
+
+    font-family: var(--pos-font-heading);
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+
+  /* sidenotes
+  ============================================================================ */
+  .pos-supplementary {
+    color: var(--pos-color-light-content-text-supplementary);
   }
 
 }
