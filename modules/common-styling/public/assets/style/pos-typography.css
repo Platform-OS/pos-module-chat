@@ -12,21 +12,21 @@
 
   /* links
   ============================================================================ */
-  a {
+  .pos-app a {
     color: var(--pos-color-interactive);
 
     transition: color .1s linear;
   }
 
-  a:hover {
+  .pos-app a:hover {
     color: var(--pos-color-interactive-hover);
   }
 
-  a:active {
+  .pos-app a:active {
     color: var(--pos-color-interactive-active)
   }
 
-  a:focus-visible {
+  .pos-app a:focus-visible {
     border-radius: var(--pos-radius-button);
     background-color: color-mix(in srgb, var(--pos-color-focused) 10%, transparent 90%);
     box-shadow: 0 0 6px 1px var(--pos-color-focused);
