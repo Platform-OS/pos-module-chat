@@ -1,6 +1,5 @@
 {% liquid
   function current_profile = 'modules/user/helpers/current_profile'
-  log current_profile, type:"D"
   if current_profile.user
    function profiles = 'modules/user/queries/profiles/search', limit: 20, not_ids: null, uuid: null, id: null, ids: null, first_name: null, last_name: null, user_id: null, query: null, emails: null, sort: null
   endif
