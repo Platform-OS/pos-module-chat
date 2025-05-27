@@ -8,7 +8,4 @@
 
 <a href="/inbox/?to_uuid={{ to_uuid }}" class="{% if button %} button whitespace-nowrap {% endif %} chat-sendMessage {{ class }}">
   {{ label | default: defaultLabel }}
-  {% if button %}
-    {% theme_render_rc 'components/atoms/icon', name: 'commentText', class: 'w-4' %}
-  {% endif %}
 </a>

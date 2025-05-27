@@ -2,7 +2,7 @@
 slug: inbox
 ---
 {% liquid
-  function current_profile = 'modules/profile/helpers/current_profile'
+  function current_profile = 'modules/user/helpers/current_profile'
 
   # platformos-check-disable ConvertIncludeToRender, UnreachableCode
   include 'modules/user/helpers/can_do_or_unauthorized', requester: current_profile, do: 'chat.inbox', return_url: '/', redirect_anonymous_to_login: true
@@ -12,7 +12,6 @@ slug: inbox
     function record = 'modules/chat/lib/queries/records/find_by_uuid', uuid: context.params['to_uuid']
   endif
   assign object = null | hash_merge: to_id: record.id, conversation_id: context.params['conversation_id']
-
   if record or context.params.conversation_id
     function current_conversation = 'modules/chat/lib/commands/conversations/find_or_create', object: object, current_profile: current_profile
   endif

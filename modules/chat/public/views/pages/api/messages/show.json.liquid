@@ -13,7 +13,7 @@ method: get
 {% endcomment %}
 
 {% liquid
-  function current_profile = 'modules/profile/helpers/current_profile'
+  function current_profile = 'modules/user/helpers/current_profile'
 
   # platformos-check-disable ConvertIncludeToRender, UnreachableCode
   include 'modules/user/helpers/can_do_or_unauthorized', requester: current_profile, do: 'chat.inbox', return_url: '/'
