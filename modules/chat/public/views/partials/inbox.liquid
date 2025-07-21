@@ -118,12 +118,11 @@
               else
                 assign name = from_profile.name
               endif
-
               render 'modules/common-styling/user/avatar', size: 's', name: name, imageSrc: from_profile.avatar.photo.versions.sm
             endif
-            print name | raw_escape_string
           endif
         %}
+        {{ name }}
       </header>
       <div class="pos-chat-conversation-messagesContainer" id="chat-messagesList-container">
         <div class="pos-chat-loadingIndicator" id="pos-chat-loadingIndicator">
