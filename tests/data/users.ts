@@ -28,5 +28,18 @@ export const users = {
     firstName: 'Jonathan',
     fullName: 'Jonathan Baird',
     lastName: 'Baird' 
+  },
+  test6: {
+    email: 'test6@example.com',
+    firstName: 'Hannah',
+    fullName: 'Hannah Lewis',
+    lastName: 'Lewis'
+  },
+  test7: {
+    email: 'test7@example.com',
+    firstName: 'James',
+    fullName: 'James Miller',
+    lastName: 'Miller',
+    uuid: '51b22569-3448-4c53-88b9-34c0d7069e24'
   }
 };

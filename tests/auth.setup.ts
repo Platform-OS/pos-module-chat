@@ -14,6 +14,8 @@ const usersToAuth = [
   users.test3,
   users.test4,
   users.test5,
+  users.test6,
+  users.test7
 ];
 
 for (const user of usersToAuth) {

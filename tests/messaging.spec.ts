@@ -1,100 +1,152 @@
 import { BrowserContext, expect, Page, test } from '@playwright/test';
-import { InboxPage } from './pages/inbox';
-import { PeoplePage } from './pages/people';
+import { PeoplePage, InboxPage } from './pages/inbox';
 import { switchContext } from './helper';
 import { messages } from './data/messages';
 import { users } from './data/users';
 
+
 test.describe('Testing messaging', () => {
-  test('user can send message to other users', async ({ browser }) => {
+  test('creating a conversation card after first message', async ({ browser }) => {
     let context: BrowserContext | null = null;
     let page: Page;
 
-    await test.step(`user 'A' sends message to user 'C' via profile`, async () => {
-      ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test1.email}.json`));
-      const inboxPage = new InboxPage(page);
+    const sender = users.test2;
+    const senderMessage = messages.test2.message1;
+    const receiver = users.test4;
+
+    await test.step(`${sender.fullName} sends message to ${receiver.fullName} via profile`, async () => {
+      ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test2.email}.json`));
       const peoplePage = new PeoplePage(page);
+      const inboxPage = new InboxPage(page);
 
       await peoplePage.goto();
-      await peoplePage.linkWithText(users.test2.fullName).click();
-      
-      await inboxPage.messageInputField.fill(messages.test1.message1);
-      await inboxPage.buttonWithText('Send').click();
-      await context.close();
+
+      const isMessageSent = await inboxPage.sendMessage(receiver.fullName, senderMessage);
+      await expect(isMessageSent).toBe(true);
     });
 
-    await test.step(`user 'B' sends message to user 'C'`, async () => {
-      ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test3.email}.json`));
-      const inboxPage = new InboxPage(page);
-      const peoplePage = new PeoplePage(page);
-      
-      await peoplePage.goto();
-      await peoplePage.linkWithText(users.test2.fullName).click();
-      
-      await inboxPage.messageInputField.fill(messages.test3.message1);
-      await inboxPage.buttonWithText('Send').click();
-      await context.close();
-    });
-
-    await test.step(`user 'D' sends message to user 'C' via profile`, async () => {
-      ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test4.email}.json`));
-      const inboxPage = new InboxPage(page);
-      const peoplePage = new PeoplePage(page);
-  
-      await peoplePage.goto();
-      await peoplePage.linkWithText(users.test2.fullName).click();
-      
-      await inboxPage.messageInputField.fill(messages.test4.message1);
-      await inboxPage.buttonWithText('Send').click();
-      await context.close();
-    }); 
-
-    await test.step(`user 'C' responds to user 'A'`, async () => {
+    await test.step(`verify chatCard was created and is visible after page refresh`, async () => {
       ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test2.email}.json`));
       const inboxPage = new InboxPage(page);
-  
+
       await inboxPage.goto();
-      await inboxPage.chatRoom(users.test1.fullName).click();
-      await expect(inboxPage.message(messages.test1.message1)).toBeVisible();
-      await inboxPage.messageInputField.fill(messages.test2.message1);
-      await inboxPage.buttonWithText('Send').click();
+
+      const isChatCardVisible = await inboxPage.chatList.isChatCardVisible(receiver.fullName);
+      await expect(isChatCardVisible).toBe(true);
     });
 
-    await test.step(`user 'C' verify there are 3 chatrooms with expected messages`, async () => {
+    await test.step(`${receiver.fullName} received the message`, async () => {
+      ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test4.email}.json`));
+      const peoplePage = new PeoplePage(page);
       const inboxPage = new InboxPage(page);
 
-      const chatRooms = [
-        { name: users.test1.fullName, messagesToBeVisible: [messages.test1.message1, messages.test2.message1], messagesNotToBeVisible: [messages.test3.message1, messages.test4.message1] },
-        { name: users.test3.fullName, messagesToBeVisible: [messages.test3.message1], messagesNotToBeVisible: [messages.test1.message1, messages.test2.message1, messages.test4.message1] },
-        { name: users.test4.fullName, messagesToBeVisible: [messages.test4.message1], messagesNotToBeVisible: [messages.test1.message1, messages.test2.message1, messages.test3.message1] }
-      ];
+      await peoplePage.goto();
 
-      await inboxPage.goto();
+      const isChatOpened = await inboxPage.isChatOpened(sender.fullName);
+      await expect(isChatOpened).toBe(true);
 
-      for (const chatRoom of chatRooms) {
-        await expect(inboxPage.chatRoom(chatRoom.name)).toBeVisible();
-        await inboxPage.chatRoom(chatRoom.name).click();
+      const isChatCardVisible = await inboxPage.chatList.isChatCardVisible(sender.fullName);
+      await expect(isChatCardVisible).toBe(true);
 
-        for (const messageToBeVisible of chatRoom.messagesToBeVisible) {
-          await expect(inboxPage.message(messageToBeVisible)).toBeVisible();
-        };
+      const isMessageVisible = await inboxPage.message.isMessageReceived(senderMessage);
+      await expect(isMessageVisible).toBe(true);
+    });
+  });
+  
+  test('sending multiple messages and order verification', async ({ browser }) => {
+    let context: BrowserContext | null = null;
+    let page: Page;
 
-        for (const messageNotToBeVisible of chatRoom.messagesNotToBeVisible) {
-          await expect(inboxPage.message(messageNotToBeVisible)).not.toBeVisible();
-        };
-      };
+    const sender = users.test4;
+    const receiver = users.test5;
+
+    const senderMessages = [messages.test4.message1, messages.test4.message2, messages.test4.message3]
+    const lastMessageText = senderMessages[2];
+
+    await test.step(`${sender.fullName} sends multiple messages to ${receiver.fullName}`, async () => {
+      ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test4.email}.json`));
+      const peoplePage = new PeoplePage(page);
+      const inboxPage = new InboxPage(page);
+
+      await peoplePage.goto();
+
+      const areMessagesSent = await inboxPage.sendMessages(receiver.fullName, senderMessages);
+      await expect(areMessagesSent).toBe(true);
+
+      const isOrderCorrect = await inboxPage.chat.verifyMessageOrder(senderMessages);
+      await expect(isOrderCorrect).toBe(true);
+    });
+
+    await test.step(`user ${receiver.fullName} received messages in correct order`, async () => {
+      ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test5.email}.json`));
+      const peoplePage = new PeoplePage(page);
+      const inboxPage = new InboxPage(page);
+
+      await peoplePage.goto();
+
+      const isChatOpened = await inboxPage.isChatOpened(sender.fullName);
+      await expect(isChatOpened).toBe(true);  
+
+      const lastMessage = await inboxPage.chatList.getCardLastMessage(sender.fullName);
+      await expect(lastMessage).toHaveText(lastMessageText);
+    
+      const isOrderCorrect = await inboxPage.chat.verifyMessageOrder(senderMessages);
+      await expect(isOrderCorrect).toBe(true);
     });
   });
 
-  test(`not involved user has empty inbox`, async ({ browser }) => {
-    const context = await browser.newContext({ storageState: `tests/.auth/${users.test5.email}.json` });
-    const page = await context.newPage();
-    const inboxPage = new InboxPage(page);
+  test('conversation card not created without sending a message', async ({ browser }) => {
+    let context: BrowserContext | null = null;
+    let page: Page;
+
+    const sender = users.test4;
+    const receiver = users.test7;
+
+    await test.step(`${sender.fullName} opens empty conversation with ${receiver.fullName}`, async () => {
+      ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test4.email}.json`));
+      const peoplePage = new PeoplePage(page);
+      const inboxPage = new InboxPage(page);
+
+      await peoplePage.goto();
+
+      const isChatOpened = await inboxPage.isChatOpened(receiver.fullName);
+      expect(isChatOpened).toBe(true);
+    });
+
+    await test.step(`${receiver.fullName} verifies that his inbox is empty`, async () => {
+      ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test7.email}.json`));
+      const inboxPage = new InboxPage(page);
+
+      await inboxPage.goto();
+
+      const countCards = await inboxPage.chatList.countCards();
+      await expect(countCards).toBe(0);
+    });
+  });
+
+  test(`user can't see his own profile card on people list`, async ({ browser }) => {
+    let context: BrowserContext | null = null;
+    let page: Page;
+    
+    ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test7.email}.json`));    
+
+    const peoplePage = new PeoplePage(page);
+
+    await peoplePage.goto();
+
+    const isPeopleCardVisible = await peoplePage.isPeopleCardVisible(users.test7.email);
+    expect(isPeopleCardVisible).toBe(false);
+  });
+
+  test(`user can't send message to himself`, async ({ browser }) => {
+    let context: BrowserContext | null = null;
+    let page: Page;
+
+    ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test7.email}.json`));    
+
+    await page.goto(`/inbox/?to_uuid=${users.test7.uuid}`);
   
-    await inboxPage.goto();
-    await expect(inboxPage.chatRoom(users.test1.fullName)).not.toBeVisible();
-    await expect(inboxPage.chatRoom(users.test3.fullName)).not.toBeVisible();
-    await expect(inboxPage.chatRoom(users.test4.fullName)).not.toBeVisible();
-    await expect(inboxPage.elementWithText('You have not started any conversation yet')).toBeVisible();
+
+    await expect(page.locator('header').getByText(users.test7.fullName)).not.toBeVisible();
   });
 });
