@@ -149,4 +149,21 @@ test.describe('Testing messaging', () => {
 
     await expect(page.locator('header').getByText(users.test7.fullName)).not.toBeVisible();
   });
+
+  test(`regression: old conversation opens correct chat from people list`, async ({ browser }) => {
+    let context: BrowserContext | null = null;
+    let page: Page;
+
+    const receiverFullName = "Dummy10 User";
+
+    ({ context, page } = await switchContext(context, browser, `tests/.auth/${users.test6.email}.json`));    
+
+    const peoplePage = new PeoplePage(page);
+    const inboxPage = new InboxPage(page);
+
+    await peoplePage.goto();
+
+    const isChatOpened = await inboxPage.isChatOpened(receiverFullName);
+    expect(isChatOpened).toBe(true);
+  })  
 });
