@@ -80,8 +80,8 @@ jobs:
           MPKIT_TOKEN: ${{ steps.get-token.outputs.mpkit-token }}
         run: |
           set -eu
-          echo $MPKIT_URL
-          ./tests/data/seed/seed.sh
+          rm app/pos-modules.*
+          sh ./tests/data/seed/seed.sh
 
   test:
     needs: ["reserve-ci-instance", "deploy"]
