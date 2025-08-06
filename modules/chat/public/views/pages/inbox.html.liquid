@@ -30,7 +30,7 @@ slug: inbox
 
   if conversations.total_entries > 0
     if current_conversation.participants == blank
-      graphql participants = 'modules/profile/profiles/search', ids: current_conversation.participant_ids
+      graphql participants = 'modules/user/profiles/search', ids: current_conversation.participant_ids
       hash_assign current_conversation['participants'] = participants.records.results
     endif
 
