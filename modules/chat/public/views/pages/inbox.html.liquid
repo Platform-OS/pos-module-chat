@@ -29,6 +29,11 @@ slug: inbox
   function conversations = 'modules/chat/lib/queries/conversations/search_by_participant', participant_id: current_profile.id, limit: 20, page: 1
 
   if conversations.total_entries > 0
+    if current_conversation.participants == blank
+      graphql participants = 'modules/profile/profiles/search', ids: current_conversation.participant_ids
+      hash_assign current_conversation['participants'] = participants.records.results
+    endif
+
     theme_render_rc 'inbox', current_conversation: current_conversation, conversations: conversations, current_profile: current_profile
   else
     render 'modules/chat/blank'
