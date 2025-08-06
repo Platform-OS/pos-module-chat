@@ -42,9 +42,9 @@ jobs:
         id: reserve
         uses: Platform-OS/ci-repository-reserve-instance-url@0.0.9
         with:
-          repository-url: ${{ vars.CI_REPOSITORY_URL }}
+          repository-url: ${{ vars.CI_PS_REPOSITORY_URL }}
           method: reserve
-          pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
+          pos-ci-repo-token: ${{ secrets.POS_CI_PS_REPO_ACCESS_TOKEN }}
 
   deploy:
     needs: ["reserve-ci-instance"]
@@ -55,11 +55,18 @@ jobs:
         node-version: [20.x]
     timeout-minutes: 5
     env:
-      MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      MPKIT_TOKEN: ${{ secrets.MPKIT_TOKEN }}
-      MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
       CI: true
+      MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
+      MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
     steps:
+      - name: Get MPKIT token
+        id: get-token
+        uses: Platform-OS/ci-repository-reserve-instance-url@mask-token
+        with:
+          method: get-token
+          repository-url: ${{ vars.CI_PS_REPOSITORY_URL }}
+          pos-ci-repo-token: ${{ secrets.POS_CI_PS_REPO_ACCESS_TOKEN }}
+          
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -71,6 +78,7 @@ jobs:
         shell: sh
         run: |
           set -eu
+          echo $MPKIT_URL
           ./tests/data/seed/seed.sh
 
   test:
@@ -79,14 +87,13 @@ jobs:
     container: platformos/playwright:5.1.5-1.47.2
     timeout-minutes: 35
     env:
-      MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
-      #MPKIT_TOKEN: ${{ secrets.MPKIT_TOKEN }}
-      MPKIT_TOKEN: ${{ secrets.QA0_ACCESS_TOKEN }}
-      MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
-      REPORT_PATH: ${{ needs.reserve-ci-instance.outputs.report-path }}
-      E2E_TEST_PASSWORD: ${{ secrets.E2E_TEST_PASSWORD }}
-      UPLOAD_HOST: https://test-reports.platformos.dev
       CI: true
+      E2E_TEST_PASSWORD: ${{ secrets.E2E_TEST_PASSWORD }}
+      MPKIT_EMAIL: ${{ secrets.MPKIT_EMAIL }}
+      MPKIT_URL: ${{ needs.reserve-ci-instance.outputs.mpkit-url }}
+      HTML_ATTACHMENTS_BASE_URL: ${{ vars.HTML_ATTACHMENTS_BASE_URL }}
+      TEST_REPORT_MPKIT_URL: ${{ vars.TEST_REPORT_MPKIT_URL }}
+      TEST_REPORT_MPKIT_TOKEN: ${{ secrets.TEST_REPORT_MPKIT_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -107,5 +114,5 @@ jobs:
         uses: Platform-OS/ci-repository-reserve-instance-url@0.0.9
         with:
           method: release
-          repository-url: ${{ vars.CI_REPOSITORY_URL }}
-          pos-ci-repo-token: ${{ secrets.POS_CI_REPO_ACCESS_TOKEN }}
+          repository-url: ${{ vars.CI_PS_REPOSITORY_URL }}
+          pos-ci-repo-token: ${{ secrets.POS_CI_PS_REPO_ACCESS_TOKEN }}
