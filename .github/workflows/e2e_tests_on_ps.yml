@@ -1,4 +1,4 @@
-name: E2E tests
+name: Playwright E2E tests
 on:
   push:
     branches:
@@ -76,6 +76,8 @@ jobs:
       - name: Deploy
         timeout-minutes: 6
         shell: sh
+        env:
+          MPKIT_TOKEN: ${{ steps.get-token.outputs.mpkit-token }}
         run: |
           set -eu
           echo $MPKIT_URL
