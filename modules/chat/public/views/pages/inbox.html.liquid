@@ -29,7 +29,7 @@ slug: inbox
   function conversations = 'modules/chat/lib/queries/conversations/search_by_participant', participant_id: current_profile.id, limit: 20, page: 1
 
   if conversations.total_entries > 0
-    if current_conversation.participants == blank
+    if current_conversation and current_conversation.participants == blank
       graphql participants = 'modules/user/profiles/search', ids: current_conversation.participant_ids
       hash_assign current_conversation['participants'] = participants.records.results
     endif
