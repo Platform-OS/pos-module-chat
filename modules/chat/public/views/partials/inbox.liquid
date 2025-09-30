@@ -41,15 +41,12 @@
 <script type="module" defer src="{{ 'modules/chat/js/pos-chat.js' | asset_url }}"></script>
 
 <!-- message templates -->
+{% assign dummy_message = '{ "message": "", "created_at": null }' | parse_json %}
 <template id="pos-chat-template-message-received">
-  {% liquid
-    render 'modules/chat/message', message: '', authored: false, created_at: created_at, timezone: null
-  %}
+  {% render 'modules/chat/message', message: dummy_message, authored: false, timezone: null %}
 </template>
 <template id="pos-chat-template-message-sent">
-  {% liquid
-    render 'modules/chat/message', message: '', authored: true, created_at: created_at, timezone: null
-  %}
+  {% render 'modules/chat/message', message: dummy_message, authored: true, timezone: null %}
 </template>
 <!-- end message templates -->
 
@@ -68,32 +65,19 @@
         assign other_participants = participants | subtract_array: current_participants
         assign from_profile = other_participants | first
 
-        if conversation.id != current_conversation.id
-          assign current = false
-        else
+        if conversation.id == current_conversation.id
           assign current = true
-        endif
-
-        if conversation.participant_read_ids contains current_profile.id
-          assign unread = false
         else
-          assign unread = true
+          assign current = false
         endif
 
         assign name = from_profile.first_name | append: ' ' | append: from_profile.last_name | default: from_profile.name
         assign imageSrc = from_profile.avatar.photo.versions.sm
         assign last_message = conversation.last_message.message
-        assign created_at = conversation.last_message.created_at
-
-        if conversation.id == current_conversation.id
-          assign other_participant = from_profile
-        endif
       %}
       {% if conversation.last_message %}
         <li>
-          {% liquid
-            theme_render_rc 'conversation', id: conversation.id, current: current, unread: unread, name: name, imageSrc: imageSrc, last_message: last_message, created_at: created_at, timezone: current_profile.timezone
-          %}
+          {% render 'modules/chat/conversation', id: conversation.id, current: current, name: name, imageSrc: imageSrc, last_message: last_message, timezone: current_profile.timezone %}
         </li>
       {% endif %}
     {% endfor %}
@@ -134,11 +118,11 @@
           {% liquid
             assign list = current_conversation.messages | reverse
             for message in list
-              if message.autor_id != current_profile.id
-                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: false, timezone: current_profile.timezone
-              else
-                render 'modules/chat/message', message: message.message, created_at: message.created_at, authored: true, timezone: current_profile.timezone
+              if message.autor_id == current_profile.id
+                assign authored = true
               endif
+
+              render 'modules/chat/message', message: message, authored: authored, timezone: current_profile.timezone
             endfor
           %}
         </ul>
