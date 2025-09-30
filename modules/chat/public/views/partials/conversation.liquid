@@ -9,8 +9,8 @@
         <div class="pos-chat-conversationCard-lastMessage">
           {% if last_message %}
             <small>{{ last_message }}</small>
-            <time datetime="{{ created_at }}">
-              {{ created_at | strftime: "%b %d", timezone }}
+            <time datetime="{{ last_message.created_at }}">
+              {{ last_message.created_at | strftime: "%b %d", timezone }}
             </time>
           {% endif %}
         </div>

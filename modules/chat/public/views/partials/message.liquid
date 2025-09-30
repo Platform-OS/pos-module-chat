@@ -1,17 +1,17 @@
 {% liquid
-  assign message = message | markdown: '{ "elements": [ "br" ] }'
+  assign msg = message.message | markdown: '{ "elements": [ "br" ] }'
 %}
 
 <li class="pos-chat-message {% if authored %} pos-chat-message-authored {% endif %}">
 
-  <time datetime="{{ created_at }}">
-    {% if created_at %}
-      {{ created_at | l: 'long', timezone }}
+  <time datetime="{{ message.created_at }}">
+    {% if message.created_at %}
+      {{ message.created_at | l: 'long', timezone }}
     {% endif %}
   </time>
 
   <div class="pos-chat-message-content">
-    {{ message }}
+    {{ msg }}
   </div>
 
 </li>

@@ -20,7 +20,7 @@
       {% comment %} custom js specific for this app {% endcomment %}
       <script defer src="{{ 'js/app.js' | asset_url }}"></script>
       <script defer src="{{ 'js/popup.js' | asset_url }}"></script>
-      
+
       <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
 
       <style>
@@ -58,7 +58,7 @@
         if context.location.pathname != flash.from or flash.force_clear
           function _ = 'modules/core/commands/session/clear', key: 'sflash'
         endif
-        theme_render_rc 'modules/common-styling/toasts', params: flash
+        render 'modules/common-styling/toasts', params: flash
       %}
 
   </body>
